@@ -22,13 +22,13 @@ public class Membro implements Serializable {
     
     @JoinColumn(name = "idfuncao", referencedColumnName = "idfuncao")
     @ManyToOne(optional = false)
-    private Funcao idfuncao;
+    private Funcao idFuncao;
     
     @JoinColumn(name = "idOrganismo", referencedColumnName = "idOrganismo", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Organismo organismo;
     
-    @Id
+    @Id // ??
     @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pessoa pessoa;
@@ -36,8 +36,8 @@ public class Membro implements Serializable {
     public Membro() {
     }
 
-    public Membro(Funcao idfuncao, Organismo organismo, Pessoa pessoa) {
-        this.idfuncao = idfuncao;
+    public Membro(Funcao idFuncao, Organismo organismo, Pessoa pessoa) {
+        this.idFuncao = idFuncao;
         this.organismo = organismo;
         this.pessoa = pessoa;
     }

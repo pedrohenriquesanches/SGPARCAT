@@ -8,7 +8,6 @@ package br.com.sgparcat.models;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,36 +28,28 @@ import javax.persistence.TemporalType;
 public class Pessoa implements Serializable {
 
     @Id
-    @Basic(optional = false)
-    @Column(name = "idPessoa")
+    @Column(name = "idPessoa", nullable = false)
     private Long idPessoa;
     
-    @Basic(optional = false)
-    @Column(name = "tipoPessoa")
+    @Column(name = "tipoPessoa", nullable = false)
     private String tipoPessoa;
     
-    @Basic(optional = false)
-    @Column(name = "funcao")
+    @Column(name = "funcao", nullable = false)
     private String funcao;
     
-    @Basic(optional = false)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false)
     private String nome;
     
-    @Basic(optional = false)
-    @Column(name = "sobrenome")
+    @Column(name = "sobrenome", nullable = false)
     private String sobrenome;
     
-    @Basic(optional = false)
-    @Column(name = "sexo")
+    @Column(name = "sexo", nullable = false)
     private Character sexo;
-        
-    @Basic(optional = false)
+    
     @Column(name = "estadoCivil")
     private Character estadoCivil;
     
-    @Basic(optional = false)
-    @Column(name = "dataNascimento")
+    @Column(name = "dataNascimento", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
     
@@ -68,15 +59,12 @@ public class Pessoa implements Serializable {
     @Column(name = "ufNatal")
     private String ufNatal;
     
-    @Basic(optional = false)
     @Column(name = "endereco")
     private String endereco;
     
-    @Basic(optional = false)
     @Column(name = "cidade")
     private String cidade;
     
-    @Basic(optional = false)
     @Column(name = "uf")
     private String uf;
     
@@ -95,20 +83,16 @@ public class Pessoa implements Serializable {
     @Column(name = "email")
     private String email;
     
-    @Basic(optional = false)
-    @Column(name = "cpf")
+    @Column(name = "cpf", nullable = false)
     private String cpf;
     
-    @Basic(optional = false)
-    @Column(name = "rg")
+    @Column(name = "rg", nullable = false)
     private String rg;
     
-    @Basic(optional = false)
-    @Column(name = "isDizimista")
+    @Column(name = "isDizimista", nullable = false)
     private boolean isDizimista;
     
-    @Basic(optional = false)
-    @Column(name = "isDizimistaAtivo")
+    @Column(name = "isDizimistaAtivo", nullable = false)
     private boolean isDizimistaAtivo;
     
     @Column(name = "observacao")
@@ -117,9 +101,9 @@ public class Pessoa implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private Collection<Lancamento> lancamentoCollection;
     
-    @JoinColumn(name = "idfuncao", referencedColumnName = "idfuncao")
+    @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
     @ManyToOne(optional = false)
-    private Funcao idfuncao;
+    private Funcao idFuncao;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private Collection<Membro> membroCollection;
@@ -136,14 +120,13 @@ public class Pessoa implements Serializable {
     public Pessoa() {
     }
 
-    public Pessoa(Long idPessoa, String tipoPessoa, String funcao, String nome, String sobrenome, Character sexo, Character estadoCivil, Date dataNascimento, String cpf, String rg, boolean isDizimista, boolean isDizimistaAtivo) {
+    public Pessoa(Long idPessoa, String tipoPessoa, String funcao, String nome, String sobrenome, Character sexo, Date dataNascimento, String cpf, String rg, boolean isDizimista, boolean isDizimistaAtivo) {
         this.idPessoa = idPessoa;
         this.tipoPessoa = tipoPessoa;
         this.funcao = funcao;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.sexo = sexo;
-        this.estadoCivil = estadoCivil;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
         this.rg = rg;

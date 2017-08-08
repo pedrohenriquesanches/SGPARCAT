@@ -8,7 +8,6 @@ package br.com.sgparcat.models;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,21 +27,17 @@ import javax.persistence.TemporalType;
 public class Evento implements Serializable {
     
     @Id
-    @Basic(optional = false)
-    @Column(name = "idEvento")
+    @Column(name = "idEvento", nullable = false)
     private Integer idEvento;
     
-    @Basic(optional = false)
-    @Column(name = "titulo")
+    @Column(name = "titulo", nullable = false)
     private String titulo;
     
-    @Basic(optional = false)
-    @Column(name = "dataEvento")
+    @Column(name = "dataEvento", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataEvento;
     
-    @Basic(optional = false)
-    @Column(name = "horarioInicio")
+    @Column(name = "horarioInicio", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horarioInicio;
     
@@ -50,21 +45,18 @@ public class Evento implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date horarioFim;
     
-    @Basic(optional = false)
-    @Column(name = "local")
+    @Column(name = "localEvento", nullable = false)
     private String local;
     
     @Lob
     @Column(name = "observacao")
     private String observacao;
     
-    @Basic(optional = false)
-    @Column(name = "dataRegistro")
+    @Column(name = "dataRegistro", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataRegistro;
     
-    @Basic(optional = false)
-    @Column(name = "horarioRegistro")
+    @Column(name = "horarioRegistro", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horarioRegistro;
     

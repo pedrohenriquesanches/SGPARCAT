@@ -8,7 +8,6 @@ package br.com.sgparcat.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,16 +30,13 @@ public class Lancamento implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "numeroLancamento")
+    @Column(name = "numeroLancamento", nullable = false)
     private Long numeroLancamento;
     
-    @Basic(optional = false)
-    @Column(name = "isDespesa")
+    @Column(name = "isDespesa", nullable = false)
     private boolean isDespesa;
     
-    @Basic(optional = false)
-    @Column(name = "descricao")
+    @Column(name = "descricao", nullable = false)
     private String descricao;
     
     //@Max(value=?)
@@ -62,25 +58,21 @@ public class Lancamento implements Serializable {
     @Column(name = "emitente")
     private String emitente;
     
-    @Basic(optional = false)
-    @Column(name = "isParcelado")
+    @Column(name = "isParcelado", nullable = false)
     private boolean isParcelado;
     
     @Lob
     @Column(name = "observacao")
     private String observacao;
     
-    @Basic(optional = false)
-    @Column(name = "isPago")
+    @Column(name = "isPago", nullable = false)
     private boolean isPago;
     
-    @Basic(optional = false)
-    @Column(name = "dataRegistro")
+    @Column(name = "dataRegistro", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataRegistro;
     
-    @Basic(optional = false)
-    @Column(name = "horarioRegistro")
+    @Column(name = "horarioRegistro", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horarioRegistro;
     

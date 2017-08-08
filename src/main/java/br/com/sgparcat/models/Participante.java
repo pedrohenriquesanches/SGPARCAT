@@ -20,15 +20,15 @@ import javax.persistence.Table;
 @Table(name = "participante")
 public class Participante implements Serializable {
     
-    @JoinColumn(name = "idfuncao", referencedColumnName = "idfuncao")
+    @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
     @ManyToOne(optional = false)
-    private Funcao idfuncao;
+    private Funcao idFuncao;
     
     @JoinColumn(name = "idEvento", referencedColumnName = "idEvento", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Evento evento;
     
-    @Id
+    @Id //??
     @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pessoa pessoa;
@@ -36,8 +36,8 @@ public class Participante implements Serializable {
     public Participante() {
     }
 
-    public Participante(Funcao idfuncao, Evento evento, Pessoa pessoa) {
-        this.idfuncao = idfuncao;
+    public Participante(Funcao idFuncao, Evento evento, Pessoa pessoa) {
+        this.idFuncao = idFuncao;
         this.evento = evento;
         this.pessoa = pessoa;
     }

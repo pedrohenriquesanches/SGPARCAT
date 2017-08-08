@@ -7,7 +7,6 @@ package br.com.sgparcat.models;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,16 +23,13 @@ import javax.persistence.Table;
 public class Organismo implements Serializable {
     
     @Id
-    @Basic(optional = false)
-    @Column(name = "idOrganismo")
+    @Column(name = "idOrganismo", nullable = false)
     private Integer idOrganismo;
     
-    @Basic(optional = false)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false)
     private String nome;
     
-    @Basic(optional = false)
-    @Column(name = "tipo")
+    @Column(name = "tipo", nullable = false)
     private String tipo;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organismo")

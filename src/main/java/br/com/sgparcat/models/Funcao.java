@@ -7,7 +7,6 @@ package br.com.sgparcat.models;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,21 +26,19 @@ public class Funcao implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idfuncao")
+    @Column(name = "idfuncao", nullable = false)
     private Integer idfuncao;
     
-    @Basic(optional = false)
-    @Column(name = "titulo")
+    @Column(name = "titulo", nullable = false)
     private String titulo;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idfuncao")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncao")
     private Collection<Pessoa> pessoaCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idfuncao")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncao")
     private Collection<Membro> membroCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idfuncao")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncao")
     private Collection<Participante> participanteCollection;
 
     public Funcao() {

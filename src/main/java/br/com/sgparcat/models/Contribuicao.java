@@ -8,7 +8,6 @@ package br.com.sgparcat.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,16 +29,13 @@ public class Contribuicao implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "numeroContribuicao")
+    @Column(name = "numeroContribuicao", nullable = false)
     private Long numeroContribuicao;
     
-    @Basic(optional = false)
-    @Column(name = "tipoContribuicao")
+    @Column(name = "tipoContribuicao", nullable = false)
     private String tipoContribuicao;
     
-    @Basic(optional = false)
-    @Column(name = "descricao")
+    @Column(name = "descricao", nullable = false)
     private String descricao;
     
     //@Max(value=?)
@@ -47,13 +43,11 @@ public class Contribuicao implements Serializable {
     @Column(name = "valor")
     private BigDecimal valor;
     
-    @Basic(optional = false)
-    @Column(name = "dataRegistro")
+    @Column(name = "dataRegistro", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataRegistro;
     
-    @Basic(optional = false)
-    @Column(name = "horarioRegistro")
+    @Column(name = "horarioRegistro", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horarioRegistro;
     
