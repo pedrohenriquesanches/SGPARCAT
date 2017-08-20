@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,6 +33,7 @@ public class Organismo implements Serializable {
     @Column(name = "nome", nullable = false)
     private String nome;
     
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
     private String tipo;
     

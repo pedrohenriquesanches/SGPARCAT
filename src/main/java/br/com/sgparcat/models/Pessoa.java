@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,6 +35,7 @@ public class Pessoa implements Serializable {
     @Column(name = "idPessoa", nullable = false)
     private Long idPessoa;
     
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipoPessoa", nullable = false)
     private String tipoPessoa;
 

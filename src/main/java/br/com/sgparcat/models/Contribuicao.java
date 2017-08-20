@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,6 +37,7 @@ public class Contribuicao implements Serializable {
     @Column(name = "numeroContribuicao", nullable = false)
     private Long numeroContribuicao;
     
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipoContribuicao", nullable = false)
     private String tipoContribuicao;
     
