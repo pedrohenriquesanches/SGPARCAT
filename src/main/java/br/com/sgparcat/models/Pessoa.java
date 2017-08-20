@@ -92,7 +92,7 @@ public class Pessoa implements Serializable {
     @OneToMany(mappedBy = "pessoaContribuinte")
     private List<Contribuicao> contribuicoesQueRealizou;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaRegistrouContribuicao")
+    @OneToMany(mappedBy = "pessoaRegistrouContribuicao")
     private List<Contribuicao> contribuicoesQueRegistrou;
     
     public Pessoa() {
