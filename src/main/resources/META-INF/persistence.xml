@@ -10,6 +10,7 @@
     <class>br.com.sgparcat.models.Organismo</class>
     <class>br.com.sgparcat.models.Participante</class>
     <class>br.com.sgparcat.models.Pessoa</class>
+    <class>br.com.sgparcat.models.Endereco</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/SGPARCAT"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

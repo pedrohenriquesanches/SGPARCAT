@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,6 +27,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "contribuicao")
 public class Contribuicao implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,47 +41,100 @@ public class Contribuicao implements Serializable {
     @Column(name = "descricao", nullable = false)
     private String descricao;
     
-    //@Max(value=?)
-    //@Min(value=?)
-    @Column(name = "valor")
+    @Column(name = "valor", precision = 10, scale = 2)
     private BigDecimal valor;
     
     @Column(name = "dataRegistro", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
     
-    @Column(name = "horarioRegistro", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date horarioRegistro;
-    
+    @Lob
     @Column(name = "observacao")
     private String observacao;
     
     @JoinColumn(name = "idPessoaContribuinte", referencedColumnName = "idPessoa")
     @ManyToOne
-    private Pessoa idPessoaContribuinte;
+    private Pessoa pessoaContribuinte;
     
     @JoinColumn(name = "idPessoaRegistrouContribuicao", referencedColumnName = "idPessoa")
     @ManyToOne(optional = false)
-    private Pessoa idPessoaRegistrouContribuicao;
+    private Pessoa pessoaRegistrouContribuicao;
 
     public Contribuicao() {
     }
 
-    public Contribuicao(Long numeroContribuicao, String tipoContribuicao, String descricao, Date dataRegistro, Date horarioRegistro, Pessoa idPessoaRegistrouContribuicao) {
+    public Contribuicao(Long numeroContribuicao, String tipoContribuicao, String descricao, Date dataRegistro, Pessoa pessoaRegistrouContribuicao) {
         this.numeroContribuicao = numeroContribuicao;
         this.tipoContribuicao = tipoContribuicao;
         this.descricao = descricao;
         this.dataRegistro = dataRegistro;
-        this.horarioRegistro = horarioRegistro;
-        this.idPessoaRegistrouContribuicao = idPessoaRegistrouContribuicao;
+        this.pessoaRegistrouContribuicao = pessoaRegistrouContribuicao;
     }
-    
-    
-    //GETTES AND SETTERS
-    
-    
-    //Métodos sobrescritos do java.lang.Object
+
+    public Long getNumeroContribuicao() {
+        return numeroContribuicao;
+    }
+
+    public void setNumeroContribuicao(Long numeroContribuicao) {
+        this.numeroContribuicao = numeroContribuicao;
+    }
+
+    public String getTipoContribuicao() {
+        return tipoContribuicao;
+    }
+
+    public void setTipoContribuicao(String tipoContribuicao) {
+        this.tipoContribuicao = tipoContribuicao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public Date getDataRegistro() {
+        return dataRegistro;
+    }
+
+    public void setDataRegistro(Date dataRegistro) {
+        this.dataRegistro = dataRegistro;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public Pessoa getPessoaContribuinte() {
+        return pessoaContribuinte;
+    }
+
+    public void setPessoaContribuinte(Pessoa pessoaContribuinte) {
+        this.pessoaContribuinte = pessoaContribuinte;
+    }
+
+    public Pessoa getPessoaRegistrouContribuicao() {
+        return pessoaRegistrouContribuicao;
+    }
+
+    public void setPessoaRegistrouContribuicao(Pessoa pessoaRegistrouContribuicao) {
+        this.pessoaRegistrouContribuicao = pessoaRegistrouContribuicao;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -101,7 +157,7 @@ public class Contribuicao implements Serializable {
 
     @Override
     public String toString() {
-        return "aplicacao.models.Contribuicao[ numeroContribuicao=" + numeroContribuicao + " ]";
+        return "br.com.sgparcat.models.Contribuicao[ numeroContribuicao=" + numeroContribuicao + " ]";
     }
     
 }

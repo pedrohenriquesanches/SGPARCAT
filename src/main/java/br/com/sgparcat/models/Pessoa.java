@@ -6,8 +6,8 @@
 package br.com.sgparcat.models;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,21 +27,17 @@ import javax.persistence.TemporalType;
 @Table(name = "pessoa")
 public class Pessoa implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @Column(name = "idPessoa", nullable = false)
     private Long idPessoa;
     
     @Column(name = "tipoPessoa", nullable = false)
     private String tipoPessoa;
-    
-    @Column(name = "funcao", nullable = false)
-    private String funcao;
-    
-    @Column(name = "nome", nullable = false)
-    private String nome;
-    
-    @Column(name = "sobrenome", nullable = false)
-    private String sobrenome;
+
+    @Column(name = "nomeCompleto", nullable = false)
+    private String nomeCompleto;
     
     @Column(name = "sexo", nullable = false)
     private Character sexo;
@@ -52,27 +48,6 @@ public class Pessoa implements Serializable {
     @Column(name = "dataNascimento", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-    
-    @Column(name = "cidadeNatal")
-    private String cidadeNatal;
-    
-    @Column(name = "ufNatal")
-    private String ufNatal;
-    
-    @Column(name = "endereco")
-    private String endereco;
-    
-    @Column(name = "cidade")
-    private String cidade;
-    
-    @Column(name = "uf")
-    private String uf;
-    
-    @Column(name = "cep")
-    private String cep;
-    
-    @Column(name = "bairro")
-    private String bairro;
     
     @Column(name = "telefoneFixo")
     private String telefoneFixo;
@@ -86,7 +61,7 @@ public class Pessoa implements Serializable {
     @Column(name = "cpf", nullable = false)
     private String cpf;
     
-    @Column(name = "rg", nullable = false)
+    @Column(name = "rg")
     private String rg;
     
     @Column(name = "isDizimista", nullable = false)
@@ -95,50 +70,156 @@ public class Pessoa implements Serializable {
     @Column(name = "isDizimistaAtivo", nullable = false)
     private boolean isDizimistaAtivo;
     
-    @Column(name = "observacao")
-    private String observacao;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private Collection<Lancamento> lancamentoCollection;
-    
     @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
     @ManyToOne(optional = false)
-    private Funcao idFuncao;
+    private Funcao funcao;
+    
+    @OneToMany(mappedBy = "pessoaRegistrouLancamento")
+    private List<Lancamento> lancamentosQueRegistrou;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private Collection<Membro> membroCollection;
-    
-    @OneToMany(mappedBy = "idPessoaContribuinte")
-    private Collection<Contribuicao> contribuicaoCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPessoaRegistrouContribuicao")
-    private Collection<Contribuicao> contribuicaoCollection1;
+    private List<Endereco> enderecos;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private Collection<Participante> participanteCollection;
-
+    private List<Membro> membros;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    private List<Participante> participantes;
+    
+    @OneToMany(mappedBy = "pessoaContribuinte")
+    private List<Contribuicao> contribuicoesQueRealizou;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaRegistrouContribuicao")
+    private List<Contribuicao> contribuicoesQueRegistrou;
+    
     public Pessoa() {
     }
 
-    public Pessoa(Long idPessoa, String tipoPessoa, String funcao, String nome, String sobrenome, Character sexo, Date dataNascimento, String cpf, String rg, boolean isDizimista, boolean isDizimistaAtivo) {
+    public Pessoa(Long idPessoa, String tipoPessoa, String nomeCompleto, Character sexo, Character estadoCivil, Date dataNascimento, String cpf, boolean isDizimista, boolean isDizimistaAtivo, Funcao funcao) {
         this.idPessoa = idPessoa;
         this.tipoPessoa = tipoPessoa;
-        this.funcao = funcao;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
+        this.nomeCompleto = nomeCompleto;
         this.sexo = sexo;
+        this.estadoCivil = estadoCivil;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
-        this.rg = rg;
         this.isDizimista = isDizimista;
         this.isDizimistaAtivo = isDizimistaAtivo;
+        this.funcao = funcao;
     }
-    
-    
-    //GETTES AND SETTERS
-    
-    
-    //Métodos sobrescritos do java.lang.Object
+
+    public Long getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(Long idPessoa) {
+        this.idPessoa = idPessoa;
+    }
+
+    public String getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(String tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+    }
+
+    public String getNomeCompleto() {
+        return nomeCompleto;
+    }
+
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
+    }
+
+    public Character getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Character sexo) {
+        this.sexo = sexo;
+    }
+
+    public Character getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(Character estadoCivil) {
+        this.estadoCivil = estadoCivil;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getTelefoneFixo() {
+        return telefoneFixo;
+    }
+
+    public void setTelefoneFixo(String telefoneFixo) {
+        this.telefoneFixo = telefoneFixo;
+    }
+
+    public String getTelefoneCelular() {
+        return telefoneCelular;
+    }
+
+    public void setTelefoneCelular(String telefoneCelular) {
+        this.telefoneCelular = telefoneCelular;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public boolean isIsDizimista() {
+        return isDizimista;
+    }
+
+    public void setIsDizimista(boolean isDizimista) {
+        this.isDizimista = isDizimista;
+    }
+
+    public boolean isIsDizimistaAtivo() {
+        return isDizimistaAtivo;
+    }
+
+    public void setIsDizimistaAtivo(boolean isDizimistaAtivo) {
+        this.isDizimistaAtivo = isDizimistaAtivo;
+    }
+
+    public Funcao getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(Funcao funcao) {
+        this.funcao = funcao;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -161,6 +242,6 @@ public class Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "aplicacao.models.Pessoa[ idPessoa=" + idPessoa + " ]";
+        return "br.com.sgparcat.models.Pessoa[ idPessoa=" + idPessoa + " ]";
     }
 }

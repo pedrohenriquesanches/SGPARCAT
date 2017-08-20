@@ -6,7 +6,7 @@
 package br.com.sgparcat.models;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,39 +24,53 @@ import javax.persistence.Table;
 @Table(name = "funcao")
 public class Funcao implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idfuncao", nullable = false)
-    private Integer idfuncao;
+    @Column(name = "idFuncao", nullable = false)
+    private Integer idFuncao;
     
     @Column(name = "titulo", nullable = false)
     private String titulo;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncao")
-    private Collection<Pessoa> pessoaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
+    private List<Pessoa> pessoas;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncao")
-    private Collection<Membro> membroCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
+    private List<Membro> membros;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncao")
-    private Collection<Participante> participanteCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
+    private List<Participante> participantes;
 
     public Funcao() {
     }
 
-    public Funcao(Integer idfuncao, String titulo) {
-        this.idfuncao = idfuncao;
+    public Funcao(Integer idFuncao, String titulo) {
+        this.idFuncao = idFuncao;
         this.titulo = titulo;
     }
-    
-    //GETTES AND SETTERS
-    
-    
-    //Métodos sobrescritos do java.lang.Object
+
+    public Integer getIdFuncao() {
+        return idFuncao;
+    }
+
+    public void setIdFuncao(Integer idFuncao) {
+        this.idFuncao = idFuncao;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idfuncao != null ? idfuncao.hashCode() : 0);
+        hash += (idFuncao != null ? idFuncao.hashCode() : 0);
         return hash;
     }
 
@@ -67,7 +81,7 @@ public class Funcao implements Serializable {
             return false;
         }
         Funcao other = (Funcao) object;
-        if ((this.idfuncao == null && other.idfuncao != null) || (this.idfuncao != null && !this.idfuncao.equals(other.idfuncao))) {
+        if ((this.idFuncao == null && other.idFuncao != null) || (this.idFuncao != null && !this.idFuncao.equals(other.idFuncao))) {
             return false;
         }
         return true;
@@ -75,6 +89,6 @@ public class Funcao implements Serializable {
 
     @Override
     public String toString() {
-        return "aplicacao.models.Funcao[ idfuncao=" + idfuncao + " ]";
+        return "br.com.sgparcat.models.Funcao[ idFuncao=" + idFuncao + " ]";
     }
 }

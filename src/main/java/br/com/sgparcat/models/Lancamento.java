@@ -28,8 +28,13 @@ import javax.persistence.TemporalType;
 @Table(name = "lancamento")
 public class Lancamento implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idLancamento", nullable = false)
+    private Long idLancamento;
+    
     @Column(name = "numeroLancamento", nullable = false)
     private Long numeroLancamento;
     
@@ -39,12 +44,10 @@ public class Lancamento implements Serializable {
     @Column(name = "descricao", nullable = false)
     private String descricao;
     
-    //@Max(value=?)
-    //@Min(value=?)
-    @Column(name = "valor")
+    @Column(name = "valor", nullable = false, precision = 10, scale = 2)
     private BigDecimal valor;
     
-    @Column(name = "valorJuros")
+    @Column(name = "valorJuros", precision = 10, scale = 2)
     private BigDecimal valorJuros;
     
     @Column(name = "dataVencimento")
@@ -69,38 +72,174 @@ public class Lancamento implements Serializable {
     private boolean isPago;
     
     @Column(name = "dataRegistro", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
-    
-    @Column(name = "horarioRegistro", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date horarioRegistro;
-    
+        
     @JoinColumn(name = "idEvento", referencedColumnName = "idEvento")
     @ManyToOne
-    private Evento idEvento;
+    private Evento evento;
     
-    @JoinColumn(name = "idPessoaRegistrouLancamento", referencedColumnName = "idPessoa", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Pessoa pessoa;
+    @JoinColumn(name = "idPessoaRegistrouLancamento", referencedColumnName = "idPessoa",nullable = true)
+    @ManyToOne()
+    private Pessoa pessoaRegistrouLancamento;
 
     public Lancamento() {
     }
 
-    public Lancamento(Long numeroLancamento, boolean isDespesa, String descricao, BigDecimal valor, boolean isParcelado, Date dataRegistro, Date horarioRegistro) {
+    public Lancamento(Long idLancamento, Long numeroLancamento, boolean isDespesa, String descricao, BigDecimal valor, boolean isParcelado, boolean isPago, Date dataRegistro) {
+        this.idLancamento = idLancamento;
         this.numeroLancamento = numeroLancamento;
         this.isDespesa = isDespesa;
         this.descricao = descricao;
         this.valor = valor;
         this.isParcelado = isParcelado;
+        this.isPago = isPago;
         this.dataRegistro = dataRegistro;
-        this.horarioRegistro = horarioRegistro;
+    }
+
+    public Long getIdLancamento() {
+        return idLancamento;
+    }
+
+    public void setIdLancamento(Long idLancamento) {
+        this.idLancamento = idLancamento;
+    }
+
+    public Long getNumeroLancamento() {
+        return numeroLancamento;
+    }
+
+    public void setNumeroLancamento(Long numeroLancamento) {
+        this.numeroLancamento = numeroLancamento;
+    }
+
+    public boolean isIsDespesa() {
+        return isDespesa;
+    }
+
+    public void setIsDespesa(boolean isDespesa) {
+        this.isDespesa = isDespesa;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public BigDecimal getValorJuros() {
+        return valorJuros;
+    }
+
+    public void setValorJuros(BigDecimal valorJuros) {
+        this.valorJuros = valorJuros;
+    }
+
+    public Date getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
+
+    public Date getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(Date dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+
+    public String getEmitente() {
+        return emitente;
+    }
+
+    public void setEmitente(String emitente) {
+        this.emitente = emitente;
+    }
+
+    public boolean isIsParcelado() {
+        return isParcelado;
+    }
+
+    public void setIsParcelado(boolean isParcelado) {
+        this.isParcelado = isParcelado;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public boolean isIsPago() {
+        return isPago;
+    }
+
+    public void setIsPago(boolean isPago) {
+        this.isPago = isPago;
+    }
+
+    public Date getDataRegistro() {
+        return dataRegistro;
+    }
+
+    public void setDataRegistro(Date dataRegistro) {
+        this.dataRegistro = dataRegistro;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+
+    public Pessoa getPessoaRegistrouLancamento() {
+        return pessoaRegistrouLancamento;
+    }
+
+    public void setPessoaRegistrouLancamento(Pessoa pessoaRegistrouLancamento) {
+        this.pessoaRegistrouLancamento = pessoaRegistrouLancamento;
     }
     
-    
-    //GETTES AND SETTERS
-    
-    
-    //Métodos sobrescritos do java.lang.Object
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idLancamento != null ? idLancamento.hashCode() : 0);
+        return hash;
+    }
 
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Lancamento)) {
+            return false;
+        }
+        Lancamento other = (Lancamento) object;
+        if ((this.idLancamento == null && other.idLancamento != null) || (this.idLancamento != null && !this.idLancamento.equals(other.idLancamento))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "br.com.sgparcat.models.Lancamento[ idLancamento=" + idLancamento + " ]";
+    }
+    
 }

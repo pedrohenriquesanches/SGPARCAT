@@ -6,7 +6,7 @@
 package br.com.sgparcat.models;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +22,8 @@ import javax.persistence.Table;
 @Table(name = "organismo")
 public class Organismo implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @Column(name = "idOrganismo", nullable = false)
     private Integer idOrganismo;
@@ -33,7 +35,7 @@ public class Organismo implements Serializable {
     private String tipo;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organismo")
-    private Collection<Membro> membroCollection;
+    private List<Membro> membros;
 
     public Organismo() {
     }
@@ -43,12 +45,31 @@ public class Organismo implements Serializable {
         this.nome = nome;
         this.tipo = tipo;
     }
+
+    public Integer getIdOrganismo() {
+        return idOrganismo;
+    }
+
+    public void setIdOrganismo(Integer idOrganismo) {
+        this.idOrganismo = idOrganismo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
     
-    
-    //GETTES AND SETTERS
-    
-    
-    //Métodos sobrescritos do java.lang.Object
     @Override
     public int hashCode() {
         int hash = 0;
@@ -71,6 +92,6 @@ public class Organismo implements Serializable {
 
     @Override
     public String toString() {
-        return "aplicacao.models.Organismo[ idOrganismo=" + idOrganismo + " ]";
+        return "br.com.sgparcat.models.Organismo[ idOrganismo=" + idOrganismo + " ]";
     }
 }

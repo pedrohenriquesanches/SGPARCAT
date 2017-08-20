@@ -20,15 +20,17 @@ import javax.persistence.Table;
 @Table(name = "participante")
 public class Participante implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
     @ManyToOne(optional = false)
-    private Funcao idFuncao;
+    private Funcao funcao;
     
     @JoinColumn(name = "idEvento", referencedColumnName = "idEvento", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Evento evento;
     
-    @Id //??
+    @Id
     @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pessoa pessoa;
@@ -36,15 +38,34 @@ public class Participante implements Serializable {
     public Participante() {
     }
 
-    public Participante(Funcao idFuncao, Evento evento, Pessoa pessoa) {
-        this.idFuncao = idFuncao;
+    public Participante(Funcao funcao, Evento evento, Pessoa pessoa) {
+        this.funcao = funcao;
         this.evento = evento;
         this.pessoa = pessoa;
     }
-    
-    //GETTES AND SETTERS
-    
-    
-    //Métodos sobrescritos do java.lang.Object
+
+    public Funcao getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(Funcao funcao) {
+        this.funcao = funcao;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
     
 }
