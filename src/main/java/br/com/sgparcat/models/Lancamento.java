@@ -8,6 +8,7 @@ package br.com.sgparcat.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -216,22 +217,55 @@ public class Lancamento implements Serializable {
     public void setPessoaRegistrouLancamento(Pessoa pessoaRegistrouLancamento) {
         this.pessoaRegistrouLancamento = pessoaRegistrouLancamento;
     }
-    
+
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idLancamento != null ? idLancamento.hashCode() : 0);
+        int hash = 5;
+        hash = 19 * hash + Objects.hashCode(this.idLancamento);
+        hash = 19 * hash + Objects.hashCode(this.numeroLancamento);
+        hash = 19 * hash + (this.isDespesa ? 1 : 0);
+        hash = 19 * hash + Objects.hashCode(this.descricao);
+        hash = 19 * hash + Objects.hashCode(this.valor);
+        hash = 19 * hash + (this.isParcelado ? 1 : 0);
+        hash = 19 * hash + (this.isPago ? 1 : 0);
+        hash = 19 * hash + Objects.hashCode(this.dataRegistro);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Lancamento)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Lancamento other = (Lancamento) object;
-        if ((this.idLancamento == null && other.idLancamento != null) || (this.idLancamento != null && !this.idLancamento.equals(other.idLancamento))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Lancamento other = (Lancamento) obj;
+        if (this.isDespesa != other.isDespesa) {
+            return false;
+        }
+        if (this.isParcelado != other.isParcelado) {
+            return false;
+        }
+        if (this.isPago != other.isPago) {
+            return false;
+        }
+        if (!Objects.equals(this.descricao, other.descricao)) {
+            return false;
+        }
+        if (!Objects.equals(this.idLancamento, other.idLancamento)) {
+            return false;
+        }
+        if (!Objects.equals(this.numeroLancamento, other.numeroLancamento)) {
+            return false;
+        }
+        if (!Objects.equals(this.valor, other.valor)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataRegistro, other.dataRegistro)) {
             return false;
         }
         return true;
@@ -239,7 +273,7 @@ public class Lancamento implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgparcat.models.Lancamento[ idLancamento=" + idLancamento + " ]";
+        return "Lancamento{" + "idLancamento=" + idLancamento + ", numeroLancamento=" + numeroLancamento + ", isDespesa=" + isDespesa + ", descricao=" + descricao + ", valor=" + valor + ", isParcelado=" + isParcelado + ", isPago=" + isPago + ", dataRegistro=" + dataRegistro + '}';
     }
-    
+
 }

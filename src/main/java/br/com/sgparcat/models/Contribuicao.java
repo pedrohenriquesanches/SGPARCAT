@@ -32,6 +32,10 @@ public class Contribuicao implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    public enum TipoContribuicao {
+        DIZIMO, OFERTA, DOACAO;
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "numeroContribuicao", nullable = false)
@@ -39,7 +43,7 @@ public class Contribuicao implements Serializable {
     
     @Enumerated(EnumType.STRING)
     @Column(name = "tipoContribuicao", nullable = false)
-    private String tipoContribuicao;
+    private TipoContribuicao tipoContribuicao;
     
     @Column(name = "descricao", nullable = false)
     private String descricao;
@@ -66,7 +70,7 @@ public class Contribuicao implements Serializable {
     public Contribuicao() {
     }
 
-    public Contribuicao(Long numeroContribuicao, String tipoContribuicao, String descricao, Date dataRegistro, Pessoa pessoaRegistrouContribuicao) {
+    public Contribuicao(Long numeroContribuicao, TipoContribuicao tipoContribuicao, String descricao, Date dataRegistro, Pessoa pessoaRegistrouContribuicao) {
         this.numeroContribuicao = numeroContribuicao;
         this.tipoContribuicao = tipoContribuicao;
         this.descricao = descricao;
@@ -82,11 +86,11 @@ public class Contribuicao implements Serializable {
         this.numeroContribuicao = numeroContribuicao;
     }
 
-    public String getTipoContribuicao() {
+    public TipoContribuicao getTipoContribuicao() {
         return tipoContribuicao;
     }
 
-    public void setTipoContribuicao(String tipoContribuicao) {
+    public void setTipoContribuicao(TipoContribuicao tipoContribuicao) {
         this.tipoContribuicao = tipoContribuicao;
     }
 

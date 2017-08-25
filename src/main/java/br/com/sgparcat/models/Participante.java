@@ -6,7 +6,11 @@
 package br.com.sgparcat.models;
 
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,26 +26,39 @@ public class Participante implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idParticipante", nullable = false)
+    private Long idParticipante;
+    
     @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
     @ManyToOne(optional = false)
     private Funcao funcao;
     
-    @JoinColumn(name = "idEvento", referencedColumnName = "idEvento", insertable = false, updatable = false)
+    @JoinColumn(name = "idEvento", referencedColumnName = "idEvento", unique=true, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Evento evento;
-    
-    @Id
-    @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa", insertable = false, updatable = false)
+
+    @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa", unique=true, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pessoa pessoa;
 
     public Participante() {
     }
 
-    public Participante(Funcao funcao, Evento evento, Pessoa pessoa) {
+    public Participante(Long idParticipante, Funcao funcao, Evento evento, Pessoa pessoa) {
+        this.idParticipante = idParticipante;
         this.funcao = funcao;
         this.evento = evento;
         this.pessoa = pessoa;
+    }
+
+    public Long getIdParticipante() {
+        return idParticipante;
+    }
+
+    public void setIdParticipante(Long idParticipante) {
+        this.idParticipante = idParticipante;
     }
 
     public Funcao getFuncao() {
@@ -66,6 +83,48 @@ public class Participante implements Serializable {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.idParticipante);
+        hash = 11 * hash + Objects.hashCode(this.funcao);
+        hash = 11 * hash + Objects.hashCode(this.evento);
+        hash = 11 * hash + Objects.hashCode(this.pessoa);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Participante other = (Participante) obj;
+        if (!Objects.equals(this.idParticipante, other.idParticipante)) {
+            return false;
+        }
+        if (!Objects.equals(this.funcao, other.funcao)) {
+            return false;
+        }
+        if (!Objects.equals(this.evento, other.evento)) {
+            return false;
+        }
+        if (!Objects.equals(this.pessoa, other.pessoa)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Participante{" + "idParticipante=" + idParticipante + ", funcao=" + funcao + ", evento=" + evento + ", pessoa=" + pessoa + '}';
     }
     
 }

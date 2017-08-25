@@ -6,7 +6,11 @@
 package br.com.sgparcat.models;
 
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,26 +26,39 @@ public class Membro implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idMembro", nullable = false)
+    private Long idMembro;
+    
     @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
     @ManyToOne(optional = false)
     private Funcao funcao;
     
-    @JoinColumn(name = "idOrganismo", referencedColumnName = "idOrganismo", insertable = false, updatable = false)
+    @JoinColumn(name = "idOrganismo", referencedColumnName = "idOrganismo", unique=true, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Organismo organismo;
     
-    @Id
-    @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa", insertable = false, updatable = false)
+    @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa", unique=true, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Pessoa pessoa;
 
     public Membro() {
     }
 
-    public Membro(Funcao funcao, Organismo organismo, Pessoa pessoa) {
+    public Membro(Long idMembro, Funcao funcao, Organismo organismo, Pessoa pessoa) {
+        this.idMembro = idMembro;
         this.funcao = funcao;
         this.organismo = organismo;
         this.pessoa = pessoa;
+    }
+
+    public Long getIdMembro() {
+        return idMembro;
+    }
+
+    public void setIdMembro(Long idMembro) {
+        this.idMembro = idMembro;
     }
 
     public Funcao getFuncao() {
@@ -68,4 +85,45 @@ public class Membro implements Serializable {
         this.pessoa = pessoa;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.idMembro);
+        hash = 97 * hash + Objects.hashCode(this.funcao);
+        hash = 97 * hash + Objects.hashCode(this.organismo);
+        hash = 97 * hash + Objects.hashCode(this.pessoa);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Membro other = (Membro) obj;
+        if (!Objects.equals(this.idMembro, other.idMembro)) {
+            return false;
+        }
+        if (!Objects.equals(this.funcao, other.funcao)) {
+            return false;
+        }
+        if (!Objects.equals(this.organismo, other.organismo)) {
+            return false;
+        }
+        if (!Objects.equals(this.pessoa, other.pessoa)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Membro{" + "idMembro=" + idMembro + ", funcao=" + funcao + ", organismo=" + organismo + ", pessoa=" + pessoa + '}';
+    }
 }

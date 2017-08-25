@@ -7,11 +7,14 @@ package br.com.sgparcat.models;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -26,7 +29,12 @@ public class Organismo implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Id
+    public enum TipoOrganismo {
+        GRUPO_DE_ORACAO, MOVIMENTO, PASTORAL, CONSELHO;
+    }
+    
+    @Id    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idOrganismo", nullable = false)
     private Integer idOrganismo;
     
@@ -35,7 +43,7 @@ public class Organismo implements Serializable {
     
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
-    private String tipo;
+    private TipoOrganismo tipoOrganismo;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organismo")
     private List<Membro> membros;
@@ -43,10 +51,10 @@ public class Organismo implements Serializable {
     public Organismo() {
     }
 
-    public Organismo(Integer idOrganismo, String nome, String tipo) {
+    public Organismo(Integer idOrganismo, String nome, TipoOrganismo tipoOrganismo) {
         this.idOrganismo = idOrganismo;
         this.nome = nome;
-        this.tipo = tipo;
+        this.tipoOrganismo = tipoOrganismo;
     }
 
     public Integer getIdOrganismo() {
@@ -65,29 +73,46 @@ public class Organismo implements Serializable {
         this.nome = nome;
     }
 
-    public String getTipo() {
-        return tipo;
+    public TipoOrganismo getTipoOrganismo() {
+        return tipoOrganismo;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoOrganismo(TipoOrganismo tipoOrganismo) {
+        this.tipoOrganismo = tipoOrganismo;
     }
-    
+
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idOrganismo != null ? idOrganismo.hashCode() : 0);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.idOrganismo);
+        hash = 79 * hash + Objects.hashCode(this.nome);
+        hash = 79 * hash + Objects.hashCode(this.tipoOrganismo);
+        hash = 79 * hash + Objects.hashCode(this.membros);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Organismo)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Organismo other = (Organismo) object;
-        if ((this.idOrganismo == null && other.idOrganismo != null) || (this.idOrganismo != null && !this.idOrganismo.equals(other.idOrganismo))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Organismo other = (Organismo) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.idOrganismo, other.idOrganismo)) {
+            return false;
+        }
+        if (this.tipoOrganismo != other.tipoOrganismo) {
+            return false;
+        }
+        if (!Objects.equals(this.membros, other.membros)) {
             return false;
         }
         return true;
@@ -95,6 +120,7 @@ public class Organismo implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgparcat.models.Organismo[ idOrganismo=" + idOrganismo + " ]";
+        return "Organismo{" + "idOrganismo=" + idOrganismo + ", nome=" + nome + ", tipoOrganismo=" + tipoOrganismo + ", membros=" + membros + '}';
     }
+    
 }

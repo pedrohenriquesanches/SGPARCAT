@@ -7,6 +7,7 @@ package br.com.sgparcat.models;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -69,19 +70,28 @@ public class Funcao implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idFuncao != null ? idFuncao.hashCode() : 0);
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.idFuncao);
+        hash = 41 * hash + Objects.hashCode(this.titulo);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Funcao)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Funcao other = (Funcao) object;
-        if ((this.idFuncao == null && other.idFuncao != null) || (this.idFuncao != null && !this.idFuncao.equals(other.idFuncao))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Funcao other = (Funcao) obj;
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        if (!Objects.equals(this.idFuncao, other.idFuncao)) {
             return false;
         }
         return true;
@@ -89,6 +99,7 @@ public class Funcao implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgparcat.models.Funcao[ idFuncao=" + idFuncao + " ]";
+        return "Funcao{" + "idFuncao=" + idFuncao + ", titulo=" + titulo + '}';
     }
+    
 }

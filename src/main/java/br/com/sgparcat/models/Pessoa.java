@@ -8,11 +8,14 @@ package br.com.sgparcat.models;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,13 +34,18 @@ public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    public enum TipoPessoa {
+        PAROQUIANO, CLERIGO;
+    }
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPessoa", nullable = false)
     private Long idPessoa;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "tipoPessoa", nullable = false)
-    private String tipoPessoa;
+    private TipoPessoa tipoPessoa;
 
     @Column(name = "nomeCompleto", nullable = false)
     private String nomeCompleto;
@@ -61,10 +69,10 @@ public class Pessoa implements Serializable {
     @Column(name = "email")
     private String email;
     
-    @Column(name = "cpf", nullable = false)
+    @Column(name = "cpf", unique=true, nullable = false)
     private String cpf;
     
-    @Column(name = "rg")
+    @Column(name = "rg", unique=true)
     private String rg;
     
     @Column(name = "isDizimista", nullable = false)
@@ -98,7 +106,7 @@ public class Pessoa implements Serializable {
     public Pessoa() {
     }
 
-    public Pessoa(Long idPessoa, String tipoPessoa, String nomeCompleto, Character sexo, Character estadoCivil, Date dataNascimento, String cpf, boolean isDizimista, boolean isDizimistaAtivo, Funcao funcao) {
+    public Pessoa(Long idPessoa, TipoPessoa tipoPessoa, String nomeCompleto, Character sexo, Character estadoCivil, Date dataNascimento, String cpf, boolean isDizimista, boolean isDizimistaAtivo, Funcao funcao) {
         this.idPessoa = idPessoa;
         this.tipoPessoa = tipoPessoa;
         this.nomeCompleto = nomeCompleto;
@@ -119,11 +127,11 @@ public class Pessoa implements Serializable {
         this.idPessoa = idPessoa;
     }
 
-    public String getTipoPessoa() {
+    public TipoPessoa getTipoPessoa() {
         return tipoPessoa;
     }
 
-    public void setTipoPessoa(String tipoPessoa) {
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
     }
 
@@ -225,19 +233,76 @@ public class Pessoa implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idPessoa != null ? idPessoa.hashCode() : 0);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.idPessoa);
+        hash = 97 * hash + Objects.hashCode(this.tipoPessoa);
+        hash = 97 * hash + Objects.hashCode(this.nomeCompleto);
+        hash = 97 * hash + Objects.hashCode(this.sexo);
+        hash = 97 * hash + Objects.hashCode(this.estadoCivil);
+        hash = 97 * hash + Objects.hashCode(this.dataNascimento);
+        hash = 97 * hash + Objects.hashCode(this.telefoneFixo);
+        hash = 97 * hash + Objects.hashCode(this.telefoneCelular);
+        hash = 97 * hash + Objects.hashCode(this.email);
+        hash = 97 * hash + Objects.hashCode(this.cpf);
+        hash = 97 * hash + Objects.hashCode(this.rg);
+        hash = 97 * hash + (this.isDizimista ? 1 : 0);
+        hash = 97 * hash + (this.isDizimistaAtivo ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.funcao);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pessoa)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Pessoa other = (Pessoa) object;
-        if ((this.idPessoa == null && other.idPessoa != null) || (this.idPessoa != null && !this.idPessoa.equals(other.idPessoa))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pessoa other = (Pessoa) obj;
+        if (this.isDizimista != other.isDizimista) {
+            return false;
+        }
+        if (this.isDizimistaAtivo != other.isDizimistaAtivo) {
+            return false;
+        }
+        if (!Objects.equals(this.nomeCompleto, other.nomeCompleto)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefoneFixo, other.telefoneFixo)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefoneCelular, other.telefoneCelular)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.cpf, other.cpf)) {
+            return false;
+        }
+        if (!Objects.equals(this.rg, other.rg)) {
+            return false;
+        }
+        if (!Objects.equals(this.idPessoa, other.idPessoa)) {
+            return false;
+        }
+        if (this.tipoPessoa != other.tipoPessoa) {
+            return false;
+        }
+        if (!Objects.equals(this.sexo, other.sexo)) {
+            return false;
+        }
+        if (!Objects.equals(this.estadoCivil, other.estadoCivil)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataNascimento, other.dataNascimento)) {
+            return false;
+        }
+        if (!Objects.equals(this.funcao, other.funcao)) {
             return false;
         }
         return true;
@@ -245,6 +310,8 @@ public class Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgparcat.models.Pessoa[ idPessoa=" + idPessoa + " ]";
+        return "Pessoa{" + "idPessoa=" + idPessoa + ", tipoPessoa=" + tipoPessoa + ", nomeCompleto=" + nomeCompleto + ", sexo=" + sexo + ", estadoCivil=" + estadoCivil + ", dataNascimento=" + dataNascimento + ", cpf=" + cpf + ", isDizimista=" + isDizimista + ", isDizimistaAtivo=" + isDizimistaAtivo + '}';
     }
+    
+    
 }

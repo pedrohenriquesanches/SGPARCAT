@@ -6,6 +6,7 @@
 package br.com.sgparcat.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -131,19 +132,48 @@ public class Endereco implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idEndereco != null ? idEndereco.hashCode() : 0);
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.idEndereco);
+        hash = 83 * hash + Objects.hashCode(this.endereco);
+        hash = 83 * hash + Objects.hashCode(this.bairro);
+        hash = 83 * hash + Objects.hashCode(this.cidade);
+        hash = 83 * hash + Objects.hashCode(this.uf);
+        hash = 83 * hash + Objects.hashCode(this.cep);
+        hash = 83 * hash + Objects.hashCode(this.pessoa);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Endereco)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Endereco other = (Endereco) object;
-        if ((this.idEndereco == null && other.idEndereco != null) || (this.idEndereco != null && !this.idEndereco.equals(other.idEndereco))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Endereco other = (Endereco) obj;
+        if (!Objects.equals(this.endereco, other.endereco)) {
+            return false;
+        }
+        if (!Objects.equals(this.bairro, other.bairro)) {
+            return false;
+        }
+        if (!Objects.equals(this.cidade, other.cidade)) {
+            return false;
+        }
+        if (!Objects.equals(this.uf, other.uf)) {
+            return false;
+        }
+        if (!Objects.equals(this.cep, other.cep)) {
+            return false;
+        }
+        if (!Objects.equals(this.idEndereco, other.idEndereco)) {
+            return false;
+        }
+        if (!Objects.equals(this.pessoa, other.pessoa)) {
             return false;
         }
         return true;
@@ -151,7 +181,7 @@ public class Endereco implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgparcat.models.Endereco[ idEndereco=" + idEndereco + " ]";
+        return "Endereco{" + "idEndereco=" + idEndereco + ", endereco=" + endereco + ", bairro=" + bairro + ", cidade=" + cidade + ", uf=" + uf + ", cep=" + cep + ", complemento=" + complemento + ", pessoa=" + pessoa + '}';
     }
-    
+
 }

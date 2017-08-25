@@ -8,6 +8,7 @@ package br.com.sgparcat.models;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -157,19 +158,60 @@ public class Evento implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idEvento != null ? idEvento.hashCode() : 0);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.idEvento);
+        hash = 89 * hash + Objects.hashCode(this.titulo);
+        hash = 89 * hash + Objects.hashCode(this.dataInicio);
+        hash = 89 * hash + Objects.hashCode(this.horarioInicio);
+        hash = 89 * hash + Objects.hashCode(this.dataFim);
+        hash = 89 * hash + Objects.hashCode(this.horarioFim);
+        hash = 89 * hash + Objects.hashCode(this.localEvento);
+        hash = 89 * hash + Objects.hashCode(this.observacao);
+        hash = 89 * hash + Objects.hashCode(this.dataRegistro);
+        hash = 89 * hash + Objects.hashCode(this.participantes);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Evento)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Evento other = (Evento) object;
-        if ((this.idEvento == null && other.idEvento != null) || (this.idEvento != null && !this.idEvento.equals(other.idEvento))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Evento other = (Evento) obj;
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        if (!Objects.equals(this.localEvento, other.localEvento)) {
+            return false;
+        }
+        if (!Objects.equals(this.observacao, other.observacao)) {
+            return false;
+        }
+        if (!Objects.equals(this.idEvento, other.idEvento)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataInicio, other.dataInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.horarioInicio, other.horarioInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataFim, other.dataFim)) {
+            return false;
+        }
+        if (!Objects.equals(this.horarioFim, other.horarioFim)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataRegistro, other.dataRegistro)) {
+            return false;
+        }
+        if (!Objects.equals(this.participantes, other.participantes)) {
             return false;
         }
         return true;
@@ -177,6 +219,6 @@ public class Evento implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgparcat.models.Evento[ idEvento=" + idEvento + " ]";
+        return "Evento{" + "idEvento=" + idEvento + ", titulo=" + titulo + ", dataInicio=" + dataInicio + ", horarioInicio=" + horarioInicio + ", dataFim=" + dataFim + ", horarioFim=" + horarioFim + ", localEvento=" + localEvento + ", observacao=" + observacao + ", dataRegistro=" + dataRegistro + '}';
     }
 }
