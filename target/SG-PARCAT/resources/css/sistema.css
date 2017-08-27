@@ -8,18 +8,15 @@ body {
 }
 
 header {
-    padding: 15px 0px;
-    margin-bottom: 20px;
-    height: 48px;
-
-    background-color: #545454;
+    padding: 10px 15px;
+    /*margin-bottom: 20px;*/
+    height: 35px;
+    background-color: #003333;
     color: #fff;
-
-    box-shadow: 0px 2px 2px #ccc;
 }
 
 header > div {
-    margin-left: 8px
+    /*margin-left: 8px*/
 }
 
 #conteudo {
@@ -32,7 +29,7 @@ footer {
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 500;
     padding: 0px;
     margin: 0px
@@ -59,9 +56,9 @@ h1 {
 }  
 
 .menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {     
-    color: #080b5d !important;     
-    font-size: 13px;     
-    /*font-weight: bold;*/  
+    color: #ffffff !important;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 .menu-sistema .ui-icon-triangle-1-s {  }
@@ -76,4 +73,12 @@ h1 {
 
 .ui-selectmanycheckbox label {     
     padding-right: 10px; 
+}
+
+.titulo-pagina {
+    float: left;
+}
+
+.titulo-pagina h1 {
+    font-weight: 600;
 }
