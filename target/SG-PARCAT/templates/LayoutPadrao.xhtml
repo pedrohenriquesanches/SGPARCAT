@@ -38,27 +38,27 @@ and open the template in the editor.
 
                         <p:submenu label="Paroquianos" style="margin-right: 3px" >
                             <p:menuitem value="Adicionar Paroquiano" outcome="/paroquianos"/>
-                            <p:menuitem value="Listar Paroquianos" outcome="/paroquianos"/>
+                            <p:menuitem value="Ver Todos os Paroquianos" outcome="/paroquianos"/>
                         </p:submenu>
 
                         <p:submenu label="Clérigo Paroquial" style="margin-right: 3px">
                             <p:menuitem value="Adicionar Clérigo Paroquial" outcome="/clerigo-paroquial"/>
-                            <p:menuitem value="Listar Clérigo Paroquial" outcome="/clerigo-paroquial"/>
+                            <p:menuitem value="Ver Todos os Clérigos Paroquiais" outcome="/clerigo-paroquial"/>
                         </p:submenu>
 
                         <p:submenu label="Organismos" style="margin-right: 3px">
                             <p:menuitem value="Adicionar Organismo" outcome="/organismos"/>
-                            <p:menuitem value="Listar Organismos" outcome="/organismos"/>
+                            <p:menuitem value="Ver Todos os Organismos" outcome="/organismos"/>
                         </p:submenu>
-                        
+
                         <p:submenu label="Contribuições" style="margin-right: 3px" >
                             <p:menuitem value="Adicionar Contribuição" outcome="/contribuicoes"/>
-                            <p:menuitem value="Listar Contribuições" outcome="/contribuicoes"/>
+                            <p:menuitem value="Ver Todos os Contribuições" outcome="/contribuicoes"/>
                         </p:submenu>
 
                         <p:submenu label="Financeiro" style="margin-right: 3px">
                             <p:menuitem value="Adicionar Lançamento" outcome="/lancamentos-financeiros"/>
-                            <p:menuitem value="Listar Lançamentos" outcome="/lancamentos-financeiros"/>
+                            <p:menuitem value="Ver Todos os Lançamentos" outcome="/lancamentos-financeiros"/>
                         </p:submenu>
 
                         <p:menuitem value="Calendário Paroquial" outcome="/calendario"/>                        
@@ -66,10 +66,16 @@ and open the template in the editor.
                 </h:form>
             </div>
 
-            <div style="margin-right: 20px; float:right">
+            <div style="margin-right: 5px; float:right; display: -webkit-box">
                 <h:link outcome="/home" >
                     <h:graphicImage library="imagens" name="usericon.png" style="height:35px" />
                 </h:link>
+                <p:menubar id="bt-painel-usuario" styleClass="menu-sistema">
+                    <p:submenu label="" style="margin-right: 3px" >
+                        <p:menuitem value="Meu Perfil" outcome="/paroquianos"/>
+                        <p:menuitem value="Sair" outcome="/paroquianos"/>
+                    </p:submenu>
+                </p:menubar>
             </div>
 
         </header>

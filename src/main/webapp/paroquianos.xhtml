@@ -13,30 +13,31 @@
             </div>
 
             <div style="float: right">
-                
+                <h:form>
+                    <p:commandButton style="margin-right: 5px" icon="ui-icon-plus" title="Adicionar" />
+
+                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" disabled="true" title="Editar" />
+
+                    <p:commandButton icon="ui-icon-minus" disabled="true" title="Remover"/>
+                </h:form>
             </div>     
         </div>
 
-
-        <p:toolbar style="margin-top: 15px">
-            <p:toolbarGroup >
-                <p:button value="Novo"/>
-                <p:commandButton value="Editar" id="botaoEditar"/>
-            </p:toolbarGroup>
-            <p:toolbarGroup align="right">
-                <p:button value="Pesquisar"/>
-            </p:toolbarGroup>
-        </p:toolbar>
-        <p:dataTable id="clienteTable" var="cliente" style="margin-top: 15px" emptyMessage="Nenhum cadastro encontrado" rows="15" paginator="true" paginatorPosition="bottom">
-            <p:column headerText="Codigo" style="text-align: center; width: 50px">
+        <p:dataTable id="tabelaParoquianos" var="paroquianos" style="margin-top: 15px" emptyMessage="Nenhum cadastro encontrado" rows="15" paginator="true" paginatorPosition="bottom">
+            <p:column headerText="Codigo" style="text-align: left; width: 50px">
                 <h:outputText value="123"/>
             </p:column>
-            <p:column headerText="Nome" style="text-align: center; width: 200px">
-                <h:outputText value="Patrick"/>
+            <p:column headerText="Nome" style="text-align: left; width: 250px">
             </p:column>
-            <p:column headerText="Telefone" style="text-align: center; width: 150px">
-                <h:outputText value="33343434"/>
+            <p:column headerText="Telefone" style="text-align: left; width: 70px">
             </p:column>
+            <p:column headerText="Endereço" style="text-align: left; width: 150px">
+            </p:column>
+            <p:column headerText="Função" style="text-align: left; width: 250px">
+            </p:column>
+            <p:column headerText="Organismos" style="text-align: left; width: 250px">
+            </p:column>
+            
         </p:dataTable>
     </ui:define>
 </ui:composition>
