@@ -1,0 +1,26 @@
+<ui:composition template="/templates/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                >
+    <ui:define name="titulo">Cadastrar Paroquiano</ui:define>
+    <ui:define name="corpo">
+        <div style="margin-top: 20px; display: flow-root;">
+            <div class="titulo-pagina">
+                <h1>Cadastrar Paroquiano</h1>            
+            </div>
+
+            <div style="float: right">
+                <h:form>
+                    <p:commandButton style="margin-right: 5px" icon="ui-icon-plus" title="Adicionar" />
+
+                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" disabled="true" title="Editar" />
+
+                    <p:commandButton icon="ui-icon-minus" disabled="true" title="Remover"/>
+                </h:form>
+            </div>     
+        </div>
+    </ui:define>
+</ui:composition>

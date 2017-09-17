@@ -79,6 +79,41 @@ h1 {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25) !important;
 }
 
+.tollbartabela .ui-widget-header {
+    margin-top: 15px;
+    padding: 0.6em;
+    color: #000000;
+    border-top-color: gray;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-right-color: gray;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-left-color: gray;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-radius: 5px 5px 0px 0px;
+    border-bottom-width: 0px;
+}
+
+.tollbartabela .ui-inputfield {
+    border: 1px solid GRAY;
+    color: #000000;
+}
+
+.tabela .ui-state-default {
+    border-color: gray;
+}
+
+.tabela .ui-icon {
+    background-image: url(/sgparcat/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-excite-bike);
+}
+
+.opcoes-right .ui-icon {
+    background-image: url(/sgparcat/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-excite-bike);
+}
+
+
 /*.icon-bt-adicionar {
     background-image: url(/sgparcat/resources/imagens/bt-adicionar16.png) !important;
 }
