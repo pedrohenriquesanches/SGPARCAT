@@ -231,6 +231,56 @@ public class Pessoa implements Serializable {
         this.funcao = funcao;
     }
 
+    public List<Lancamento> getLancamentosQueRegistrou() {
+        return lancamentosQueRegistrou;
+    }
+
+    public void setLancamentosQueRegistrou(List<Lancamento> lancamentosQueRegistrou) {
+        this.lancamentosQueRegistrou = lancamentosQueRegistrou;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
+    public List<Membro> getMembros() {
+        return membros;
+    }
+
+    public void setMembros(List<Membro> membros) {
+        this.membros = membros;
+    }
+
+    public List<Participante> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(List<Participante> participantes) {
+        this.participantes = participantes;
+    }
+
+    public List<Contribuicao> getContribuicoesQueRealizou() {
+        return contribuicoesQueRealizou;
+    }
+
+    public void setContribuicoesQueRealizou(List<Contribuicao> contribuicoesQueRealizou) {
+        this.contribuicoesQueRealizou = contribuicoesQueRealizou;
+    }
+
+    public List<Contribuicao> getContribuicoesQueRegistrou() {
+        return contribuicoesQueRegistrou;
+    }
+
+    public void setContribuicoesQueRegistrou(List<Contribuicao> contribuicoesQueRegistrou) {
+        this.contribuicoesQueRegistrou = contribuicoesQueRegistrou;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 5;

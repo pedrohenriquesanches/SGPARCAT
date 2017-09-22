@@ -1,13 +1,13 @@
+br/com/sgparcat/controllers/ClerigoController.class
 br/com/sgparcat/models/Contribuicao.class
 br/com/sgparcat/models/Participante.class
 br/com/sgparcat/models/Evento.class
-br/com/sgparcat/controllers/FuncaoJpaController.class
 br/com/sgparcat/controllers/EnderecoJpaController.class
 br/com/sgparcat/models/Organismo$TipoOrganismo.class
 br/com/sgparcat/models/Lancamento.class
-br/com/sgparcat/models/Car.class
 br/com/sgparcat/controllers/exceptions/NonexistentEntityException.class
 br/com/sgparcat/controllers/ParticipanteJpaController.class
+br/com/sgparcat/controllers/ParoquianoController.class
 br/com/sgparcat/controllers/MembroJpaController.class
 br/com/sgparcat/controllers/EventoJpaController.class
 br/com/sgparcat/models/Pessoa$TipoPessoa.class
@@ -18,7 +18,6 @@ br/com/sgparcat/models/Endereco.class
 br/com/sgparcat/models/Membro.class
 br/com/sgparcat/controllers/OrganismoJpaController.class
 br/com/sgparcat/models/Organismo.class
-br/com/sgparcat/controllers/PessoaController.class
 br/com/sgparcat/models/Pessoa.class
 br/com/sgparcat/controllers/exceptions/PreexistingEntityException.class
 br/com/sgparcat/controllers/exceptions/IllegalOrphanException.class
