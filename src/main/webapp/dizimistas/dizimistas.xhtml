@@ -6,4 +6,68 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 >
     <ui:define name="titulo">Dizimistas</ui:define>
+<ui:define name="corpo">
+
+        <div style="margin-top: 20px; display: flow-root;">
+            <div class="titulo-pagina">
+                <h1>Gestão de Dizimistas</h1>            
+            </div>
+            <div class="opcoes-right" style="float: right">
+                <h:form>
+                    <p:commandButton style="margin-right: 5px" value="Cadastrar Dizimista" icon="ui-icon-plus" title="Cadastrar Dizimista"/>                    
+                </h:form>
+            </div>     
+        </div>
+
+        <h:form class="tollbartabela">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:outputLabel style="margin-right: 5px" for="box-selecao-status" value="Status:" />
+                    <h:selectOneMenu id="box-selecao-status" style="height:23px; width:125px; margin-right: 15px">
+                        <f:selectItem itemLabel="Ativos e Inativos" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Ativos" itemValue="1" />
+                        <f:selectItem itemLabel="Inativos" itemValue="2" />
+                    </h:selectOneMenu>
+                    <!--<p:commandButton style="margin-right: 5px" value="Remover" icon="ui-icon-trash" title="Remover" disabled="true"/>-->
+                </f:facet>
+
+                <f:facet name="right">
+                    <p:inputText placeholder="Pesquisar"/>
+                </f:facet>
+
+            </p:toolbar>
+        </h:form>
+
+    <p:dataTable class="tabela" id="tabelaDizimistas" var="dizimista" value="#{DizimistaController.dizimistas}" rowKey="#{dizimista.idPessoa}" style="margin-bottom:0" rows="12" paginator="true" paginatorPosition="bottom">
+            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+            <p:column headerText="ID" style="text-align: left; width: 50px">
+                <h:outputText value="#{dizimista.idPessoa}" />
+            </p:column>
+            <p:column headerText="Nome" style="text-align: left; width: 250px">
+                <h:outputText value="#{dizimista.nomeCompleto}" />
+            </p:column>
+            <p:column headerText="Status" style="text-align: left; width: 250px">
+                <h:outputText value="#{dizimista.isDizimistaAtivo}" />
+            </p:column>
+            <p:column headerText="Telefone" style="text-align: left; width: 70px">
+                <h:outputText value="#{dizimista.telefoneFixo}" />
+            </p:column>
+<!--            <p:column headerText="Última Contribuição" style="text-align: left; width: 150px">
+                <h:outputText value="#{dizimista.ultimaContribuicao}" />
+            </p:column>-->
+<!--            <p:column headerText="Endereço" style="text-align: left; width: 150px">
+                <h:outputText value="#{dizimista.enderecos}" />
+            </p:column>-->
+            <p:column style="width:80px;text-align: center">
+                <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar">
+
+                </p:commandButton>
+                <p:commandButton  icon="ui-icon-trash" title="Remover">
+
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+    
+    </ui:define>
 </ui:composition>

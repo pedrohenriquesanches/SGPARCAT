@@ -113,6 +113,23 @@ h1 {
     background-image: url(/sgparcat/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-excite-bike);
 }
 
+.tollbartabela .tollbarbotao {
+    border: none;
+    background: none;
+    border-right-width: 1px;
+    border-right-style: outset;
+    color: gray;
+    font-weight: 600;
+}
+
+.tollbartabela .tollbarbotao:hover {
+    color: #1484e6;
+    cursor: pointer;
+}
+
+.tollbartabela .ativo {
+    color: #0300b7;
+}
 
 /*.icon-bt-adicionar {
     background-image: url(/sgparcat/resources/imagens/bt-adicionar16.png) !important;

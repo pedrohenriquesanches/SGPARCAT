@@ -6,4 +6,99 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 >
     <ui:define name="titulo">Contribuições</ui:define>
+    <ui:define name="corpo">
+
+        <div style="margin-top: 20px; display: flow-root;">
+            <div class="titulo-pagina">
+                <h1>Gestão de Contribuições</h1>            
+            </div>
+            <div class="opcoes-right" style="float: right">
+                <h:form>
+                    <p:commandButton style="margin-right: 5px" value="Registrar Contribuição" icon="ui-icon-plus" title="Registrar Contribuição"/>                    
+                </h:form>
+            </div>     
+        </div>
+
+        <h:form class="tollbartabela">
+            <p:toolbar>
+                <f:facet name="left">
+                    <div>
+                        <p:outputLabel style="margin-right: 5px" for="box-selecao-tipo-contribuicao" value="Tipo:" />
+                        <h:selectOneMenu id="box-selecao-tipo-contribuicao" style="height:23px; width:125px; margin-right: 15px">
+                            <f:selectItem itemLabel="Todos" itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Ofertas" itemValue="1" />
+                            <f:selectItem itemLabel="Doações" itemValue="2" />
+                            <f:selectItem itemLabel="Dízimos" itemValue="3" />
+                        </h:selectOneMenu>
+                        <p:outputLabel style="margin-left: 5px; margin-right: 5px" for="box-selecao-meses" value="Mês:" />
+                        <h:selectOneMenu id="box-selecao-meses" style="height:23px; width:90px; margin-right: 15px">
+                            <f:selectItem itemLabel="Todos" itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Janeiro" itemValue="1" />
+                            <f:selectItem itemLabel="Fevereiro" itemValue="2" />
+                            <f:selectItem itemLabel="Março" itemValue="3" />
+                            <f:selectItem itemLabel="Abril" itemValue="4" />
+                            <f:selectItem itemLabel="Maio" itemValue="5" />
+                            <f:selectItem itemLabel="Junho" itemValue="6" />
+                            <f:selectItem itemLabel="Julho" itemValue="7" />
+                            <f:selectItem itemLabel="Agosto" itemValue="8" />
+                            <f:selectItem itemLabel="Setembro" itemValue="9" />
+                            <f:selectItem itemLabel="Outubro" itemValue="10" />
+                            <f:selectItem itemLabel="Novembro" itemValue="11" />
+                            <f:selectItem itemLabel="Dezembro" itemValue="12" />                        
+                        </h:selectOneMenu>
+                        <p:outputLabel style="margin-left: 5px; margin-right: 5px" for="box-selecao-anos" value="Ano:" />
+                        <h:selectOneMenu id="box-selecao-anos" style="height:23px; width:65px; margin-right: 15px">
+                            <f:selectItem itemLabel="Todos" itemValue="Todos" noSelectionOption="true" />
+                            <f:selectItems value="#{ContribuicaoController.anos}" var="ano" itemValue="#{anos}"/>
+                        </h:selectOneMenu>
+                        <!--<p:commandButton style="margin-right: 5px" value="Remover" icon="ui-icon-trash" title="Remover" disabled="true"/>-->
+                    </div>
+                    <div style="margin-top: 10px">
+                        <p:outputLabel style="margin-right: 5px" value="Período:" />
+                        <p:commandButton type="button" title="Histórico Completo" class="tollbarbotao ativo" />
+                        <p:commandButton type="button" title="Últimos 30 Dias" class="tollbarbotao" />
+                        <p:commandButton type="button" title="Última Semana" class="tollbarbotao" />
+                        <p:commandButton type="button" title="Intervalo Personalizado" class="tollbarbotao" />
+                    </div>
+                </f:facet>
+
+                <f:facet name="right">
+                    <p:inputText style="margin-top: 15px; margin-right: 15px" placeholder="Pesquisar"/>
+                </f:facet>
+
+            </p:toolbar>
+        </h:form>
+
+        <p:dataTable class="tabela" id="tabelaContribuicoes" var="contribuicao" value="#{ContribuicaoController.contribuicoes}" rowKey="#{contribuicao.numeroContribuicao}" style="margin-bottom:0" rows="12" paginator="true" paginatorPosition="bottom">
+            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+            <p:column headerText="Número" style="text-align: left; width: 50px">
+                <h:outputText value="#{contribuicao.numeroContribuicao}" />
+            </p:column>
+            <p:column headerText="Tipo" style="text-align: left; width: 70px">
+                <h:outputText value="#{contribuicao.tipoContribuicao}" />
+            </p:column>
+            <p:column headerText="Descrição" style="text-align: left; width: 250px">
+                <h:outputText value="#{contribuicao.descricao}" />
+            </p:column>
+            <p:column headerText="Valor" style="text-align: left; width: 150px">
+                <h:outputText value="#{contribuicao.valor}" />
+            </p:column>
+            <p:column headerText="Contribuinte" style="text-align: left; width: 250px">
+                <h:outputText value="#{contribuicao.pessoaContribuinte}" />
+            </p:column>
+            <p:column headerText="Data" style="text-align: left; width: 250px">
+                <h:outputText value="#{contribuicao.dataRegistro}" />
+            </p:column>
+            <p:column style="width:80px;text-align: center">
+                <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar">
+
+                </p:commandButton>
+                <p:commandButton  icon="ui-icon-trash" title="Remover">
+
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
 </ui:composition>

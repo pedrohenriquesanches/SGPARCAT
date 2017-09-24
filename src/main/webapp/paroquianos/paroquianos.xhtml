@@ -22,8 +22,8 @@
         <h:form class="tollbartabela">
             <p:toolbar>
                 <f:facet name="left">
-                    <p:outputLabel style="margin-right: 5px" for="funcoesParoquianos" value="Função:" />
-                    <h:selectOneMenu id="funcoesParoquianos" style="height:23px; width:125px; margin-right: 15px">
+                    <p:outputLabel style="margin-right: 5px" for="box-selecao-funcoes" value="Função:" />
+                    <h:selectOneMenu id="box-selecao-funcoes" style="height:23px; width:125px; margin-right: 15px">
                         <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true" />
                         <f:selectItem itemLabel="Ministros" itemValue="1" />
                         <f:selectItem itemLabel="Coordenadores" itemValue="2" />
@@ -43,7 +43,7 @@
         <p:dataTable class="tabela" id="tabelaParoquianos" var="paroquiano" value="#{ParoquianoController.paroquianos}" rowKey="#{paroquiano.idPessoa}" style="margin-bottom:0" rows="12" paginator="true" paginatorPosition="bottom">
             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
-            <p:column headerText="Codigo" style="text-align: left; width: 50px">
+            <p:column headerText="ID" style="text-align: left; width: 50px">
                 <h:outputText value="#{paroquiano.idPessoa}" />
             </p:column>
             <p:column headerText="Nome" style="text-align: left; width: 250px">
