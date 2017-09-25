@@ -8,72 +8,59 @@
                 >
     <ui:define name="titulo">Novo Cliente</ui:define>
     <ui:define name="corpo">
-        <h:form>
-            <h1>Cadastro de cliente</h1>
-            <p:toolbar style="margin-top: 15px">
-                <p:toolbarGroup >
-                    <p:button value="Novo"/>
-                    <p:commandButton value="Editar" id="botaoEditar"/>
-                </p:toolbarGroup>
-                <p:toolbarGroup align="right">
-                    <p:button value="Pesquisar" outcome="/paroquianos/paroquianos"/>
-                </p:toolbarGroup>
-            </p:toolbar>
-            <br/>
-            <p:panelGrid columns="2" id="painel" styleClass="width:100%; margin-top: 15px" columnClasses="rotulo,campo">
-                <p:outputLabel value="Nome" for="nome"/>
-                <p:inputText id="nome" size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="Endereço" for="endereco"/>
-                <p:inputText id="endereco" size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText id="cpf" size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-                <p:outputLabel value="CPF" for="cpf"/>
-                <p:inputText size="40" maxlength="100" required="true"/>
-            </p:panelGrid>
-            
-            
+
+        <div style="margin-top: 20px; display: flow-root;">
+            <div class="titulo-pagina">
+                <h1>Cadastro de Paroquiano</h1>            
+            </div>
+            <div class="opcoes-right" style="float: right">
+                <h:form>
+                    <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar"/>
+                    <p:commandButton value="Cancelar" icon="ui-icon-cancel" title="Cancelar" disabled="true"/>
+                </h:form>
+            </div>     
+        </div>
+
+        <h:form style="margin-top: 15px">
+
+            <p:tabView>
+                <p:tab title="Dados Pessoais">
+                    <p:panelGrid class="painel-dados" columns="3" layout="grid">            
+                        <p:panelGrid columns="2" id="painel1" columnClasses="rotulo,campo">
+                            <p:outputLabel value="Nome" for="nome"/>
+                            <p:inputText id="nome" size="40" style="width: 80%" required="true"/>                
+                            <p:outputLabel value="Endereço" for="endereco"/>
+                            <p:inputText id="endereco" size="40" style="width: 80%" required="true"/>
+                            <p:outputLabel value="Nome" for="nomea"/>
+                            <p:inputText id="nomea" size="40" style="width: 80%" required="true"/>                
+                            <p:outputLabel value="Endereço" for="enderecoa"/>
+                            <p:inputText id="enderecoa" size="40" style="width: 80%" required="true"/>
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2" id="painel2" columnClasses="rotulo,campo">
+                            <p:outputLabel value="Nome" for="nome1"/>
+                            <p:inputText id="nome1" size="40" style="width: 80%" required="true"/>                
+                            <p:outputLabel value="Endereço" for="endereco1"/>
+                            <p:inputText id="endereco1" size="40" style="width: 80%" required="true"/>
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2" id="painel3" columnClasses="rotulo,campo">
+                            <p:outputLabel value="Nome" for="nome2"/>
+                            <p:inputText id="nome2" size="40" style="width: 80%" required="true"/>                
+                            <p:outputLabel value="Endereço" for="endereco2"/>
+                            <p:inputText id="endereco2" size="40" style="width: 80%" required="true"/>
+                        </p:panelGrid>
+                    </p:panelGrid>
+                </p:tab>
+                <p:tab title="Contatos">
+
+                </p:tab>
+                <p:tab title="Endereços">
+
+                </p:tab>
+            </p:tabView>
+
         </h:form>
+
     </ui:define>
 </ui:composition>

@@ -131,6 +131,11 @@ h1 {
     color: #0300b7;
 }
 
+.painel-dados .ui-widget-content {
+    border: 0;
+    background: none;
+}
+
 /*.icon-bt-adicionar {
     background-image: url(/sgparcat/resources/imagens/bt-adicionar16.png) !important;
 }
