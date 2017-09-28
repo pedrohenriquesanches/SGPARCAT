@@ -2,6 +2,7 @@ br/com/sgparcat/controllers/ClerigoController.class
 br/com/sgparcat/models/Contribuicao.class
 br/com/sgparcat/models/Participante.class
 br/com/sgparcat/models/Evento.class
+br/com/sgparcat/controllers/LancamentoController.class
 br/com/sgparcat/controllers/EnderecoJpaController.class
 br/com/sgparcat/controllers/ContribuicaoController.class
 br/com/sgparcat/models/Organismo$TipoOrganismo.class

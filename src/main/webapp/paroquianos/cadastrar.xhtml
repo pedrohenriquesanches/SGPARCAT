@@ -22,25 +22,23 @@
 
         <h:form style="margin-top: 15px">
 
-            <p:tabView>
-                <p:tab title="Dados Pessoais">
-                    <p:panelGrid class="painel-dados" columns="3" layout="grid">            
+            <div style="width: 100%">
+                <p:panel id="basic" header="Dados Pessoais" class="painel-cadastros" style="background: none; margin-bottom:15px; padding: 0;">
+                    <p:panelGrid class="painel-dados" columns="3" layout="grid">
                         <p:panelGrid columns="2" id="painel1" columnClasses="rotulo,campo">
-                            <p:outputLabel value="Nome" for="nome"/>
-                            <p:inputText id="nome" size="40" style="width: 80%" required="true"/>                
-                            <p:outputLabel value="Endereço" for="endereco"/>
-                            <p:inputText id="endereco" size="40" style="width: 80%" required="true"/>
-                            <p:outputLabel value="Nome" for="nomea"/>
-                            <p:inputText id="nomea" size="40" style="width: 80%" required="true"/>                
-                            <p:outputLabel value="Endereço" for="enderecoa"/>
-                            <p:inputText id="enderecoa" size="40" style="width: 80%" required="true"/>
+                            <p:outputLabel value="ID:" for="id"/>
+                            <p:inputText id="id" disabled="true" readonly="true" value="123" size="30" />
+                            <p:outputLabel value="Nome:" for="nome"/>
+                            <p:inputText id="nome" size="30" required="true"/>
+                            <p:outputLabel value="CPF:" for="cpf"/>
+                            <p:inputText id="cpf" size="30" required="true"/>
+                            <p:outputLabel value="RG:" for="rg"/>
+                            <p:inputText id="rg" size="30" /> 
                         </p:panelGrid>
 
                         <p:panelGrid columns="2" id="painel2" columnClasses="rotulo,campo">
-                            <p:outputLabel value="Nome" for="nome1"/>
-                            <p:inputText id="nome1" size="40" style="width: 80%" required="true"/>                
-                            <p:outputLabel value="Endereço" for="endereco1"/>
-                            <p:inputText id="endereco1" size="40" style="width: 80%" required="true"/>
+                            <p:outputLabel value="Função:" for="funcao" />
+                            <p:autoComplete id="funcao" size="26" dropdown="true" required="true" value="" />
                         </p:panelGrid>
 
                         <p:panelGrid columns="2" id="painel3" columnClasses="rotulo,campo">
@@ -50,14 +48,29 @@
                             <p:inputText id="endereco2" size="40" style="width: 80%" required="true"/>
                         </p:panelGrid>
                     </p:panelGrid>
-                </p:tab>
-                <p:tab title="Contatos">
+                </p:panel>
+            </div>
+            <div style="width: 49.5%; float: left">
+                <p:panel id="basic2" header="Contatos" class="painel-cadastros" style="background: none; padding: 0; height: 160px;">
+                    <div class="campo-cadastro">
+                        <p:outputLabel value="Telefone Fixo:" for="telefonefixo" />
+                        <p:inputMask id="telefonefixo" mask="(99) 9999-9999"/>
+                    </div>
+                    <div class="campo-cadastro">
+                        <p:outputLabel value="Telefone Celular:" for="telefonecelular" />
+                        <p:inputMask id="telefonecelular" mask="(99) 99999-9999"/>
+                    </div>
+                    <div class="campo-cadastro">
+                        <p:outputLabel value="E-mail:" for="telefonecelular2" />
+                        <p:inputText id="telefonecelular2" placeholder="" />
+                    </div>
+                </p:panel>
+            </div>
+            <div style="width: 49.5%; float: right">
+                <p:panel id="basic3" header="Endereços" class="painel-cadastros" style="background: none; padding: 0; height: 160px;">
 
-                </p:tab>
-                <p:tab title="Endereços">
-
-                </p:tab>
-            </p:tabView>
+                </p:panel>
+            </div>
 
         </h:form>
 

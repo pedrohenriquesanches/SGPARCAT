@@ -136,6 +136,42 @@ h1 {
     background: none;
 }
 
+.painel-cadastros .ui-panel-titlebar {
+    padding: 5px 10px !important;
+}
+
+.painel-cadastros .ui-widget-header {
+    color: #003333 !important;
+    background: #e0e0e0;
+    border: none;
+    border-bottom-color: rgb(202, 136, 136);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-radius: 0;
+}
+
+.campo-cadastro{
+    display:inline-block;
+    width: 49.5%;
+    margin-top: 10px;
+}
+
+.campo-cadastro > label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.campo-cadastro > input {
+    display: block;
+    width: 90%;
+}
+
+@media (max-width:800px) {
+    .campo-cadastro{
+        width: 100%;
+    }
+}
 /*.icon-bt-adicionar {
     background-image: url(/sgparcat/resources/imagens/bt-adicionar16.png) !important;
 }
