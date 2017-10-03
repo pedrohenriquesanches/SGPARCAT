@@ -39,7 +39,7 @@
             </p:toolbar>
         </h:form>
 
-        <p:dataTable class="tabela" id="tabelaOrganismos" var="organismo" value="#{OrganismoController.organismos}" rowKey="#{organismo.idOrganismo}" style="margin-bottom:0" rows="12" paginator="true" paginatorPosition="bottom">
+        <p:dataTable class="tabela" id="tabelaOrganismos" var="organismo" value="#{OrganismoBean.organismos}" rowKey="#{organismo.idOrganismo}" style="margin-bottom:0" rows="12" paginator="true" paginatorPosition="bottom">
             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
             <p:column headerText="ID" style="text-align: left; width: 50px">
