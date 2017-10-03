@@ -10,7 +10,6 @@ br/com/sgparcat/models/Organismo$TipoOrganismo.class
 br/com/sgparcat/models/Lancamento.class
 br/com/sgparcat/controllers/exceptions/NonexistentEntityException.class
 br/com/sgparcat/controllers/OrganismoBean.class
-.netbeans_automatic_build
 br/com/sgparcat/util/jpa/EntityManagerProducer.class
 br/com/sgparcat/models/Pessoa$TipoPessoa.class
 br/com/sgparcat/controllers/EnderecoBean.class
