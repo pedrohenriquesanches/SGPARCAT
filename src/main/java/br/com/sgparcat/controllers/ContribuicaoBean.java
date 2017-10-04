@@ -6,13 +6,10 @@
 package br.com.sgparcat.controllers;
 
 import br.com.sgparcat.models.Contribuicao;
-import br.com.sgparcat.models.Pessoa;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -20,24 +17,15 @@ import javax.faces.bean.ViewScoped;
  *
  * @author pedrohensanches
  */
-@ManagedBean(name = "ClerigoBean")
+@ManagedBean
 @ViewScoped
 public class ContribuicaoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private List<Contribuicao> contribuicoes;
+    
     private List<String> anos;
 
-    @PostConstruct
-    public void init() {
-        geraAnos();
-        contribuicoes = new ArrayList<>();
-        for (int i = 0; i < 35; i++) {
-            Contribuicao c = new Contribuicao(1219L, Contribuicao.TipoContribuicao.DOACAO, "Descrição da contribuição", new Date(), new Pessoa());
-            contribuicoes.add(c);
-        }
-    }
+    private List<Contribuicao> contribuicoes;
 
     private void geraAnos(){
         anos = new ArrayList<>();
@@ -46,13 +34,23 @@ public class ContribuicaoBean implements Serializable {
             anos.add(""+i);
         }
     }
-    
-    public List<Contribuicao> getContribuicoes() {
-        return contribuicoes;
-    }
 
     public List<String> getAnos() {
         return anos;
     }
+
+    public void setAnos(List<String> anos) {
+        this.anos = anos;
+    }
+
+    public List<Contribuicao> getContribuicoes() {
+        return contribuicoes;
+    }
+
+    public void setContribuicoes(List<Contribuicao> contribuicoes) {
+        this.contribuicoes = contribuicoes;
+    }
+    
+    
 
 }

@@ -5,43 +5,23 @@
  */
 package br.com.sgparcat.controllers;
 
-import br.com.sgparcat.models.Endereco;
-import br.com.sgparcat.models.Pessoa;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author pedrohensanches
  */
-@ManagedBean(name = "EnderecoBean")
-@ViewScoped
+@Named
+@SessionScoped
 public class EnderecoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private List<Endereco> enderecos;
-
-    @PostConstruct
-    public void init() {
-        enderecos = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            Endereco e = new Endereco(2132l, "Rua Brasil, 132", "Centro", "Londrina", "PR", "86290000", new Pessoa());
-            enderecos.add(e);
-        }
-    }
-
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
+    
     public void cadastrarEndereco() {
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);

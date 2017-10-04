@@ -15,6 +15,7 @@ import javax.persistence.EntityTransaction;
  *
  * @author pedrohensanches
  */
+
 public class Pessoas implements Serializable{
     
     private static final long serialVersionUID = 1L;

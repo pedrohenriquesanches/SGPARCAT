@@ -5,37 +5,19 @@
  */
 package br.com.sgparcat.controllers;
 
-import br.com.sgparcat.models.Organismo;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author pedrohensanches
  */
 
-@ManagedBean(name="OrganismoBean")
-@ViewScoped
+@Named
+@SessionScoped
 public class OrganismoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    private List<Organismo> organismos;
-    
-    @PostConstruct
-    public void init() {
-        organismos = new ArrayList<>();
-        for(int i = 0 ; i < 35 ; i++) {
-            Organismo o = new Organismo(3432, "Nome Organismo", Organismo.TipoOrganismo.MOVIMENTO);
-            organismos.add(o);
-        }
-    }
- 
-    public List<Organismo> getOrganismos() {
-        return organismos;
-    }
 }

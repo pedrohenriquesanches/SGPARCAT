@@ -40,23 +40,23 @@ public class Pessoa implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idPessoa", nullable = false)
+    @Column(name = "idPessoa")//, nullable = false)
     private Long idPessoa;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipoPessoa", nullable = true)
+    @Column(name = "tipoPessoa")//, nullable = true)
     private TipoPessoa tipoPessoa;
 
-    @Column(name = "nomeCompleto", nullable = false)
+    @Column(name = "nomeCompleto")//, nullable = false)
     private String nomeCompleto;
     
-    @Column(name = "sexo", nullable = true)
+    @Column(name = "sexo")//, nullable = true)
     private Character sexo;
     
     @Column(name = "estadoCivil")
     private Character estadoCivil;
     
-    @Column(name = "dataNascimento", nullable = false)
+    @Column(name = "dataNascimento")//, nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
     
@@ -69,16 +69,16 @@ public class Pessoa implements Serializable {
     @Column(name = "email")
     private String email;
     
-    @Column(name = "cpf", unique=true, nullable = false)
+    @Column(name = "cpf")//, unique=true)//, nullable = false)
     private String cpf;
     
-    @Column(name = "rg", unique=true)
+    @Column(name = "rg")//, unique=true)
     private String rg;
     
-    @Column(name = "isDizimista", nullable = true)
+    @Column(name = "isDizimista")//, nullable = true)
     private boolean isDizimista;
     
-    @Column(name = "isDizimistaAtivo", nullable = true)
+    @Column(name = "isDizimistaAtivo")//, nullable = true)
     private boolean isDizimistaAtivo;
     
     @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
@@ -103,22 +103,6 @@ public class Pessoa implements Serializable {
     @OneToMany(mappedBy = "pessoaRegistrouContribuicao")
     private List<Contribuicao> contribuicoesQueRegistrou;
     
-//    public Pessoa() {
-//    }
-//
-//    public Pessoa(Long idPessoa, TipoPessoa tipoPessoa, String nomeCompleto, Character sexo, Character estadoCivil, Date dataNascimento, String cpf, boolean isDizimista, boolean isDizimistaAtivo, Funcao funcao) {
-//        this.idPessoa = idPessoa;
-//        this.tipoPessoa = tipoPessoa;
-//        this.nomeCompleto = nomeCompleto;
-//        this.sexo = sexo;
-//        this.estadoCivil = estadoCivil;
-//        this.dataNascimento = dataNascimento;
-//        this.cpf = cpf;
-//        this.isDizimista = isDizimista;
-//        this.isDizimistaAtivo = isDizimistaAtivo;
-//        this.funcao = funcao;
-//    }
-
     public Long getIdPessoa() {
         return idPessoa;
     }

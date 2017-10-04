@@ -5,10 +5,19 @@
  */
 package br.com.sgparcat.controllers;
 
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
 /**
  *
  * @author pedrohensanches
  */
-public class ParticipanteBean {
+
+@Named
+@SessionScoped
+public class ParticipanteBean implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
     
 }

@@ -49,7 +49,7 @@
                         <p:outputLabel style="margin-left: 5px; margin-right: 5px" for="box-selecao-anos" value="Ano:" />
                         <h:selectOneMenu id="box-selecao-anos" style="height:23px; width:65px; margin-right: 15px">
                             <f:selectItem itemLabel="Todos" itemValue="Todos" noSelectionOption="true" />
-                            <f:selectItems value="#{ClerigoBean.anos}" var="ano" itemValue="#{anos}"/>
+                            <f:selectItems value="#{contribuicaoBean.anos}" var="ano" itemValue="#{contribuicaoBean.anos}"/>
                         </h:selectOneMenu>
                         <!--<p:commandButton style="margin-right: 5px" value="Remover" icon="ui-icon-trash" title="Remover" disabled="true"/>-->
                     </div>
@@ -69,7 +69,7 @@
             </p:toolbar>
         </h:form>
 
-        <p:dataTable class="tabela" id="tabelaContribuicoes" var="contribuicao" value="#{ClerigoBean.contribuicoes}" rowKey="#{contribuicao.numeroContribuicao}" style="margin-bottom:0" rows="12" paginator="true" paginatorPosition="bottom">
+        <p:dataTable class="tabela" id="tabelaContribuicoes" var="contribuicao" value="#{contribuicaoBean.contribuicoes}" rowKey="#{contribuicao.numeroContribuicao}" style="margin-bottom:0" rows="12" paginator="true" paginatorPosition="bottom">
             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
             <p:column headerText="Número" style="text-align: left; width: 50px">

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.sgparcat.controllers;
+package br.com.sgparcat.util.jpa;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

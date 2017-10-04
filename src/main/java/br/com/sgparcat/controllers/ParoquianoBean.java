@@ -5,15 +5,9 @@
  */
 package br.com.sgparcat.controllers;
 
-import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.services.CadastroParoquianoService;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,12 +23,15 @@ public class ParoquianoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    @Inject
     private Pessoa paroquiano;
     
     @Inject
     CadastroParoquianoService cadastroParoquianoService;
     
     public void salvar(){
+        System.out.println("OLHA O PAROQUIANO\n");
+        System.out.println(paroquiano);
         paroquiano = cadastroParoquianoService.salvar(paroquiano);
         System.out.println("Salvo com SUCESSO");
     }

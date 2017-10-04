@@ -5,23 +5,17 @@
  */
 package br.com.sgparcat.controllers;
 
-import br.com.sgparcat.models.Funcao;
-import br.com.sgparcat.models.Pessoa;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author pedrohensanches
  */
 
-@ManagedBean(name="DizimistaBean")
-@ViewScoped
+@Named
+@SessionScoped
 public class DizimistaBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
