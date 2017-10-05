@@ -75,10 +75,10 @@ public class Pessoa implements Serializable {
     @Column(name = "rg")//, unique=true)
     private String rg;
     
-    @Column(name = "isDizimista")//, nullable = true)
+    @Column(name = "isDizimista", nullable = true)
     private boolean isDizimista;
     
-    @Column(name = "isDizimistaAtivo")//, nullable = true)
+    @Column(name = "isDizimistaAtivo", nullable = true)
     private boolean isDizimistaAtivo;
     
     @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")

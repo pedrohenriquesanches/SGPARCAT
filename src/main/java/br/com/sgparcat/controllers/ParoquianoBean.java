@@ -6,8 +6,11 @@
 package br.com.sgparcat.controllers;
 
 import br.com.sgparcat.models.Pessoa;
+import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.CadastroParoquianoService;
 import java.io.Serializable;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,10 +27,15 @@ public class ParoquianoBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Inject
-    private Pessoa paroquiano;
+    CadastroParoquianoService cadastroParoquianoService;
     
     @Inject
-    CadastroParoquianoService cadastroParoquianoService;
+    Pessoas repositorioPessoas;
+    
+    @Inject
+    private Pessoa paroquiano;
+    
+    private List<Pessoa> pessoas;
     
     public void salvar(){
         System.out.println("OLHA O PAROQUIANO\n");
@@ -35,6 +43,11 @@ public class ParoquianoBean implements Serializable {
         paroquiano = cadastroParoquianoService.salvar(paroquiano);
         System.out.println("Salvo com SUCESSO");
     }
+    
+    @PostConstruct
+    public void listar(){
+        pessoas = repositorioPessoas.retornaPessoas();
+    }            
 
     public Pessoa getParoquiano() {
         return paroquiano;
@@ -43,6 +56,16 @@ public class ParoquianoBean implements Serializable {
     public void setParoquiano(Pessoa paroquiano) {
         this.paroquiano = paroquiano;
     }
+
+    public List<Pessoa> getPessoas() {
+        return pessoas;
+    }
+
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
+    }
+    
+    
     
 }
 

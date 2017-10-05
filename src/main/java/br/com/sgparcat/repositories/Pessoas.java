@@ -7,9 +7,15 @@ package br.com.sgparcat.repositories;
 
 import br.com.sgparcat.models.Pessoa;
 import java.io.Serializable;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -29,6 +35,13 @@ public class Pessoas implements Serializable{
         paroquiano = manager.merge(paroquiano);
         et.commit();
         return paroquiano;
+    }
+    
+    public List<Pessoa> retornaPessoas(){
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Pessoa.class);
+        c.add(Restrictions.ilike("nomeCompleto", "Pedro", MatchMode.ANYWHERE));
+        return c.addOrder(Order.asc("nomeCompleto")).list();
     }
     
     
