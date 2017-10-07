@@ -44,7 +44,6 @@ public class ParoquianoBean implements Serializable {
         System.out.println("Salvo com SUCESSO");
     }
     
-    @PostConstruct
     public void listar(){
         pessoas = repositorioPessoas.retornaPessoas();
     }            

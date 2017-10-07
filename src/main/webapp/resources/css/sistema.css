@@ -65,8 +65,25 @@ h1 {
     width: 190px !important;
 }
 
+label {
+    margin-right: 5px;
+}
+
+select {
+    margin-right: 15px !important;
+}
+
+.tollbartabela select {
+    height: 23px;
+}
+
 .titulo-pagina {
     float: left;
+}
+
+.titulo-opcoes{
+    margin-top: 20px;
+    display: flow-root;
 }
 
 .titulo-pagina h1 {
@@ -79,9 +96,9 @@ h1 {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25) !important;
 }
 
-.tollbartabela .ui-widget-header {
+.tollbartabela {
     margin-top: 15px;
-    padding: 0.6em;
+    padding: 0.6em !important;
     color: #000000;
     border-top-color: gray;
     border-top-style: solid;
@@ -105,6 +122,10 @@ h1 {
     border-color: gray;
 }
 
+.tabela th {
+    text-align: left !important;
+}
+
 .tabelaCadastro {
     border-radius: 3px;
     border: 1px solid #aaaaaa; 
@@ -125,6 +146,10 @@ h1 {
     border: 1px solid #ffffff;
     background: #1484e6 url(/sgparcat/javax.faces.resource/images/ui-bg_diagonals-thick_22_1484e6_40x40.png.xhtml?ln=primefaces-excite-bike) 50% 50% repeat !important;
     padding: 0px 0 0 0 !important;
+}
+
+.opcoes-right {
+    float: right;
 }
 
 .opcoes-right .ui-icon , .div-campos-cadastro .ui-icon , .tabela .ui-icon {
