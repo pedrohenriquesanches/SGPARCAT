@@ -28,13 +28,21 @@ public class TestandoBanco {
         
         System.out.println("Chegou aqui");
         
-        Pessoa paroquiano = new Pessoa();
         
+        Funcao f = new Funcao();
+        f.setTitulo("Secretário");
+        manager.persist(f);
+        
+        Pessoa paroquiano = new Pessoa();
+        paroquiano.setFuncao(f);
+        paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
         paroquiano.setCpf("09404551961");
         paroquiano.setDataNascimento(new Date());
         paroquiano.setEmail("pedrohenrique@hotmail.com");
         paroquiano.setEstadoCivil('C');
         paroquiano.setSexo('M');
+        paroquiano.setIsDizimista(1);
+        paroquiano.setIsDizimistaAtivo(0);
         paroquiano.setRg("83323884");
         paroquiano.setNomeCompleto("Pedro Sanches");
         

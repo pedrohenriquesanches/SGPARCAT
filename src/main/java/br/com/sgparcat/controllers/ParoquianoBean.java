@@ -5,6 +5,7 @@
  */
 package br.com.sgparcat.controllers;
 
+import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.CadastroParoquianoService;
@@ -37,10 +38,8 @@ public class ParoquianoBean implements Serializable {
     private List<Pessoa> pessoas;
     
     public void salvar(){
-        System.out.println("OLHA O PAROQUIANO\n");
-        System.out.println(paroquiano);
+        paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
         paroquiano = cadastroParoquianoService.salvar(paroquiano);
-        System.out.println("Salvo com SUCESSO");
     }
     
     public void listar(){
