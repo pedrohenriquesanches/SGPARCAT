@@ -22,7 +22,7 @@
                     <div class="coluna-1-2">
                         <div class="campo-cadastro">
                             <p:outputLabel value="ID:" for="id"/>
-                            <p:inputText id="id" value="Gerado automaticante" disabled="true" />
+                            <p:inputText id="id" value="#{paroquianoBean.paroquiano.idPessoa}" disabled="true" />
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Nome Completo:" for="nome"/>
@@ -40,7 +40,7 @@
                     <div class="coluna-1-2">
                         <div class="campo-cadastro">
                             <p:outputLabel value="Sexo:" for="sexo" />
-                            <p:selectOneButton id="sexo" value="#{paroquianoBean.paroquiano.sexo}" >
+                            <p:selectOneButton id="sexo" required="true" value="#{paroquianoBean.paroquiano.sexo}" >
                                 <f:selectItem itemLabel="Masculino" itemValue="M" />
                                 <f:selectItem itemLabel="Feminino" itemValue="F" />
                             </p:selectOneButton>                            
@@ -48,7 +48,7 @@
                         <div class="campo-cadastro">
                             <div style="width: 65%; display: inline-block">
                                 <p:outputLabel value="Estado Civil:" for="estadoCivil" />
-                                <p:selectOneButton id="estadoCivil" value="#{paroquianoBean.paroquiano.estadoCivil}" >
+                                <p:selectOneButton id="estadoCivil" required="true"  value="#{paroquianoBean.paroquiano.estadoCivil}" >
                                     <f:selectItem itemLabel="Casado" itemValue="C" />
                                     <f:selectItem itemLabel="Solteiro" itemValue="S" />
                                     <f:selectItem itemLabel="Divorciado" itemValue="D" />
@@ -56,7 +56,7 @@
                             </div>
                             <div style="width: 30%; display: inline-block">
                                 <p:outputLabel value="Dizimista:" for="isDizimista" />
-                                <p:selectOneButton id="isDizimista" value="#{paroquianoBean.paroquiano.isDizimista}" >
+                                <p:selectOneButton id="isDizimista" required="true" value="#{paroquianoBean.paroquiano.isDizimista}" >
                                     <f:selectItem itemLabel="Sim" itemValue="1" />
                                     <f:selectItem itemLabel="Não" itemValue="0" />
                                 </p:selectOneButton>
@@ -103,31 +103,31 @@
                     <div class="coluna-1-3">
                         <div class="campo-cadastro">
                             <p:outputLabel value="Endereço:" for="endereco" />
-                            <p:inputText id="endereco" />
+                            <p:inputText id="endereco" value="#{paroquianoBean.paroquiano.endereco}"/>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Bairro:" for="bairro" />
-                            <p:inputText id="bairro" />
+                            <p:inputText id="bairro" value="#{paroquianoBean.paroquiano.bairro}"/>
                         </div>
                     </div>
                     <div class="coluna-1-3">
                         <div class="campo-cadastro">
                             <p:outputLabel value="CEP:" for="cep" />
-                            <p:inputMask id="cep" mask="99999-999"/>
+                            <p:inputMask id="cep" mask="99999-999" value="#{paroquianoBean.paroquiano.CEP}"/>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Complemento:" for="complemento" />
-                            <p:inputText id="complemento" />
+                            <p:inputText id="complemento" value="#{paroquianoBean.paroquiano.complemento}" />
                         </div>
                     </div>
                     <div class="coluna-1-3">
                         <div class="campo-cadastro">
                             <p:outputLabel value="Cidade:" for="cidade" />
-                            <p:inputText id="cidade" />
+                            <p:inputText id="cidade" value="#{paroquianoBean.paroquiano.cidade}"/>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="UF:" for="box-selecao-estado" />
-                            <h:selectOneMenu id="box-selecao-estado" style="height:23px; width:90px; margin-right: 15px">
+                            <h:selectOneMenu id="box-selecao-estado" value="#{paroquianoBean.paroquiano.UF}" style="height:23px; width:90px; margin-right: 15px">
                                 <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
                                 <f:selectItem itemLabel="Acre" itemValue="AC" />
                                 <f:selectItem itemLabel="Alagoas" itemValue="AL" />

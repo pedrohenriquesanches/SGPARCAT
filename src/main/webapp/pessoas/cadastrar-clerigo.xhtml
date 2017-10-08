@@ -22,7 +22,7 @@
                     <div class="coluna-1-2">
                         <div class="campo-cadastro">
                             <p:outputLabel value="ID:" for="id"/>
-                            <p:inputText id="id" placeholder="Gerado Automaticamente" disabled="true" />
+                            <p:inputText id="id" disabled="true" />
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Nome Completo:" for="nome"/>
@@ -55,8 +55,8 @@
                                 </p:selectOneButton>
                             </div>
                             <div style="width: 30%; display: inline-block">
-                                <p:outputLabel value="Dizimista:" for="isDizimista2" />
-                                <p:selectOneButton id="isDizimista2" required="true" >
+                                <p:outputLabel value="Dizimista:" for="isDizimista" />
+                                <p:selectOneButton id="isDizimista" required="true" >
                                     <f:selectItem itemLabel="Sim" itemValue="Sim" />
                                     <f:selectItem itemLabel="Não" itemValue="Não" />
                                 </p:selectOneButton>
@@ -64,7 +64,10 @@
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Data de Nascimento:" for="dataNascimento"/>
-                            <p:inputMask id="dataNascimento" mask="99/99/9999" required="true"/>
+                            <p:inputMask id="dataNascimento" mask="99/99/9999" required="true" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                <p:watermark value="DD/MM/YYYY" for="dataNascimento" />
+                            </p:inputMask>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Função:" for="funcao" />
