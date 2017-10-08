@@ -17,7 +17,6 @@ teste/PrecoProdutoBean.class
 br/com/sgparcat/services/CadastroParoquianoService.class
 br/com/sgparcat/models/Contribuicao$TipoContribuicao.class
 br/com/sgparcat/controllers/DizimistaBean.class
-br/com/sgparcat/models/Endereco.class
 br/com/sgparcat/controllers/ClerigoBean.class
 br/com/sgparcat/models/Membro.class
 teste/CalculadoraPreco.class

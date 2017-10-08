@@ -35,10 +35,9 @@ public class Organismo implements Serializable {
     
     @Id    
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idOrganismo", nullable = false)
     private Integer idOrganismo;
     
-    @Column(name = "nome", nullable = false)
+    @Column(nullable = false)
     private String nome;
     
     @Enumerated(EnumType.STRING)
@@ -47,7 +46,7 @@ public class Organismo implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organismo")
     private List<Membro> membros;
-
+    
     public Organismo() {
     }
 

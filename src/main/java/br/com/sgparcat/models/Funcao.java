@@ -29,10 +29,9 @@ public class Funcao implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idFuncao", nullable = false)
     private Integer idFuncao;
     
-    @Column(name = "titulo", nullable = false)
+    @Column(nullable = false)
     private String titulo;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
@@ -68,6 +67,30 @@ public class Funcao implements Serializable {
         this.titulo = titulo;
     }
 
+    public List<Pessoa> getPessoas() {
+        return pessoas;
+    }
+
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
+    }
+
+    public List<Membro> getMembros() {
+        return membros;
+    }
+
+    public void setMembros(List<Membro> membros) {
+        this.membros = membros;
+    }
+
+    public List<Participante> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(List<Participante> participantes) {
+        this.participantes = participantes;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

@@ -38,33 +38,32 @@ public class Contribuicao implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "numeroContribuicao", nullable = false)
     private Long numeroContribuicao;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipoContribuicao", nullable = false)
+    @Column(nullable = false)
     private TipoContribuicao tipoContribuicao;
     
-    @Column(name = "descricao", nullable = false)
+    @Column(nullable = false)
     private String descricao;
     
-    @Column(name = "valor", precision = 10, scale = 2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal valor;
     
-    @Column(name = "dataRegistro", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
     
     @Lob
-    @Column(name = "observacao")
+    @Column
     private String observacao;
     
-    @JoinColumn(name = "idPessoaContribuinte", referencedColumnName = "idPessoa")
+    @JoinColumn(nullable = true, name = "idPessoaContribuinte")
     @ManyToOne
     private Pessoa pessoaContribuinte;
     
-    @JoinColumn(name = "idPessoaRegistrouContribuicao", referencedColumnName = "idPessoa")
-    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false, name = "idPessoaRegistrouContribuicao")
+    @ManyToOne
     private Pessoa pessoaRegistrouContribuicao;
 
     public Contribuicao() {

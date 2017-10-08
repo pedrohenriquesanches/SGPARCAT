@@ -7,7 +7,6 @@ package br.com.sgparcat.models;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,19 +27,18 @@ public class Membro implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idMembro", nullable = false)
     private Long idMembro;
     
-    @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
-    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false, name = "idFuncao")
+    @ManyToOne
     private Funcao funcao;
     
-    @JoinColumn(name = "idOrganismo", referencedColumnName = "idOrganismo", unique=true, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false, name = "idOrganismo") //unique=true
+    @ManyToOne
     private Organismo organismo;
     
-    @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa", unique=true, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false, name = "idPessoa") //unique=true
+    @ManyToOne
     private Pessoa pessoa;
 
     public Membro() {

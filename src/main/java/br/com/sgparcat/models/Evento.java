@@ -33,55 +33,45 @@ public class Evento implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idEvento", nullable = false)
     private Integer idEvento;
     
-    @Column(name = "titulo", nullable = false)
+    @Column(nullable = false)
     private String titulo;
     
-    @Column(name = "dataInicio", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataInicio;
     
-    @Column(name = "horarioInicio", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horarioInicio;
     
-    @Column(name = "dataFim")
+    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date dataFim;
     
-    @Column(name = "horarioFim")
+    @Column(nullable = true)
     @Temporal(TemporalType.TIME)
     private Date horarioFim;
     
-    @Column(name = "localEvento", nullable = false)
+    @Column(nullable = false)
     private String localEvento;
     
     @Lob
-    @Column(name = "observacao")
+    @Column(nullable = true)
     private String observacao;
     
-    @Column(name = "dataRegistro", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
     
-    @OneToMany(mappedBy = "evento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Lancamento> lancamentos;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Participante> participantes;
 
     public Evento() {
-    }
-
-    public Evento(Integer idEvento, String titulo, Date dataInicio, Date horarioInicio, String localEvento, Date dataRegistro) {
-        this.idEvento = idEvento;
-        this.titulo = titulo;
-        this.dataInicio = dataInicio;
-        this.horarioInicio = horarioInicio;
-        this.localEvento = localEvento;
-        this.dataRegistro = dataRegistro;
     }
 
     public Integer getIdEvento() {
@@ -154,6 +144,22 @@ public class Evento implements Serializable {
 
     public void setDataRegistro(Date dataRegistro) {
         this.dataRegistro = dataRegistro;
+    }
+
+    public List<Lancamento> getLancamentos() {
+        return lancamentos;
+    }
+
+    public void setLancamentos(List<Lancamento> lancamentos) {
+        this.lancamentos = lancamentos;
+    }
+
+    public List<Participante> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(List<Participante> participantes) {
+        this.participantes = participantes;
     }
 
     @Override

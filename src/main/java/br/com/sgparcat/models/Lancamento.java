@@ -33,69 +33,57 @@ public class Lancamento implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idLancamento", nullable = false)
     private Long idLancamento;
     
-    @Column(name = "numeroLancamento", nullable = false)
+    @Column(nullable = false)
     private Long numeroLancamento;
     
-    @Column(name = "isDespesa", nullable = false)
-    private boolean isDespesa;
+    @Column(nullable = false)
+    private byte isDespesa;
     
-    @Column(name = "descricao", nullable = false)
+    @Column(nullable = false)
     private String descricao;
     
-    @Column(name = "valor", nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valor;
     
     @Column(name = "valorJuros", precision = 10, scale = 2)
     private BigDecimal valorJuros;
     
-    @Column(name = "dataVencimento")
+    @Column
     @Temporal(TemporalType.DATE)
     private Date dataVencimento;
     
-    @Column(name = "dataPagamento")
+    @Column
     @Temporal(TemporalType.DATE)
     private Date dataPagamento;
     
     @Column(name = "emitente")
     private String emitente;
     
-    @Column(name = "isParcelado", nullable = false)
-    private boolean isParcelado;
+    @Column(nullable = false)
+    private byte isParcelado;
     
     @Lob
-    @Column(name = "observacao")
+    @Column
     private String observacao;
     
-    @Column(name = "isPago", nullable = false)
-    private boolean isPago;
+    @Column(nullable = false)
+    private byte isPago;
     
-    @Column(name = "dataRegistro", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
         
-    @JoinColumn(name = "idEvento", referencedColumnName = "idEvento")
+    @JoinColumn(nullable = true, name = "idEvento")
     @ManyToOne
     private Evento evento;
     
-    @JoinColumn(name = "idPessoaRegistrouLancamento", referencedColumnName = "idPessoa",nullable = true)
-    @ManyToOne()
+    @JoinColumn(nullable = true, name = "idPessoaRegistrouLancamento")
+    @ManyToOne
     private Pessoa pessoaRegistrouLancamento;
 
     public Lancamento() {
-    }
-
-    public Lancamento(Long idLancamento, Long numeroLancamento, boolean isDespesa, String descricao, BigDecimal valor, boolean isParcelado, boolean isPago, Date dataRegistro) {
-        this.idLancamento = idLancamento;
-        this.numeroLancamento = numeroLancamento;
-        this.isDespesa = isDespesa;
-        this.descricao = descricao;
-        this.valor = valor;
-        this.isParcelado = isParcelado;
-        this.isPago = isPago;
-        this.dataRegistro = dataRegistro;
     }
 
     public Long getIdLancamento() {
@@ -114,11 +102,11 @@ public class Lancamento implements Serializable {
         this.numeroLancamento = numeroLancamento;
     }
 
-    public boolean isIsDespesa() {
+    public byte getIsDespesa() {
         return isDespesa;
     }
 
-    public void setIsDespesa(boolean isDespesa) {
+    public void setIsDespesa(byte isDespesa) {
         this.isDespesa = isDespesa;
     }
 
@@ -157,7 +145,7 @@ public class Lancamento implements Serializable {
     public Date getDataPagamento() {
         return dataPagamento;
     }
-
+    
     public void setDataPagamento(Date dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
@@ -170,11 +158,11 @@ public class Lancamento implements Serializable {
         this.emitente = emitente;
     }
 
-    public boolean isIsParcelado() {
+    public byte getIsParcelado() {
         return isParcelado;
     }
 
-    public void setIsParcelado(boolean isParcelado) {
+    public void setIsParcelado(byte isParcelado) {
         this.isParcelado = isParcelado;
     }
 
@@ -186,11 +174,11 @@ public class Lancamento implements Serializable {
         this.observacao = observacao;
     }
 
-    public boolean isIsPago() {
+    public byte getIsPago() {
         return isPago;
     }
 
-    public void setIsPago(boolean isPago) {
+    public void setIsPago(byte isPago) {
         this.isPago = isPago;
     }
 
@@ -218,17 +206,18 @@ public class Lancamento implements Serializable {
         this.pessoaRegistrouLancamento = pessoaRegistrouLancamento;
     }
 
+    
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 19 * hash + Objects.hashCode(this.idLancamento);
-        hash = 19 * hash + Objects.hashCode(this.numeroLancamento);
-        hash = 19 * hash + (this.isDespesa ? 1 : 0);
-        hash = 19 * hash + Objects.hashCode(this.descricao);
-        hash = 19 * hash + Objects.hashCode(this.valor);
-        hash = 19 * hash + (this.isParcelado ? 1 : 0);
-        hash = 19 * hash + (this.isPago ? 1 : 0);
-        hash = 19 * hash + Objects.hashCode(this.dataRegistro);
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.idLancamento);
+        hash = 17 * hash + Objects.hashCode(this.numeroLancamento);
+        hash = 17 * hash + this.isDespesa;
+        hash = 17 * hash + Objects.hashCode(this.descricao);
+        hash = 17 * hash + Objects.hashCode(this.valor);
+        hash = 17 * hash + Objects.hashCode(this.dataVencimento);
+        hash = 17 * hash + this.isParcelado;
         return hash;
     }
 
@@ -250,9 +239,6 @@ public class Lancamento implements Serializable {
         if (this.isParcelado != other.isParcelado) {
             return false;
         }
-        if (this.isPago != other.isPago) {
-            return false;
-        }
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
@@ -265,7 +251,7 @@ public class Lancamento implements Serializable {
         if (!Objects.equals(this.valor, other.valor)) {
             return false;
         }
-        if (!Objects.equals(this.dataRegistro, other.dataRegistro)) {
+        if (!Objects.equals(this.dataVencimento, other.dataVencimento)) {
             return false;
         }
         return true;

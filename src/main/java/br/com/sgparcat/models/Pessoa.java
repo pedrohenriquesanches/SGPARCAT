@@ -33,76 +33,90 @@ import javax.persistence.TemporalType;
 public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     public enum TipoPessoa {
         PAROQUIANO, CLERIGO;
     }
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idPessoa")//, nullable = false)
     private Long idPessoa;
-    
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipoPessoa")//, nullable = true)
+    @Column(nullable = false)
     private TipoPessoa tipoPessoa;
 
-    @Column(name = "nomeCompleto")//, nullable = false)
+    @Column(nullable = false)
     private String nomeCompleto;
-    
-    @Column(name = "sexo")//, nullable = true)
+
+    @Column(nullable = false)
     private Character sexo;
-    
-    @Column(name = "estadoCivil")
+
+    @Column(nullable = false)
     private Character estadoCivil;
-    
-    @Column(name = "dataNascimento")//, nullable = false)
+
+    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-    
-    @Column(name = "telefoneFixo")
+
+    @Column
     private String telefoneFixo;
-    
-    @Column(name = "telefoneCelular")
+
+    @Column
     private String telefoneCelular;
-    
-    @Column(name = "email")
+
+    @Column
+    private String endereco;
+
+    @Column
+    private String bairro;
+
+    @Column
+    private String cidade;
+
+    @Column
+    private String UF;
+
+    @Column
+    private String CEP;
+
+    @Column
+    private String complemento;
+
+    @Column
     private String email;
-    
-    @Column(name = "cpf")//, unique=true)//, nullable = false)
+
+    @Column(unique = true, nullable = false)
     private String cpf;
-    
-    @Column(name = "rg")//, unique=true)
+
+    @Column(unique = true)
     private String rg;
-    
-    @Column(name = "isDizimista", nullable = true)
+
+    @Column(nullable = false)
     private byte isDizimista;
-    
-    @Column(name = "isDizimistaAtivo", nullable = true)
+
+    @Column(nullable = false)
     private byte isDizimistaAtivo;
-    
-    @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
-    @ManyToOne(optional = true)
+
+    @JoinColumn(nullable = false, name = "idFuncao")
+    @ManyToOne
     private Funcao funcao;
-    
-    @OneToMany(mappedBy = "pessoaRegistrouLancamento")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaRegistrouLancamento")
     private List<Lancamento> lancamentosQueRegistrou;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Endereco> enderecos;
-    
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaContribuinte")
+    private List<Contribuicao> contribuicoesQueRealizou;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaRegistrouContribuicao")
+    private List<Contribuicao> contribuicoesQueRegistrou;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Membro> membros;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Participante> participantes;
-    
-    @OneToMany(mappedBy = "pessoaContribuinte")
-    private List<Contribuicao> contribuicoesQueRealizou;
-    
-    @OneToMany(mappedBy = "pessoaRegistrouContribuicao")
-    private List<Contribuicao> contribuicoesQueRegistrou;
-    
+
     public Long getIdPessoa() {
         return idPessoa;
     }
@@ -167,6 +181,54 @@ public class Pessoa implements Serializable {
         this.telefoneCelular = telefoneCelular;
     }
 
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUF() {
+        return UF;
+    }
+
+    public void setUF(String UF) {
+        this.UF = UF;
+    }
+
+    public String getCEP() {
+        return CEP;
+    }
+
+    public void setCEP(String CEP) {
+        this.CEP = CEP;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -221,14 +283,6 @@ public class Pessoa implements Serializable {
 
     public void setLancamentosQueRegistrou(List<Lancamento> lancamentosQueRegistrou) {
         this.lancamentosQueRegistrou = lancamentosQueRegistrou;
-    }
-
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
     }
 
     public List<Membro> getMembros() {
@@ -335,14 +389,10 @@ public class Pessoa implements Serializable {
         }
         return true;
     }
-    
-    
-    
 
     @Override
     public String toString() {
         return "Pessoa{" + "idPessoa=" + idPessoa + ", tipoPessoa=" + tipoPessoa + ", nomeCompleto=" + nomeCompleto + ", sexo=" + sexo + ", estadoCivil=" + estadoCivil + ", dataNascimento=" + dataNascimento + ", cpf=" + cpf + ", isDizimista=" + isDizimista + ", isDizimistaAtivo=" + isDizimistaAtivo + '}';
     }
-    
-    
+
 }
