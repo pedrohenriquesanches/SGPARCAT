@@ -76,10 +76,10 @@ public class Pessoa implements Serializable {
     private String rg;
     
     @Column(name = "isDizimista", nullable = true)
-    private boolean isDizimista;
+    private byte isDizimista;
     
     @Column(name = "isDizimistaAtivo", nullable = true)
-    private boolean isDizimistaAtivo;
+    private byte isDizimistaAtivo;
     
     @JoinColumn(name = "idFuncao", referencedColumnName = "idFuncao")
     @ManyToOne(optional = true)
@@ -191,19 +191,19 @@ public class Pessoa implements Serializable {
         this.rg = rg;
     }
 
-    public boolean isIsDizimista() {
+    public byte getIsDizimista() {
         return isDizimista;
     }
 
-    public void setIsDizimista(boolean isDizimista) {
+    public void setIsDizimista(byte isDizimista) {
         this.isDizimista = isDizimista;
     }
 
-    public boolean isIsDizimistaAtivo() {
+    public byte getIsDizimistaAtivo() {
         return isDizimistaAtivo;
     }
 
-    public void setIsDizimistaAtivo(boolean isDizimistaAtivo) {
+    public void setIsDizimistaAtivo(byte isDizimistaAtivo) {
         this.isDizimistaAtivo = isDizimistaAtivo;
     }
 
@@ -262,12 +262,10 @@ public class Pessoa implements Serializable {
     public void setContribuicoesQueRegistrou(List<Contribuicao> contribuicoesQueRegistrou) {
         this.contribuicoesQueRegistrou = contribuicoesQueRegistrou;
     }
-    
-    
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.idPessoa);
         hash = 97 * hash + Objects.hashCode(this.tipoPessoa);
         hash = 97 * hash + Objects.hashCode(this.nomeCompleto);
@@ -279,9 +277,8 @@ public class Pessoa implements Serializable {
         hash = 97 * hash + Objects.hashCode(this.email);
         hash = 97 * hash + Objects.hashCode(this.cpf);
         hash = 97 * hash + Objects.hashCode(this.rg);
-        hash = 97 * hash + (this.isDizimista ? 1 : 0);
-        hash = 97 * hash + (this.isDizimistaAtivo ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.funcao);
+        hash = 97 * hash + this.isDizimista;
+        hash = 97 * hash + this.isDizimistaAtivo;
         return hash;
     }
 
@@ -336,11 +333,11 @@ public class Pessoa implements Serializable {
         if (!Objects.equals(this.dataNascimento, other.dataNascimento)) {
             return false;
         }
-        if (!Objects.equals(this.funcao, other.funcao)) {
-            return false;
-        }
         return true;
     }
+    
+    
+    
 
     @Override
     public String toString() {

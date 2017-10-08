@@ -1,0 +1,60 @@
+<ui:composition template="/templates/pagina.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:metadata>
+
+    </f:metadata>
+    <ui:define name="titulo">Clérigo Paroquial</ui:define>
+    <ui:define name="corpo">
+        <div class="titulo-opcoes">
+            <div class="titulo-pagina">
+                <h1>Gestão do Clérigo Paroquial</h1>            
+            </div>
+            <div class="opcoes-right">
+                <p:button outcome="/pessoas/cadastrar-clerigo" value="Cadastrar Clérigo" icon="ui-icon-plus"/>
+            </div>     
+        </div>
+        <h:form>
+            <p:toolbar class="tollbartabela">
+                <f:facet name="left">
+                    <p:outputLabel value="Função:" for="box-selecao-funcoes" />
+                    <h:selectOneMenu id="box-selecao-funcoes">
+                        <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Padre" itemValue="Padre" />
+                        <f:selectItem itemLabel="Diácono" itemValue="Diácono" />
+                        <f:selectItem itemLabel="Monsenhor" itemValue="Monsenhor" />
+                        <f:selectItem itemLabel="Vigário" itemValue="Vigário" />
+                    </h:selectOneMenu>
+                </f:facet>
+                <f:facet name="right">
+                    <p:inputText placeholder="Pesquisar"/>
+                </f:facet>
+            </p:toolbar>
+            <p:dataTable class="tabela" id="tabelaClerigos" var="clerigo" value="#{ClerigoBean.clerigos}" rowKey="#{clerigo.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
+                <p:column selectionMode="multiple" style="width:16px"/>
+                <p:column headerText="ID" style="width: 50px;text-align: center">
+                    <h:outputText value="#{clerigo.idPessoa}" />
+                </p:column>
+                <p:column headerText="Função" style="width: 250px">
+                    <h:outputText value="#{clerigo.funcao}" />
+                </p:column>
+                <p:column headerText="Nome" style="width: 250px">
+                    <h:outputText value="#{clerigo.nomeCompleto}" />
+                </p:column>
+                <p:column headerText="Telefone" style="width: 70px">
+                    <h:outputText value="#{clerigo.telefoneFixo}" />
+                </p:column>
+                <p:column headerText="Endereço" style="width: 150px">
+                    <h:outputText value="#{clerigo.enderecos}" />
+                </p:column>
+                <p:column style="width:80px;text-align: center">
+                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>
+                    <p:commandButton  icon="ui-icon-trash" title="Remover"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,178 @@
+<ui:composition template="/templates/pagina.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="titulo">Cadastrar Paroquiano / Dizimista</ui:define>
+    <ui:define name="corpo">
+        <h:form >
+            <div class="titulo-opcoes">
+                <div class="titulo-pagina">
+                    <h1>Cadastrar Paroquiano / Dizimista</h1>            
+                </div>
+                <div class="opcoes-right">
+                    <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar" action="#{paroquianoBean.salvar()}" update="dadospessoais,acessoaosistema" />
+                    <p:commandButton value="Cancelar" icon="ui-icon-cancel" title="Cancelar" disabled="true"/>
+                </div>     
+            </div>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" />
+            <div class="div-campos-cadastro" style="width: 69.5%; float: left">
+                <p:panel id="dadospessoais" header="Dados Pessoais" class="painel-cadastros" style="height: 300px">
+                    <div class="coluna-1-2">
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="ID:" for="id"/>
+                            <p:inputText id="id" value="Gerado automaticante" disabled="true" />
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Nome Completo:" for="nome"/>
+                            <p:inputText id="nome" required="true" value="#{paroquianoBean.paroquiano.nomeCompleto}"/>
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="CPF:" for="cpf"/>
+                            <p:inputMask id="cpf" required="true" mask="999.999.999-99" value="#{paroquianoBean.paroquiano.cpf}" />
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="RG:" for="rg"/>
+                            <p:inputMask id="rg" mask="99.999.999-9" value="#{paroquianoBean.paroquiano.rg}" />
+                        </div>
+                    </div>
+                    <div class="coluna-1-2">
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Sexo:" for="sexo" />
+                            <p:selectOneButton id="sexo" value="#{paroquianoBean.paroquiano.sexo}" >
+                                <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                <f:selectItem itemLabel="Feminino" itemValue="F" />
+                            </p:selectOneButton>                            
+                        </div>
+                        <div class="campo-cadastro">
+                            <div style="width: 65%; display: inline-block">
+                                <p:outputLabel value="Estado Civil:" for="estadoCivil" />
+                                <p:selectOneButton id="estadoCivil" value="#{paroquianoBean.paroquiano.estadoCivil}" >
+                                    <f:selectItem itemLabel="Casado" itemValue="C" />
+                                    <f:selectItem itemLabel="Solteiro" itemValue="S" />
+                                    <f:selectItem itemLabel="Divorciado" itemValue="D" />
+                                </p:selectOneButton>
+                            </div>
+                            <div style="width: 30%; display: inline-block">
+                                <p:outputLabel value="Dizimista:" for="isDizimista" />
+                                <p:selectOneButton id="isDizimista" value="#{paroquianoBean.paroquiano.isDizimista}" >
+                                    <f:selectItem itemLabel="Sim" itemValue="1" />
+                                    <f:selectItem itemLabel="Não" itemValue="0" />
+                                </p:selectOneButton>
+                            </div>
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Data de Nascimento:" for="dataNascimento"/>
+                            <p:inputMask id="dataNascimento" mask="99/99/9999" required="true" value="#{paroquianoBean.paroquiano.dataNascimento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                <p:watermark value="DD/MM/YYYY" for="dataNascimento" />
+                            </p:inputMask>
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Função:" for="funcao" />
+                            <p:autoComplete id="funcao" size="26" dropdown="true" />
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+            <div class="div-campos-cadastro" style="width: 29.5%; float: right">
+                <p:panel id="acessoaosistema" header="Acesso ao sistema" class="painel-cadastros" style="height: 300px">
+                    <div class="campo-cadastro ">
+                        <p:outputLabel value="E-mail:" for="email" />
+                        <p:inputText id="email" value="#{paroquianoBean.paroquiano.email}"/>
+                    </div>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Ceder acesso ao sistema para essa pessoa: " />
+                        <p:selectBooleanCheckbox/>
+                    </h:panelGrid>
+                    <div class="campo-cadastro ">                 
+                        <h:outputLabel for="senha1" value="Senha:" />
+                        <p:password id="senha1" match="senha2" label="Senha" feedback="true" inline="true"
+                                    promptLabel="Digite a senha" weakLabel="Fraca"
+                                    goodLabel="Boa" strongLabel="Forte" disabled="true"/>
+                    </div>
+                    <div class="campo-cadastro ">
+                        <h:outputLabel for="senha2" value="Confirme a Senha:" />
+                        <p:password id="senha2" label="Confirme a Senha" disabled="true"/>
+                    </div>
+                </p:panel>
+            </div>
+            <div class="div-campos-cadastro" style="width: 69.5%; float: left">
+                <p:panel header="Endereço" class="painel-cadastros">
+                    <div class="coluna-1-3">
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Endereço:" for="endereco" />
+                            <p:inputText id="endereco" />
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Bairro:" for="bairro" />
+                            <p:inputText id="bairro" />
+                        </div>
+                    </div>
+                    <div class="coluna-1-3">
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="CEP:" for="cep" />
+                            <p:inputMask id="cep" mask="99999-999"/>
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Complemento:" for="complemento" />
+                            <p:inputText id="complemento" />
+                        </div>
+                    </div>
+                    <div class="coluna-1-3">
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Cidade:" for="cidade" />
+                            <p:inputText id="cidade" />
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="UF:" for="box-selecao-estado" />
+                            <h:selectOneMenu id="box-selecao-estado" style="height:23px; width:90px; margin-right: 15px">
+                                <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Acre" itemValue="AC" />
+                                <f:selectItem itemLabel="Alagoas" itemValue="AL" />
+                                <f:selectItem itemLabel="Amazonas" itemValue="AM" />
+                                <f:selectItem itemLabel="Amapá" itemValue="AP" />
+                                <f:selectItem itemLabel="Bahia" itemValue="BA" />
+                                <f:selectItem itemLabel="Ceará" itemValue="CE" />
+                                <f:selectItem itemLabel="Distrito Federal" itemValue="DF" />
+                                <f:selectItem itemLabel="Espírito Santo" itemValue="ES" />
+                                <f:selectItem itemLabel="Goiás" itemValue="GO" />
+                                <f:selectItem itemLabel="Maranhão" itemValue="MA" />
+                                <f:selectItem itemLabel="Minas Gerais" itemValue="MG" />
+                                <f:selectItem itemLabel="Mato Grosso do Sul" itemValue="MS" />
+                                <f:selectItem itemLabel="Mato Grosso" itemValue="MT" />
+                                <f:selectItem itemLabel="Pará" itemValue="PA" />
+                                <f:selectItem itemLabel="Paraíba" itemValue="PB" />
+                                <f:selectItem itemLabel="Pernambuco" itemValue="PE" />
+                                <f:selectItem itemLabel="Piauí" itemValue="PI" />
+                                <f:selectItem itemLabel="Paraná" itemValue="PR" />
+                                <f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ" />
+                                <f:selectItem itemLabel="Rio Grande do Norte" itemValue="RN" />
+                                <f:selectItem itemLabel="Rondônia" itemValue="RO" />
+                                <f:selectItem itemLabel="Roraima" itemValue="RR" />
+                                <f:selectItem itemLabel="Rio Grande do Sul" itemValue="RS" />
+                                <f:selectItem itemLabel="Santa Catarina" itemValue="SC" />
+                                <f:selectItem itemLabel="Sergipe" itemValue="SE" />
+                                <f:selectItem itemLabel="São Paulo" itemValue="SP" />
+                                <f:selectItem itemLabel="Tocantins" itemValue="TO" />
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+            <div class="div-campos-cadastro" style="width: 29.5%; float: right">
+                <p:panel header="Contatos" class="painel-cadastros">
+                    <div class="campo-cadastro ">
+                        <p:outputLabel value="Telefone Fixo:" for="telefonefixo" />
+                        <p:inputMask id="telefonefixo" mask="(99) 9999-9999" value="#{paroquianoBean.paroquiano.telefoneFixo}"/>
+                    </div>
+                    <div class="campo-cadastro ">
+                        <p:outputLabel value="Telefone Celular:" for="telefonecelular" />
+                        <p:inputMask id="telefonecelular" mask="(99) 99999-9999" value="#{paroquianoBean.paroquiano.telefoneCelular}"/>
+                    </div>
+                </p:panel>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
