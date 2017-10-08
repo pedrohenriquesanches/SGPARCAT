@@ -24,10 +24,7 @@ public class TestandoBanco {
         EntityManager manager = factory.createEntityManager();
         
         EntityTransaction transa = manager.getTransaction();
-        transa.begin();
-        
-        System.out.println("Chegou aqui");
-        
+        transa.begin();        
         
         Funcao f = new Funcao();
         f.setTitulo("Secretário");
@@ -36,15 +33,15 @@ public class TestandoBanco {
         Pessoa paroquiano = new Pessoa();
         paroquiano.setFuncao(f);
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
-        paroquiano.setCpf("09404551961");
+        paroquiano.setCpf("029124961");
         paroquiano.setDataNascimento(new Date());
         paroquiano.setEmail("pedrohenrique@hotmail.com");
         paroquiano.setEstadoCivil('C');
         paroquiano.setSexo('M');
         paroquiano.setIsDizimista(1);
         paroquiano.setIsDizimistaAtivo(0);
-        paroquiano.setRg("83323884");
-        paroquiano.setNomeCompleto("Pedro Sanches");
+        paroquiano.setRg("81234324");
+        paroquiano.setNomeCompleto("Outro Paroquiano");
         
         manager.persist(paroquiano);
         transa.commit();

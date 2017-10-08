@@ -40,8 +40,9 @@ public class Pessoas implements Serializable{
     public List<Pessoa> retornaPessoas(){
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
-        c.add(Restrictions.ilike("nomeCompleto", "Pedro", MatchMode.ANYWHERE));
-        return c.addOrder(Order.asc("nomeCompleto")).list();
+        c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
+        c.addOrder(Order.asc("idPessoa"));
+        return c.list();
     }
     
     

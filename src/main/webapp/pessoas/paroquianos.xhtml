@@ -33,7 +33,7 @@
                     <p:inputText placeholder="Pesquisar"/>
                 </f:facet>
             </p:toolbar>
-            <p:dataTable class="tabela" id="tabelaParoquianos" var="paroquiano" value="#{paroquianoBean.pessoas}" rowKey="#{paroquiano.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
+            <p:dataTable class="tabela" id="tabelaParoquianos" var="paroquiano" value="#{paroquianoBean.paroquianos}" rowKey="#{paroquiano.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
                 <p:column selectionMode="multiple" style="width:16px;text-align: center"/>
                 <p:column headerText="ID" style="width: 50px">
                     <h:outputText value="#{paroquiano.idPessoa}" />

@@ -5,7 +5,6 @@
  */
 package br.com.sgparcat.controllers;
 
-import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.CadastroParoquianoService;
@@ -35,15 +34,16 @@ public class ParoquianoBean implements Serializable {
     @Inject
     private Pessoa paroquiano;
     
-    private List<Pessoa> pessoas;
+    private List<Pessoa> paroquianos;
     
     public void salvar(){
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
         paroquiano = cadastroParoquianoService.salvar(paroquiano);
+        limpar();
     }
     
     public void listar(){
-        pessoas = repositorioPessoas.retornaPessoas();
+        paroquianos = repositorioPessoas.retornaPessoas();
     }            
 
     public Pessoa getParoquiano() {
@@ -54,42 +54,16 @@ public class ParoquianoBean implements Serializable {
         this.paroquiano = paroquiano;
     }
 
-    public List<Pessoa> getPessoas() {
-        return pessoas;
+    public List<Pessoa> getParoquianos() {
+        return paroquianos;
     }
 
-    public void setPessoas(List<Pessoa> pessoas) {
-        this.pessoas = pessoas;
+    public void setParoquianos(List<Pessoa> paroquianos) {
+        this.paroquianos = paroquianos;
     }
     
-    
-    
+    public void limpar(){
+        paroquiano = new Pessoa();
+    }    
+
 }
-
-
-//    private List<Pessoa> paroquianos;
-//    
-//    @PostConstruct
-//    public void init() {
-//        paroquianos = new ArrayList<>();
-//        for(int i = 0 ; i < 35 ; i++) {
-//            Pessoa p = new Pessoa(93291L, Pessoa.TipoPessoa.PAROQUIANO, "Nome", 'M', 'C', new Date(), "09404551961", true, true, new Funcao());
-//            p.setTelefoneFixo("43 99999-9999");
-//            paroquianos.add(p);
-//        }
-//    }
-// 
-//    public List<Pessoa> getParoquianos() {
-//        return paroquianos;
-//    }
-
-
-//    public void onRowSelect(SelectEvent event) {
-//        FacesMessage msg = new FacesMessage("Pessoa selecionada", ""+((Pessoa) event.getObject()).getIdPessoa());
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-//    }
-// 
-//    public void onRowUnselect(UnselectEvent event) {
-//        FacesMessage msg = new FacesMessage("Pessoa não selecionada", ""+((Pessoa) event.getObject()).getIdPessoa());
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-//    }
