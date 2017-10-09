@@ -54,7 +54,12 @@
                                     <h:outputText value="#{paroquiano.organismos}" />
                                 </p:column>-->
                 <p:column style="width:80px;text-align: center">
-                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>
+                    <p:button style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" outcome="/pessoas/cadastrar-paroquiano">
+                        <f:param value="#{paroquiano.idPessoa}" name="paroquiano"/>                        
+                    </p:button>
+<!--                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar">
+                        <f:param value="#{paroquiano.idPessoa}" name="paroquiano"/>
+                    </p:commandButton>-->
                     <p:commandButton icon="ui-icon-trash" title="Remover" update="form"
                                      actionListener="#{paroquianoBean.excluir(paroquiano)}"
                                      ajax="false" onclick="if(!confirm('Deseja realmente remover #{paroquiano.nomeCompleto}  ?')) return false">
