@@ -4,18 +4,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-<!--    <f:metadata>
-        <f:event listener="#{paroquianoBean.limpar()}" type="preRenderView"/>
-    </f:metadata> -->
     <ui:define name="titulo">Cadastrar Paroquiano / Dizimista</ui:define>
     <ui:define name="corpo">
-        <h:form >
+        <h:form>
             <div class="titulo-opcoes">
                 <div class="titulo-pagina">
                     <h1>Cadastrar Paroquiano / Dizimista</h1>            
                 </div>
                 <div class="opcoes-right">
-                    <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar" action="#{paroquianoBean.salvar()}" update="dadospessoais,acessoaosistema" />
+                    <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar" action="#{paroquianoBean.salvar()}" update="dadospessoais,acessoaosistema, enderecos, contatos" />
                     <p:commandButton value="Cancelar" icon="ui-icon-cancel" title="Cancelar" disabled="true"/>
                 </div>     
             </div>
@@ -51,7 +48,7 @@
                         <div class="campo-cadastro">
                             <div style="width: 65%; display: inline-block">
                                 <p:outputLabel value="Estado Civil:" for="estadoCivil" />
-                                <p:selectOneButton id="estadoCivil" required="true"  value="#{paroquianoBean.paroquiano.estadoCivil}" >
+                                <p:selectOneButton id="estadoCivil" required="true" value="#{paroquianoBean.paroquiano.estadoCivil}" >
                                     <f:selectItem itemLabel="Casado" itemValue="C" />
                                     <f:selectItem itemLabel="Solteiro" itemValue="S" />
                                     <f:selectItem itemLabel="Divorciado" itemValue="D" />
@@ -74,7 +71,13 @@
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Função:" for="funcao" />
-                            <p:autoComplete id="funcao" required="true" size="26" dropdown="true" />
+                            <p:autoComplete id="funcao" size="26" dropdown="true" />
+                            <!--                            <p:autoComplete id="funcao" required="true" size="26" dropdown="true"
+                                                                        value="#{paroquianoBean.funcao}"
+                                                                        completeMethod="#{funcaoBean.listar()}"
+                                                                        var="funcao" itemLabel="#{funcao.titulo}"
+                                                                        itemValue="#{funcao}">
+                                                        </p:autoComplete>-->
                         </div>
                     </div>
                 </p:panel>
@@ -102,7 +105,7 @@
                 </p:panel>
             </div>
             <div class="div-campos-cadastro" style="width: 69.5%; float: left">
-                <p:panel header="Endereço" class="painel-cadastros">
+                <p:panel id="enderecos" header="Endereço" class="painel-cadastros">
                     <div class="coluna-1-3">
                         <div class="campo-cadastro">
                             <p:outputLabel value="Endereço:" for="endereco" />
@@ -129,7 +132,7 @@
                             <p:inputText id="cidade" value="#{paroquianoBean.paroquiano.cidade}"/>
                         </div>
                         <div class="campo-cadastro">
-                            <p:outputLabel value="UF:" for="box-selecao-estado" />
+                            <p:outputLabel value="Estado:" for="box-selecao-estado" />
                             <h:selectOneMenu id="box-selecao-estado" value="#{paroquianoBean.paroquiano.UF}" style="height:23px; width:90px; margin-right: 15px">
                                 <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
                                 <f:selectItem itemLabel="Acre" itemValue="AC" />
@@ -165,7 +168,7 @@
                 </p:panel>
             </div>
             <div class="div-campos-cadastro" style="width: 29.5%; float: right">
-                <p:panel header="Contatos" class="painel-cadastros">
+                <p:panel id="contatos" header="Contatos" class="painel-cadastros">
                     <div class="campo-cadastro ">
                         <p:outputLabel value="Telefone Fixo:" for="telefonefixo" />
                         <p:inputMask id="telefonefixo" mask="(99) 9999-9999" value="#{paroquianoBean.paroquiano.telefoneFixo}"/>

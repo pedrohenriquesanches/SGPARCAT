@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-
+        <f:event listener="#{clerigoBean.listar()}" type="preRenderView"/>
     </f:metadata>
     <ui:define name="titulo">Clérigo Paroquial</ui:define>
     <ui:define name="corpo">
@@ -33,22 +33,22 @@
                     <p:inputText placeholder="Pesquisar"/>
                 </f:facet>
             </p:toolbar>
-            <p:dataTable class="tabela" id="tabelaClerigos" var="clerigo" value="#{ClerigoBean.clerigos}" rowKey="#{clerigo.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
+            <p:dataTable class="tabela" id="tabelaClerigos" var="clerigo" value="#{clerigoBean.clerigos}" rowKey="#{clerigo.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
                 <p:column selectionMode="multiple" style="width:16px"/>
                 <p:column headerText="ID" style="width: 50px;text-align: center">
                     <h:outputText value="#{clerigo.idPessoa}" />
                 </p:column>
-                <p:column headerText="Função" style="width: 250px">
-                    <h:outputText value="#{clerigo.funcao}" />
+                <p:column headerText="Função" style="width: 150px">
+                    <h:outputText value="#{clerigo.funcao.titulo}" />
                 </p:column>
                 <p:column headerText="Nome" style="width: 250px">
                     <h:outputText value="#{clerigo.nomeCompleto}" />
                 </p:column>
-                <p:column headerText="Telefone" style="width: 70px">
+                <p:column headerText="Telefone" style="width: 80px">
                     <h:outputText value="#{clerigo.telefoneFixo}" />
                 </p:column>
-                <p:column headerText="Endereço" style="width: 150px">
-                    <h:outputText value="#{clerigo.enderecos}" />
+                <p:column headerText="Endereço" style="width: 250px">
+                    <h:outputText value="#{clerigo.endereco} - #{clerigo.cidade}" />
                 </p:column>
                 <p:column style="width:80px;text-align: center">
                     <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>

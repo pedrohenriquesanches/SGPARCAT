@@ -5,6 +5,7 @@
  */
 package br.com.sgparcat.repositories;
 
+import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Pessoa;
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -29,18 +29,32 @@ public class Pessoas implements Serializable{
     @Inject
     private EntityManager manager;
     
-    public Pessoa guardar(Pessoa paroquiano){
+    public Pessoa guardar(Pessoa pessoa){
         EntityTransaction et = manager.getTransaction();
         et.begin();
-        paroquiano = manager.merge(paroquiano);
+        
+        Funcao f = new Funcao();
+        f.setTitulo("Coordenador");
+        manager.persist(f);
+        pessoa.setFuncao(f);
+        
+        pessoa = manager.merge(pessoa);
         et.commit();
-        return paroquiano;
+        return pessoa;
     }
     
-    public List<Pessoa> retornaPessoas(){
+    public List<Pessoa> retornaParoquianos(){
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
         c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
+        c.addOrder(Order.asc("idPessoa"));
+        return c.list();
+    }
+    
+    public List<Pessoa> retornaClerigos(){
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Pessoa.class);
+        c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.CLERIGO));
         c.addOrder(Order.asc("idPessoa"));
         return c.list();
     }

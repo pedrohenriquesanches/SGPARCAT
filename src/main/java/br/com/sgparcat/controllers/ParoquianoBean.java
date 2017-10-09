@@ -5,9 +5,10 @@
  */
 package br.com.sgparcat.controllers;
 
+import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Pessoas;
-import br.com.sgparcat.services.CadastroParoquianoService;
+import br.com.sgparcat.services.CadastroPessoaService;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -26,7 +27,7 @@ public class ParoquianoBean implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Inject
-    CadastroParoquianoService cadastroParoquianoService;
+    CadastroPessoaService cadastroPessoaService;
     
     @Inject
     Pessoas repositorioPessoas;
@@ -36,14 +37,18 @@ public class ParoquianoBean implements Serializable {
     
     private List<Pessoa> paroquianos;
     
+    @Inject
+    private Funcao funcao;
+    
     public void salvar(){
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
-        paroquiano = cadastroParoquianoService.salvar(paroquiano);
+        paroquiano.setFuncao(funcao);
+        paroquiano = cadastroPessoaService.salvar(paroquiano);
         limpar();
     }
     
     public void listar(){
-        paroquianos = repositorioPessoas.retornaPessoas();
+        paroquianos = repositorioPessoas.retornaParoquianos();
     }            
 
     public Pessoa getParoquiano() {
@@ -61,9 +66,17 @@ public class ParoquianoBean implements Serializable {
     public void setParoquianos(List<Pessoa> paroquianos) {
         this.paroquianos = paroquianos;
     }
+
+    public Funcao getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(Funcao funcao) {
+        this.funcao = funcao;
+    }
     
     public void limpar(){
         paroquiano = new Pessoa();
-    }    
+    }
 
 }
