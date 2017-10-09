@@ -7,6 +7,7 @@ br/com/sgparcat/repositories/Pessoas.class
 teste/TestandoBanco.class
 br/com/sgparcat/models/Evento.class
 br/com/sgparcat/controllers/ParticipanteBean.class
+br/com/sgparcat/services/CadastroPessoaService.class
 br/com/sgparcat/models/Organismo$TipoOrganismo.class
 br/com/sgparcat/models/Lancamento.class
 br/com/sgparcat/controllers/OrganismoBean.class
@@ -14,7 +15,6 @@ br/com/sgparcat/util/jpa/GeraTabelas.class
 br/com/sgparcat/util/jpa/EntityManagerProducer.class
 br/com/sgparcat/models/Pessoa$TipoPessoa.class
 teste/PrecoProdutoBean.class
-br/com/sgparcat/services/CadastroParoquianoService.class
 br/com/sgparcat/models/Contribuicao$TipoContribuicao.class
 br/com/sgparcat/controllers/DizimistaBean.class
 br/com/sgparcat/controllers/ClerigoBean.class

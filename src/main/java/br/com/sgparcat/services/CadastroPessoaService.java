@@ -25,5 +25,9 @@ public class CadastroPessoaService implements Serializable{
     public Pessoa salvar(Pessoa pessoa){
         return pessoas.guardar(pessoa);
     }
+
+    public void excluir(Pessoa pessoa) {
+        pessoas.remover(pessoa);
+    }
     
 }

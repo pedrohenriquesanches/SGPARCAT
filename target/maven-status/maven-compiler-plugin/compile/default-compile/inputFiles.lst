@@ -15,9 +15,9 @@
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/models/Funcao.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/FuncaoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/ClerigoBean.java
+/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/services/CadastroPessoaService.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/repositories/Pessoas.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/models/Membro.java
-/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/services/CadastroParoquianoService.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/ParoquianoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/util/jpa/GeraTabelas.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/repositories/Funcoes.java

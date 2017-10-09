@@ -42,6 +42,16 @@ public class Pessoas implements Serializable{
         et.commit();
         return pessoa;
     }
+
+    public void remover(Pessoa pessoa) {
+        EntityTransaction et = manager.getTransaction();
+        et.begin();
+        
+        pessoa =  manager.find(Pessoa.class, pessoa.getIdPessoa());
+        manager.remove(pessoa);
+        
+        et.commit();
+    }
     
     public List<Pessoa> retornaParoquianos(){
         Session session = manager.unwrap(Session.class);

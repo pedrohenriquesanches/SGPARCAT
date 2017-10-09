@@ -47,6 +47,10 @@ public class ParoquianoBean implements Serializable {
         limpar();
     }
     
+    public void excluir(Pessoa paroquiano){
+        cadastroPessoaService.excluir(paroquiano);
+    }
+    
     public void listar(){
         paroquianos = repositorioPessoas.retornaParoquianos();
     }            

@@ -17,7 +17,7 @@
                 <p:button outcome="/pessoas/cadastrar-paroquiano" value="Cadastrar Paroquiano" icon="ui-icon-plus"/>
             </div>
         </div>        
-        <h:form>
+        <h:form id="form">
             <p:toolbar class="tollbartabela">
                 <f:facet name="left">
                     <p:outputLabel value="Função:" for="box-selecao-funcoes" />
@@ -55,7 +55,10 @@
                                 </p:column>-->
                 <p:column style="width:80px;text-align: center">
                     <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>
-                    <p:commandButton  icon="ui-icon-trash" title="Remover"/>
+                    <p:commandButton icon="ui-icon-trash" title="Remover" update="form"
+                                     actionListener="#{paroquianoBean.excluir(paroquiano)}"
+                                     ajax="false" onclick="if(!confirm('Deseja realmente remover #{paroquiano.nomeCompleto}  ?')) return false">
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>
