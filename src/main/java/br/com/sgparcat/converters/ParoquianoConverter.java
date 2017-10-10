@@ -23,7 +23,7 @@ public class ParoquianoConverter implements Converter{
     
     private Pessoas repositorioPessoas;
 
-    public ParoquianoConverter(Pessoas repositorioPessoas) {
+    public ParoquianoConverter() {
         this.repositorioPessoas = CDIServiceLocator.getBean(Pessoas.class);
     }
 

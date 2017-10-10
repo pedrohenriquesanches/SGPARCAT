@@ -69,10 +69,7 @@ public class Pessoas implements Serializable {
     }
 
     public Pessoa retornaPorId(Long id) {
-        System.out.println("CHEGOU AQUI " + id);
-        Pessoa pessoa = manager.find(Pessoa.class, 11);
-        System.out.println("CHEGOU AQUI " + pessoa);
-        return pessoa;
+        return manager.find(Pessoa.class, id);
     }
 
 }
