@@ -21,23 +21,22 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author pedrohensanches
  */
+public class Pessoas implements Serializable {
 
-public class Pessoas implements Serializable{
-    
     private static final long serialVersionUID = 1L;
-    
+
     @Inject
     private EntityManager manager;
-    
-    public Pessoa guardar(Pessoa pessoa){
+
+    public Pessoa guardar(Pessoa pessoa) {
         EntityTransaction et = manager.getTransaction();
         et.begin();
-        
+
         Funcao f = new Funcao();
         f.setTitulo("Coordenador");
         manager.persist(f);
         pessoa.setFuncao(f);
-        
+
         pessoa = manager.merge(pessoa);
         et.commit();
         return pessoa;
@@ -46,28 +45,34 @@ public class Pessoas implements Serializable{
     public void remover(Pessoa pessoa) {
         EntityTransaction et = manager.getTransaction();
         et.begin();
-        
-        pessoa =  manager.find(Pessoa.class, pessoa.getIdPessoa());
+
+        pessoa = manager.find(Pessoa.class, pessoa.getIdPessoa());
         manager.remove(pessoa);
-        
+
         et.commit();
     }
-    
-    public List<Pessoa> retornaParoquianos(){
+
+    public List<Pessoa> retornaParoquianos() {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
         c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
         c.addOrder(Order.asc("idPessoa"));
         return c.list();
     }
-    
-    public List<Pessoa> retornaClerigos(){
+
+    public List<Pessoa> retornaClerigos() {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
         c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.CLERIGO));
         c.addOrder(Order.asc("idPessoa"));
         return c.list();
     }
-    
-    
+
+    public Pessoa retornaPorId(Long id) {
+        System.out.println("CHEGOU AQUI " + id);
+        Pessoa pessoa = manager.find(Pessoa.class, 11);
+        System.out.println("CHEGOU AQUI " + pessoa);
+        return pessoa;
+    }
+
 }
