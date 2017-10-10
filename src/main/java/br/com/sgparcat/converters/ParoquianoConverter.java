@@ -5,6 +5,7 @@
  */
 package br.com.sgparcat.converters;
 
+import br.com.sgparcat.cdi.CDIServiceLocator;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Pessoas;
 import javax.faces.component.UIComponent;
@@ -20,7 +21,11 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(forClass = Pessoa.class)
 public class ParoquianoConverter implements Converter{
     
-    private Pessoas repositorioPessoas = new Pessoas();
+    private Pessoas repositorioPessoas;
+
+    public ParoquianoConverter(Pessoas repositorioPessoas) {
+        this.repositorioPessoas = CDIServiceLocator.getBean(Pessoas.class);
+    }
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {

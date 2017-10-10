@@ -6,6 +6,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
         <f:event listener="#{paroquianoBean.listar()}" type="preRenderView"/>
+        <f:viewParam name="paroquianos" value="#{paroquianoBean.paroquianos}"/>
     </f:metadata> 
     <ui:define name="titulo">Paroquianos</ui:define>
     <ui:define name="corpo">
