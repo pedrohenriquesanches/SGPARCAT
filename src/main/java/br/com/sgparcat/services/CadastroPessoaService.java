@@ -22,8 +22,8 @@ public class CadastroPessoaService implements Serializable{
     @Inject
     private Pessoas pessoas;
     
-    public Pessoa salvar(Pessoa pessoa){
-        return pessoas.guardar(pessoa);
+    public void salvar(Pessoa pessoa){
+        pessoas.guardar(pessoa);
     }
 
     public void excluir(Pessoa pessoa) {

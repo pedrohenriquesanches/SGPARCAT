@@ -28,18 +28,11 @@ public class Pessoas implements Serializable {
     @Inject
     private EntityManager manager;
 
-    public Pessoa guardar(Pessoa pessoa) {
+    public void guardar(Pessoa pessoa) {
         EntityTransaction et = manager.getTransaction();
         et.begin();
-
-//        Funcao f = new Funcao();
-//        f.setTitulo("Coordenador");
-//        manager.persist(f);
-//        pessoa.setFuncao(f);
-
-        pessoa = manager.merge(pessoa);
+        manager.merge(pessoa);
         et.commit();
-        return pessoa;
     }
 
     public void remover(Pessoa pessoa) {

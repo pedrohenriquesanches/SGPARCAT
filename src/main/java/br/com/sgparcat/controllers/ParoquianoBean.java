@@ -11,6 +11,8 @@ import br.com.sgparcat.services.CadastroPessoaService;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -54,7 +56,9 @@ public class ParoquianoBean implements Serializable {
     
     public void salvar(){
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
-        paroquiano = cadastroPessoaService.salvar(paroquiano);
+        cadastroPessoaService.salvar(paroquiano);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null,
+                "O cadastro de "+ paroquiano.getNomeCompleto() +" foi realizado com sucesso"));
         limpar();
     }
     

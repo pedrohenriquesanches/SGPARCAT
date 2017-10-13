@@ -37,13 +37,9 @@ public class ClerigoBean implements Serializable {
     
     private List<Pessoa> clerigos;
     
-    @Inject
-    private Funcao funcao;
-    
     public void salvar(){
         clerigo.setTipoPessoa(Pessoa.TipoPessoa.CLERIGO);
-        clerigo.setFuncao(funcao);
-        clerigo = cadastroPessoaService.salvar(clerigo);
+        cadastroPessoaService.salvar(clerigo);
         limpar();
     }
     
@@ -65,14 +61,6 @@ public class ClerigoBean implements Serializable {
 
     public void setClerigos(List<Pessoa> clerigos) {
         this.clerigos = clerigos;
-    }
-
-    public Funcao getFuncao() {
-        return funcao;
-    }
-
-    public void setFuncao(Funcao funcao) {
-        this.funcao = funcao;
     }
     
     public void limpar(){

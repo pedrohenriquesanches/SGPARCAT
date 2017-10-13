@@ -58,8 +58,12 @@
                         <f:param value="#{paroquiano.idPessoa}" name="paroquiano"/>                        
                     </p:button>
                     <p:commandButton icon="ui-icon-trash" title="Remover" update="form"
-                                     actionListener="#{paroquianoBean.excluir(paroquiano)}"
-                                     ajax="false" onclick="if(!confirm('Deseja realmente remover #{paroquiano.nomeCompleto}  ?')) return false">
+                                     actionListener="#{paroquianoBean.excluir(paroquiano)}">
+                        <p:confirm header="Atenção" message="Deseja realmente remover #{paroquiano.nomeCompleto} ?" icon="ui-icon-alert" />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
