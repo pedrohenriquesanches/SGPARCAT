@@ -20,24 +20,25 @@ import javax.inject.Named;
  *
  * @author pedrohensanches
  */
-
 @Named
 @SessionScoped
 public class ParoquianoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Inject
     CadastroPessoaService cadastroPessoaService;
-    
+
     @Inject
     Pessoas repositorioPessoas;
-    
+
     @Inject
     private Pessoa paroquiano;
-    
+
     private List<Pessoa> paroquianos;
     
+    private String inputPesquisa;
+
     public Pessoa getParoquiano() {
         return paroquiano;
     }
@@ -53,24 +54,35 @@ public class ParoquianoBean implements Serializable {
     public void setParoquianos(List<Pessoa> paroquianos) {
         this.paroquianos = paroquianos;
     }
+
+    public String getInputPesquisa() {
+        return inputPesquisa;
+    }
+
+    public void setInputPesquisa(String inputPesquisa) {
+        this.inputPesquisa = inputPesquisa;
+    }
     
-    public void salvar(){
+    public void salvar() {
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
         cadastroPessoaService.salvar(paroquiano);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null,
-                "O cadastro de "+ paroquiano.getNomeCompleto() +" foi realizado com sucesso"));
+                "O cadastro de " + paroquiano.getNomeCompleto() + " foi realizado com sucesso"));
         limpar();
     }
-    
-    public void excluir(Pessoa paroquiano){
-        cadastroPessoaService.excluir(paroquiano);
-    }    
 
-    public void limpar(){
+    public void excluir(Pessoa paroquiano) {
+        cadastroPessoaService.excluir(paroquiano);
+    }
+
+    public void limpar() {
         paroquiano = new Pessoa();
     }
-    
-    public void listarParoquianos(){
-        paroquianos = repositorioPessoas.retornaParoquianos();
+
+    public void listarParoquianos() {
+        if(inputPesquisa==null){
+            inputPesquisa = "";
+        }
+        paroquianos = repositorioPessoas.retornaParoquianosPorNome(inputPesquisa);
     }
 }

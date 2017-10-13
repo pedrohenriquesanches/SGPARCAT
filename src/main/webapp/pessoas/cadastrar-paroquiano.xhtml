@@ -17,7 +17,8 @@
                 <div class="opcoes-right">
                     <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar" action="#{paroquianoBean.salvar()}" update="dadospessoais,acessoaosistema, enderecos, contatos" />
                     <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/pessoas/paroquianos"
-                              onclick="if(!confirm('Tem certeza? Você será redirecionado para a tela de consulta de paroquianos.')) return false">
+                              onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de consulta de paroquianos.'))
+                                          return false">
                     </p:button>
                 </div>     
             </div>
@@ -90,7 +91,9 @@
                 <p:panel id="acessoaosistema" header="Acesso ao sistema" class="painel-cadastros" style="height: 300px">
                     <div class="campo-cadastro ">
                         <p:outputLabel value="E-mail:" for="email" />
-                        <p:inputText id="email" value="#{paroquianoBean.paroquiano.email}"/>
+                        <p:inputText id="email" value="#{paroquianoBean.paroquiano.email}">
+                            <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
+                        </p:inputText>
                     </div>
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Ceder acesso ao sistema para essa pessoa: " />

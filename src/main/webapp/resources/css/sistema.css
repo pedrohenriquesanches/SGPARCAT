@@ -120,6 +120,15 @@ select {
 .tollbartabela .ui-inputfield {
     border: 1px solid GRAY;
     color: #000000;
+    border-right: none;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.tollbartabela .botaopesquisa {
+    border: 1px solid GRAY;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .tabela .ui-state-default {

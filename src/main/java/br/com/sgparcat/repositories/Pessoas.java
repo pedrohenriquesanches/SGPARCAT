@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -45,11 +46,20 @@ public class Pessoas implements Serializable {
         et.commit();
     }
 
-    public List<Pessoa> retornaParoquianos() {
+    public List<Pessoa> retornaTodosOsParoquianos() {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
         c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
-        c.addOrder(Order.asc("idPessoa"));
+        c.addOrder(Order.asc("nomeCompleto"));
+        return c.list();
+    }
+    
+    public List<Pessoa> retornaParoquianosPorNome(String nome) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Pessoa.class);
+        c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
+        c.add(Restrictions.like("nomeCompleto", nome, MatchMode.ANYWHERE));
+        c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
     }
 
@@ -57,7 +67,7 @@ public class Pessoas implements Serializable {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
         c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.CLERIGO));
-        c.addOrder(Order.asc("idPessoa"));
+        c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
     }
 

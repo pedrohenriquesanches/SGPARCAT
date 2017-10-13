@@ -30,7 +30,10 @@
                     </h:selectOneMenu>
                 </f:facet>
                 <f:facet name="right">
-                    <p:inputText placeholder="Pesquisar"/>
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{paroquianoBean.inputPesquisa}" />
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa"
+                                     action="#{paroquianoBean.listarParoquianos()}"
+                                     update="tabelaParoquianos" />
                 </f:facet>
             </p:toolbar>
             <p:dataTable class="tabela" id="tabelaParoquianos" var="paroquiano" value="#{paroquianoBean.paroquianos}" rowKey="#{paroquiano.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
@@ -61,8 +64,8 @@
                                      actionListener="#{paroquianoBean.excluir(paroquiano)}">
                         <p:confirm header="Atenção" message="Deseja realmente remover #{paroquiano.nomeCompleto} ?" icon="ui-icon-alert" />
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            <p:commandButton value="Sim" type="button" icon="ui-icon-check" />
+                            <p:commandButton value="Não" type="button" icon="ui-icon-close" />
                         </p:confirmDialog>
                     </p:commandButton>
                 </p:column>
