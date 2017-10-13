@@ -37,7 +37,6 @@
                 </f:facet>
             </p:toolbar>
             <p:dataTable class="tabela" id="tabelaParoquianos" var="paroquiano" value="#{paroquianoBean.paroquianos}" rowKey="#{paroquiano.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
-                <p:column selectionMode="multiple" style="width:16px;text-align: center"/>
                 <p:column headerText="ID" style="width: 50px">
                     <h:outputText value="#{paroquiano.idPessoa}" />
                 </p:column>
@@ -61,12 +60,8 @@
                         <f:param value="#{paroquiano.idPessoa}" name="paroquiano"/>                        
                     </p:button>
                     <p:commandButton icon="ui-icon-trash" title="Remover" update="form"
-                                     actionListener="#{paroquianoBean.excluir(paroquiano)}">
-                        <p:confirm header="Atenção" message="Deseja realmente remover #{paroquiano.nomeCompleto} ?" icon="ui-icon-alert" />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sim" type="button" icon="ui-icon-check" />
-                            <p:commandButton value="Não" type="button" icon="ui-icon-close" />
-                        </p:confirmDialog>
+                                     actionListener="#{paroquianoBean.excluir(paroquiano)}"
+                                     ajax="false" onclick="if (!confirm('Tem certeza? Os dados de #{paroquiano.nomeCompleto} serão excluídos!')) return false">
                     </p:commandButton>
                 </p:column>
             </p:dataTable>

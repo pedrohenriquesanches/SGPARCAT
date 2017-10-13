@@ -22,7 +22,7 @@
                     </p:button>
                 </div>     
             </div>
-            <p:messages id="messages" showDetail="true" autoUpdate="true" />
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
             <div class="div-campos-cadastro" style="width: 69.5%; float: left">
                 <p:panel id="dadospessoais" header="Dados Pessoais" class="painel-cadastros" style="height: 300px">
                     <div class="coluna-1-2">
@@ -39,8 +39,10 @@
                             <p:inputMask id="cpf" required="true" mask="999.999.999-99" value="#{paroquianoBean.paroquiano.cpf}" />
                         </div>
                         <div class="campo-cadastro">
-                            <p:outputLabel value="RG:" for="rg"/>
-                            <p:inputMask id="rg" mask="99.999.999-9" value="#{paroquianoBean.paroquiano.rg}" />
+                            <p:outputLabel value="RG:" title="Apenas números e letras" for="rg"/>
+                            <p:inputText id="rg" title="Apenas números e letras" value="#{paroquianoBean.paroquiano.rg}">
+                                <p:keyFilter regEx="/[a-z0-9_]/i"/>
+                            </p:inputText>
                         </div>
                     </div>
                     <div class="coluna-1-2">

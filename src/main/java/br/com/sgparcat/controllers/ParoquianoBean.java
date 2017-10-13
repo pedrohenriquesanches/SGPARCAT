@@ -38,6 +38,8 @@ public class ParoquianoBean implements Serializable {
     private List<Pessoa> paroquianos;
     
     private String inputPesquisa;
+    
+    private boolean estaEditando;
 
     public Pessoa getParoquiano() {
         return paroquiano;
@@ -66,8 +68,8 @@ public class ParoquianoBean implements Serializable {
     public void salvar() {
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
         cadastroPessoaService.salvar(paroquiano);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null,
-                "O cadastro de " + paroquiano.getNomeCompleto() + " foi realizado com sucesso"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "O cadastro de " + paroquiano.getNomeCompleto() + " foi realizado com sucesso",null));
         limpar();
     }
 
@@ -80,9 +82,10 @@ public class ParoquianoBean implements Serializable {
     }
 
     public void listarParoquianos() {
-        if(inputPesquisa==null){
-            inputPesquisa = "";
+        if(inputPesquisa==null || inputPesquisa.equals("")){
+            paroquianos = repositorioPessoas.retornaTodosOsParoquianos();
+        }else{
+            paroquianos = repositorioPessoas.retornaParoquianosPorNome(inputPesquisa);
         }
-        paroquianos = repositorioPessoas.retornaParoquianosPorNome(inputPesquisa);
     }
 }
