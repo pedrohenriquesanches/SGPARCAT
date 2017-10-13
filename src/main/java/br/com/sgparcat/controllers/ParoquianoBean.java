@@ -5,14 +5,15 @@
  */
 package br.com.sgparcat.controllers;
 
+import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.CadastroPessoaService;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,7 +22,7 @@ import javax.inject.Named;
  * @author pedrohensanches
  */
 @Named
-@SessionScoped
+@ViewScoped
 public class ParoquianoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,7 +40,8 @@ public class ParoquianoBean implements Serializable {
     
     private String inputPesquisa;
     
-    private boolean estaEditando;
+    @Inject
+    private Funcao funcaoSelecionada;
 
     public Pessoa getParoquiano() {
         return paroquiano;
@@ -65,6 +67,18 @@ public class ParoquianoBean implements Serializable {
         this.inputPesquisa = inputPesquisa;
     }
     
+    public Funcao getFuncaoSelecionada() {
+        return funcaoSelecionada;
+    }
+
+    public void setFuncaoSelecionada(Funcao funcaoSelecionada) {
+        this.funcaoSelecionada = funcaoSelecionada;
+    }
+    
+    public void limpar() {
+        paroquiano = new Pessoa();
+    }
+    
     public void salvar() {
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
         cadastroPessoaService.salvar(paroquiano);
@@ -77,15 +91,7 @@ public class ParoquianoBean implements Serializable {
         cadastroPessoaService.excluir(paroquiano);
     }
 
-    public void limpar() {
-        paroquiano = new Pessoa();
-    }
-
     public void listarParoquianos() {
-        if(inputPesquisa==null || inputPesquisa.equals("")){
-            paroquianos = repositorioPessoas.retornaTodosOsParoquianos();
-        }else{
-            paroquianos = repositorioPessoas.retornaParoquianosPorNome(inputPesquisa);
-        }
+        paroquianos = repositorioPessoas.retornaParoquianos(funcaoSelecionada, inputPesquisa);
     }
 }

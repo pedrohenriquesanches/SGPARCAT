@@ -83,6 +83,10 @@ public class Funcao implements Serializable {
         this.participantes = participantes;
     }
     
+    public boolean isFuncaoValida(){
+        return (idFuncao != null) && (titulo != null);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

@@ -6,9 +6,10 @@
 package br.com.sgparcat.controllers;
 
 import br.com.sgparcat.models.Funcao;
+import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Funcoes;
+import br.com.sgparcat.repositories.Pessoas;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -28,8 +29,12 @@ public class FuncaoBean implements Serializable {
     @Inject
     Funcoes repositorioFuncoes;
         
-    public List<Funcao> listarFuncoes(String input){
+    public List<Funcao> listarFuncoesPorNome(String input){
         return repositorioFuncoes.retornaFuncoesPorNome(input);
+    }
+    
+    public List<Funcao> listarFuncoes(){
+        return repositorioFuncoes.retornaFuncoes();
     }
 
 }

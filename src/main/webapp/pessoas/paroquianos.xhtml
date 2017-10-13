@@ -21,19 +21,21 @@
             <p:toolbar class="tollbartabela">
                 <f:facet name="left">
                     <p:outputLabel value="Função:" for="box-selecao-funcoes" />
-                    <h:selectOneMenu id="box-selecao-funcoes">
-                        <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="Ministros" itemValue="Ministros" />
-                        <f:selectItem itemLabel="Coordenadores" itemValue="Coordenadores" />
-                        <f:selectItem itemLabel="Secretários" itemValue="Secretários" />
-                        <f:selectItem itemLabel="Tesoureiros" itemValue="Tesoureiros" />
+                    <h:selectOneMenu id="box-selecao-funcoes" value="#{paroquianoBean.funcaoSelecionada}"
+                                     converter="funcaoConverter">
+                        <f:selectItem  itemLabel="Todas" itemValue="-1"/>
+                        <f:selectItems value="#{funcaoBean.listarFuncoes()}"
+                                       var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}"/>
                     </h:selectOneMenu>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa"
+                                     actionListener="#{paroquianoBean.listarParoquianos()}"
+                                     update="form" />
                 </f:facet>
                 <f:facet name="right">
                     <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{paroquianoBean.inputPesquisa}" />
                     <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa"
-                                     action="#{paroquianoBean.listarParoquianos()}"
-                                     update="tabelaParoquianos" />
+                                     actionListener="#{paroquianoBean.listarParoquianos()}"
+                                     update="form" />
                 </f:facet>
             </p:toolbar>
             <p:dataTable class="tabela" id="tabelaParoquianos" var="paroquiano" value="#{paroquianoBean.paroquianos}" rowKey="#{paroquiano.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
@@ -61,7 +63,8 @@
                     </p:button>
                     <p:commandButton icon="ui-icon-trash" title="Remover" update="form"
                                      actionListener="#{paroquianoBean.excluir(paroquiano)}"
-                                     ajax="false" onclick="if (!confirm('Tem certeza? Os dados de #{paroquiano.nomeCompleto} serão excluídos!')) return false">
+                                     ajax="false" onclick="if (!confirm('Tem certeza? Os dados de #{paroquiano.nomeCompleto} serão excluídos!'))
+                                                 return false">
                     </p:commandButton>
                 </p:column>
             </p:dataTable>

@@ -32,6 +32,10 @@ public class FuncaoConverter implements Converter {
         if (value == null || value.isEmpty()) {
             return null;
         }
+        
+        if(value.equals("-1")){
+            return new Funcao();
+        } 
 
         if (!value.matches("\\d+")) {
             throw new ConverterException("O valor não é um ID válido: " + value);
@@ -46,10 +50,14 @@ public class FuncaoConverter implements Converter {
         if (value == null) {
             return null;
         }
-
+        
+        if (value.equals("-1")){
+            return "-1";
+        }
+        
         if (!(value instanceof Funcao)) {
             throw new ConverterException("Esse valor não é uma Função Válida: " + value);
-        }
+        }       
 
         Integer id = ((Funcao) value).getIdFuncao();
         return (id != null) ? String.valueOf(id) : null;
