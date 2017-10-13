@@ -27,26 +27,9 @@ public class FuncaoBean implements Serializable {
 
     @Inject
     Funcoes repositorioFuncoes;
-    
-    @Inject
-    private Funcao funcao;
-    
-    private List<Funcao> funcoes;
-    
-    public void listar(){
-        funcoes = repositorioFuncoes.retornaFuncoes();
-    }
-    
-    public List<Funcao> getFuncoes() {
-        return funcoes;
-    }
-
-    public void setFuncoes(List<Funcao> funcoes) {
-        this.funcoes = funcoes;
-    }
-    
-    public void limpar(){
-        funcoes = new ArrayList<>();
+        
+    public List<Funcao> listarFuncoes(String input){
+        return repositorioFuncoes.retornaFuncoesPorNome(input);
     }
 
 }

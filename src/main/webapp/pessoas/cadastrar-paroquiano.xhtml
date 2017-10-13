@@ -74,13 +74,12 @@
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Função:" for="funcao" />
-                            <p:autoComplete id="funcao" size="26" dropdown="true" />
-                            <!--                            <p:autoComplete id="funcao" required="true" size="26" dropdown="true"
-                                                                        value="#{paroquianoBean.funcao}"
-                                                                        completeMethod="#{funcaoBean.listar()}"
-                                                                        var="funcao" itemLabel="#{funcao.titulo}"
-                                                                        itemValue="#{funcao}">
-                                                        </p:autoComplete>-->
+                            <p:autoComplete id="funcao" required="true" size="26" dropdown="true" emptyMessage="Nenhuma função encontrada com este nome" scrollHeight="180"
+                                            value="#{paroquianoBean.paroquiano.funcao}"
+                                            completeMethod="#{funcaoBean.listarFuncoes}"
+                                            var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}"
+                                            converter="funcaoConverter">
+                            </p:autoComplete>
                         </div>
                     </div>
                 </p:panel>

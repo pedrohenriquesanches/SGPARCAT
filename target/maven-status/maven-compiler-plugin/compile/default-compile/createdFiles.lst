@@ -1,6 +1,5 @@
 br/com/sgparcat/controllers/ContribuicaoBean.class
 br/com/sgparcat/models/Contribuicao.class
-br/com/sgparcat/converters/cdiServiceLocator.class
 br/com/sgparcat/models/Participante.class
 br/com/sgparcat/controllers/MembroBean.class
 br/com/sgparcat/repositories/Funcoes.class
@@ -9,6 +8,7 @@ teste/TestandoBanco.class
 br/com/sgparcat/models/Evento.class
 br/com/sgparcat/controllers/ParticipanteBean.class
 br/com/sgparcat/services/CadastroPessoaService.class
+br/com/sgparcat/converters/FuncaoConverter.class
 br/com/sgparcat/models/Organismo$TipoOrganismo.class
 br/com/sgparcat/models/Lancamento.class
 br/com/sgparcat/controllers/OrganismoBean.class

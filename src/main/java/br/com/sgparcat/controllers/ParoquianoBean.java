@@ -5,7 +5,6 @@
  */
 package br.com.sgparcat.controllers;
 
-import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.CadastroPessoaService;
@@ -37,24 +36,6 @@ public class ParoquianoBean implements Serializable {
     
     private List<Pessoa> paroquianos;
     
-    @Inject
-    private Funcao funcao;
-    
-    public void salvar(){
-        paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
-        paroquiano.setFuncao(funcao);
-        paroquiano = cadastroPessoaService.salvar(paroquiano);
-        limpar();
-    }
-    
-    public void excluir(Pessoa paroquiano){
-        cadastroPessoaService.excluir(paroquiano);
-    }
-    
-    public void listar(){
-        paroquianos = repositorioPessoas.retornaParoquianos();
-    }            
-
     public Pessoa getParoquiano() {
         return paroquiano;
     }
@@ -70,17 +51,22 @@ public class ParoquianoBean implements Serializable {
     public void setParoquianos(List<Pessoa> paroquianos) {
         this.paroquianos = paroquianos;
     }
-
-    public Funcao getFuncao() {
-        return funcao;
-    }
-
-    public void setFuncao(Funcao funcao) {
-        this.funcao = funcao;
+    
+    public void salvar(){
+        paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
+        paroquiano = cadastroPessoaService.salvar(paroquiano);
+        limpar();
     }
     
+    public void excluir(Pessoa paroquiano){
+        cadastroPessoaService.excluir(paroquiano);
+    }    
+
     public void limpar(){
         paroquiano = new Pessoa();
     }
-
+    
+    public void listarParoquianos(){
+        paroquianos = repositorioPessoas.retornaParoquianos();
+    }
 }

@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:event listener="#{paroquianoBean.listar()}" type="preRenderView"/>
+        <f:event listener="#{paroquianoBean.listarParoquianos()}" type="preRenderView"/>
     </f:metadata> 
     <ui:define name="titulo">Paroquianos</ui:define>
     <ui:define name="corpo">
@@ -57,9 +57,6 @@
                     <p:button style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" outcome="/pessoas/cadastrar-paroquiano">
                         <f:param value="#{paroquiano.idPessoa}" name="paroquiano"/>                        
                     </p:button>
-<!--                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar">
-                        <f:param value="#{paroquiano.idPessoa}" name="paroquiano"/>
-                    </p:commandButton>-->
                     <p:commandButton icon="ui-icon-trash" title="Remover" update="form"
                                      actionListener="#{paroquianoBean.excluir(paroquiano)}"
                                      ajax="false" onclick="if(!confirm('Deseja realmente remover #{paroquiano.nomeCompleto}  ?')) return false">
