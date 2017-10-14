@@ -9,6 +9,7 @@ import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.CadastroPessoaService;
+import br.com.sgparcat.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -77,18 +78,22 @@ public class ParoquianoBean implements Serializable {
     
     public void limpar() {
         paroquiano = new Pessoa();
+        funcaoSelecionada = new Funcao();
+        inputPesquisa = "";        
     }
     
     public void salvar() {
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
-        cadastroPessoaService.salvar(paroquiano);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "O cadastro de " + paroquiano.getNomeCompleto() + " foi realizado com sucesso",null));
+        cadastroPessoaService.salvar(paroquiano);        
+        FacesUtil.addInfoMessage("O cadastro de " + paroquiano.getNomeCompleto() + " foi realizado com sucesso");
         limpar();
     }
 
     public void excluir(Pessoa paroquiano) {
         cadastroPessoaService.excluir(paroquiano);
+        paroquianos.remove(paroquiano);
+        FacesUtil.addInfoMessage("O cadastro de" + paroquiano.getNomeCompleto() + " foi excluido com sucesso!");
+        limpar();
     }
 
     public void listarParoquianos() {

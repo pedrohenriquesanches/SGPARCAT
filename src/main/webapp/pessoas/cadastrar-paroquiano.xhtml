@@ -4,12 +4,17 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    <f:metadata>
-        <f:viewParam name="paroquiano" value="#{paroquianoBean.paroquiano}"/>
-    </f:metadata> 
+
     <ui:define name="titulo">Cadastrar Paroquiano / Dizimista</ui:define>
+
     <ui:define name="corpo">
+
+        <f:metadata>
+            <f:viewParam name="paroquiano" value="#{paroquianoBean.paroquiano}"/>
+        </f:metadata>
+        
         <h:form>
+            
             <div class="titulo-opcoes">
                 <div class="titulo-pagina">
                     <h1>Cadastrar Paroquiano / Dizimista</h1>            
@@ -22,7 +27,9 @@
                     </p:button>
                 </div>     
             </div>
+            
             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+            
             <div class="div-campos-cadastro" style="width: 69.5%; float: left">
                 <p:panel id="dadospessoais" header="Dados Pessoais" class="painel-cadastros" style="height: 300px">
                     <div class="coluna-1-2">
@@ -54,12 +61,12 @@
                             </p:selectOneButton>                            
                         </div>
                         <div class="campo-cadastro">
-                            <div style="width: 65%; display: inline-block">
+                            <div style="width: 68%; display: inline-block">
                                 <p:outputLabel value="Estado Civil:" for="estadoCivil" />
                                 <p:selectOneButton id="estadoCivil" required="true" value="#{paroquianoBean.paroquiano.estadoCivil}" >
-                                    <f:selectItem itemLabel="Casado" itemValue="C" />
-                                    <f:selectItem itemLabel="Solteiro" itemValue="S" />
-                                    <f:selectItem itemLabel="Divorciado" itemValue="D" />
+                                    <f:selectItem itemLabel="Casado(a)" itemValue="C" />
+                                    <f:selectItem itemLabel="Solteiro(a)" itemValue="S" />
+                                    <f:selectItem itemLabel="Divorciado(a)" itemValue="D" />
                                 </p:selectOneButton>
                             </div>
                             <div style="width: 30%; display: inline-block">
@@ -89,6 +96,7 @@
                     </div>
                 </p:panel>
             </div>
+            
             <div class="div-campos-cadastro" style="width: 29.5%; float: right">
                 <p:panel id="acessoaosistema" header="Acesso ao sistema" class="painel-cadastros" style="height: 300px">
                     <div class="campo-cadastro ">
@@ -113,6 +121,7 @@
                     </div>
                 </p:panel>
             </div>
+            
             <div class="div-campos-cadastro" style="width: 69.5%; float: left">
                 <p:panel id="enderecos" header="Endereço" class="painel-cadastros">
                     <div class="coluna-1-3">
@@ -176,6 +185,7 @@
                     </div>
                 </p:panel>
             </div>
+            
             <div class="div-campos-cadastro" style="width: 29.5%; float: right">
                 <p:panel id="contatos" header="Contatos" class="painel-cadastros">
                     <div class="campo-cadastro ">
@@ -188,6 +198,9 @@
                     </div>
                 </p:panel>
             </div>
+            
         </h:form>
+        
     </ui:define>
+    
 </ui:composition>

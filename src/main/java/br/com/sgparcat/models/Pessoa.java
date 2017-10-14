@@ -89,7 +89,7 @@ public class Pessoa implements Serializable {
     @Column(unique = true, nullable = false)
     private String cpf;
 
-    @Column(unique = true)
+    @Column
     private String rg;
 
     @Column(nullable = false)

@@ -7,6 +7,7 @@ br/com/sgparcat/repositories/Pessoas.class
 teste/TestandoBanco.class
 br/com/sgparcat/models/Evento.class
 br/com/sgparcat/controllers/ParticipanteBean.class
+br/com/sgparcat/util/jsf/FacesUtil.class
 br/com/sgparcat/services/CadastroPessoaService.class
 br/com/sgparcat/converters/FuncaoConverter.class
 br/com/sgparcat/models/Organismo$TipoOrganismo.class
