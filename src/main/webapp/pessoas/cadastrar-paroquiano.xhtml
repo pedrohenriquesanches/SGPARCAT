@@ -87,10 +87,8 @@
                         <div class="campo-cadastro">
                             <p:outputLabel value="Função:" for="funcao" />
                             <p:autoComplete id="funcao" required="true" size="26" dropdown="true" emptyMessage="Nenhuma função encontrada com este nome" scrollHeight="180"
-                                            value="#{paroquianoBean.paroquiano.funcao}"
-                                            completeMethod="#{funcaoBean.listarFuncoesPorNome}"
-                                            var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}"
-                                            converter="funcaoConverter">
+                                            value="#{paroquianoBean.paroquiano.funcao}" completeMethod="#{funcaoBean.listarFuncoesPorNome}"
+                                            var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" converter="funcaoConverter">
                             </p:autoComplete>
                         </div>
                     </div>
@@ -112,8 +110,7 @@
                     <div class="campo-cadastro ">                 
                         <h:outputLabel for="senha1" value="Senha:" />
                         <p:password id="senha1" match="senha2" label="Senha" feedback="true" inline="true"
-                                    promptLabel="Digite a senha" weakLabel="Fraca"
-                                    goodLabel="Boa" strongLabel="Forte" disabled="true"/>
+                                    promptLabel="Digite a senha" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" disabled="true"/>
                     </div>
                     <div class="campo-cadastro ">
                         <h:outputLabel for="senha2" value="Confirme a Senha:" />

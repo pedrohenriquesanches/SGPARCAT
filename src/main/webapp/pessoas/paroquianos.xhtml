@@ -28,43 +28,25 @@
             <p:toolbar class="tollbartabela">
                 
                 <f:facet name="left">
-                    <p:outputLabel value="Função:"
-                                   for="box-selecao-funcoes" />
-                    <h:selectOneMenu id="box-selecao-funcoes"
-                                     value="#{paroquianoBean.funcaoSelecionada}"
-                                     converter="funcaoConverter">
+                    <p:outputLabel value="Função:" for="box-selecao-funcoes" />
+                    <h:selectOneMenu id="box-selecao-funcoes" value="#{paroquianoBean.funcaoSelecionada}" converter="funcaoConverter">
                         <f:selectItem  itemLabel="Todas" itemValue="-1"/>
-                        <f:selectItems value="#{funcaoBean.listarFuncoes()}"
-                                       var="funcao" itemLabel="#{funcao.titulo}"
-                                       itemValue="#{funcao}"/>
+                        <f:selectItems value="#{funcaoBean.listarFuncoes()}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}"/>
                         <p:ajax event="change" listener="#{paroquianoBean.listarParoquianos()}" update="form" />
                     </h:selectOneMenu>
                 </f:facet>
                 
                 <f:facet name="right">
-                    <p:inputText id="campoPesquisa"
-                                 placeholder="Pesquisar"
-                                 value="#{paroquianoBean.inputPesquisa}" >
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{paroquianoBean.inputPesquisa}" >
                         <p:ajax event="keyup" listener="#{paroquianoBean.listarParoquianos()}" update="form" />                    
                     </p:inputText>
-                    <p:commandButton icon="ui-icon-search"
-                                     title="Pesquisar"
-                                     class="botaopesquisa"
-                                     actionListener="#{paroquianoBean.listarParoquianos()}"
-                                     update="form"/>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{paroquianoBean.listarParoquianos()}" update="form"/>
                 </f:facet>
             
             </p:toolbar>
             
-            <p:dataTable class="tabela"
-                         id="tabelaParoquianos"
-                         var="paroquiano"
-                         value="#{paroquianoBean.paroquianos}"
-                         rowKey="#{paroquiano.idPessoa}" 
-                         rows="12"
-                         paginator="true" 
-                         paginatorPosition="bottom"
-                         emptyMessage="Nenhum registro encontrado" >
+            <p:dataTable class="tabela" id="tabelaParoquianos" var="paroquiano" value="#{paroquianoBean.paroquianos}" rowKey="#{paroquiano.idPessoa}"
+                         rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum registro encontrado" >
                 
                 <p:column headerText="ID" style="width: 50px">
                     <h:outputText value="#{paroquiano.idPessoa}" />
@@ -91,17 +73,10 @@
                                 </p:column>-->
                 
                 <p:column style="width:80px;text-align: center">
-                    <p:button style="margin-right: 5px"
-                              icon="ui-icon-pencil"
-                              title="Editar" 
-                              outcome="/pessoas/cadastrar-paroquiano">
+                    <p:button style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" outcome="/pessoas/cadastrar-paroquiano">
                         <f:param value="#{paroquiano.idPessoa}" name="paroquiano"/>                        
                     </p:button>
-                    <p:commandButton icon="ui-icon-trash"
-                                     title="Remover"
-                                     update="form"
-                                     actionListener="#{paroquianoBean.excluir(paroquiano)}"
-                                     ajax="false"
+                    <p:commandButton icon="ui-icon-trash" title="Remover" update="form" actionListener="#{paroquianoBean.excluir(paroquiano)}" ajax="false"
                                      onclick="if (!confirm('Tem certeza? Os dados de #{paroquiano.nomeCompleto} serão excluídos!'))
                                                  return false">
                     </p:commandButton>
