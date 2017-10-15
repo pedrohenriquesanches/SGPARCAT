@@ -21,8 +21,8 @@
                 </div>
                 <div class="opcoes-right">
                     <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar" action="#{clerigoBean.salvar()}" update="dadospessoais,acessoaosistema, enderecos, contatos"/>
-                    <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/pessoas/clerigos-paroquiais"
-                              onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de consulta de clérigos.'))
+                    <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/pessoas/gerenciar-clerigos"
+                              onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de gestão de clérigos.'))
                                           return false">
                     </p:button>
                 </div>     

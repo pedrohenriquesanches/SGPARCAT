@@ -21,8 +21,8 @@
                 </div>
                 <div class="opcoes-right">
                     <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar" action="#{paroquianoBean.salvar()}" update="dadospessoais,acessoaosistema, enderecos, contatos" />
-                    <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/pessoas/paroquianos"
-                              onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de consulta de paroquianos.'))
+                    <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/pessoas/gerenciar-paroquianos"
+                              onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de gestão de paroquianos.'))
                                           return false">
                     </p:button>
                 </div>     

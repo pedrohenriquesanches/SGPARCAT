@@ -18,7 +18,7 @@
                 <h1>Gestão de Dizimistas</h1>            
             </div>
             <div class="opcoes-right">
-                <p:button outcome="/pessoas/cadastrar-paroquiano" value="Cadastrar Dizimista" icon="ui-icon-plus"/>
+                <p:button outcome="/pessoas/cadastrar" value="Cadastrar Dizimista" icon="ui-icon-plus"/>
             </div>     
         </div>
         
@@ -74,7 +74,7 @@
                 </p:column>
                 
                 <p:column style="width:80px;text-align: center">
-                    <p:button style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" outcome="/pessoas/cadastrar-paroquiano">
+                    <p:button style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" outcome="/pessoas/cadastrar">
                         <f:param value="#{dizimista.idPessoa}" name="paroquiano"/>                        
                     </p:button>
                     <p:commandButton icon="ui-icon-trash" title="Remover" update="@form" actionListener="#{dizimistaBean.excluir(dizimista)}" ajax="false"
