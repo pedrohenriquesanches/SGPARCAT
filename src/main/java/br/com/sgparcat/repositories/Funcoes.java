@@ -27,14 +27,31 @@ public class Funcoes implements Serializable{
     @Inject
     private EntityManager manager;
     
-    public List<Funcao> retornaFuncoesPorNome(String nomeFuncao){
+    public List<Funcao> retornaFuncoesQueNaoSaoApenasParaClerigos(String nomeFuncao){
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Funcao.class);
-        c.add(Restrictions.like("titulo", nomeFuncao, MatchMode.ANYWHERE));
+        c.add(Restrictions.like("apenasParaClerigos", 'N'));
+                
+        if(nomeFuncao != null && !nomeFuncao.equals("")){
+            c.add(Restrictions.like("titulo", nomeFuncao, MatchMode.ANYWHERE));
+        }
+        
         return c.list();
     }
-
-    public List<Funcao> retornaFuncoes(){
+    
+    public List<Funcao> retornaFuncoesApenasParaClerigos(String nomeFuncao){
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Funcao.class);
+        c.add(Restrictions.like("apenasParaClerigos", 'S'));
+                
+        if(nomeFuncao != null && !nomeFuncao.equals("")){
+            c.add(Restrictions.like("titulo", nomeFuncao, MatchMode.ANYWHERE));
+        }
+        
+        return c.list();
+    }
+    
+    public List<Funcao> retornaTodasFuncoes(){
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Funcao.class);
         return c.list();

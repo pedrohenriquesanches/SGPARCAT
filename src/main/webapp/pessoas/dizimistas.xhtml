@@ -4,11 +4,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    <f:metadata>
 
-    </f:metadata>
     <ui:define name="titulo">Dizimistas</ui:define>
+
     <ui:define name="corpo">
+
+        <f:metadata>
+            <f:event listener="#{dizimistaBean.filtrarDizimistas()}" type="preRenderView"/>
+        </f:metadata>
+        
         <div class="titulo-opcoes">
             <div class="titulo-pagina">
                 <h1>Gestão de Dizimistas</h1>            
@@ -17,44 +21,68 @@
                 <p:button outcome="/pessoas/cadastrar-paroquiano" value="Cadastrar Dizimista" icon="ui-icon-plus"/>
             </div>     
         </div>
+        
+        <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+        
         <h:form>
             <p:toolbar class="tollbartabela">
+                
                 <f:facet name="left">
                     <p:outputLabel value="Status:" for="box-selecao-status" />
-                    <h:selectOneMenu id="box-selecao-status" >
-                        <f:selectItem itemLabel="Ativos e Inativos" itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="Ativos" itemValue="1" />
-                        <f:selectItem itemLabel="Inativos" itemValue="0" />
+                    <h:selectOneMenu id="box-selecao-status" value="#{dizimistaBean.statusSelecionado}">
+                        <f:selectItem itemLabel="Ativos e Inativos" itemValue="" />
+                        <f:selectItem itemLabel="Ativos" itemValue="S" />
+                        <f:selectItem itemLabel="Inativos" itemValue="N" />
+                        <p:ajax event="change" listener="#{dizimistaBean.filtrarDizimistas()}" update="tabelaDizimistas" />
                     </h:selectOneMenu>
                 </f:facet>
+                
                 <f:facet name="right">
-                    <p:inputText placeholder="Pesquisar"/>
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{dizimistaBean.inputPesquisa}" >
+                        <p:ajax event="keyup" listener="#{dizimistaBean.filtrarDizimistas()}" update="tabelaDizimistas" />                    
+                    </p:inputText>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{dizimistaBean.filtrarDizimistas()}" update="@form"/>
                 </f:facet>
+                
             </p:toolbar>
-            <p:dataTable class="tabela" id="tabelaDizimistas" var="dizimista" value="#{DizimistaBean.dizimistas}" rowKey="#{dizimista.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
-                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            
+            <p:dataTable class="tabela" id="tabelaDizimistas" var="dizimista" value="#{dizimistaBean.dizimistas}" rowKey="#{dizimista.idPessoa}"
+                         rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum registro encontrado" >
+                
                 <p:column headerText="ID" style="width: 50px">
                     <h:outputText value="#{dizimista.idPessoa}" />
                 </p:column>
+                
                 <p:column headerText="Nome" style="width: 250px">
                     <h:outputText value="#{dizimista.nomeCompleto}" />
                 </p:column>
+                
                 <p:column headerText="Status" style="width: 250px">
-                    <h:outputText value="#{dizimista.isDizimistaAtivo}" />
+                    <h:outputText value="#{dizimistaBean.getStatusDoDizimista(dizimista)}" />
                 </p:column>
+                
                 <p:column headerText="Telefone" style="width: 70px">
                     <h:outputText value="#{dizimista.telefoneFixo}" />
                 </p:column>
+                
                 <p:column headerText="Última Contribuição" style="width: 150px">
-                    <h:outputText value="#{dizimista.ultimaContribuicao}" />
+                    <h:outputText value="#{dizimistaBean.getUltimaContribuicao()}" />
                 </p:column>
+                
                 <p:column headerText="Endereço" style="width: 150px">
-                    <h:outputText value="#{dizimista.enderecos}" />
+                    <h:outputText value="#{dizimista.endereco} - #{dizimista.cidade}" />
                 </p:column>
+                
                 <p:column style="width:80px;text-align: center">
-                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" />
-                    <p:commandButton  icon="ui-icon-trash" title="Remover" />
+                    <p:button style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" outcome="/pessoas/cadastrar-paroquiano">
+                        <f:param value="#{dizimista.idPessoa}" name="paroquiano"/>                        
+                    </p:button>
+                    <p:commandButton icon="ui-icon-trash" title="Remover" update="@form" actionListener="#{dizimistaBean.excluir(dizimista)}" ajax="false"
+                                     onclick="if (!confirm('Tem certeza? Os dados de #{dizimista.nomeCompleto} serão excluídos!'))
+                                                 return false">
+                    </p:commandButton>
                 </p:column>
+                
             </p:dataTable>
         </h:form>
     </ui:define>

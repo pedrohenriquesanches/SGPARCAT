@@ -93,12 +93,12 @@ public class Pessoa implements Serializable {
     private String rg;
 
     @Column(nullable = false)
-    private int isDizimista;
+    private Character isDizimista;
 
     @Column(nullable = false)
-    private int isDizimistaAtivo;
+    private Character isDizimistaAtivo;
 
-    @JoinColumn(nullable = false, name = "idFuncao")
+    @JoinColumn(name = "idFuncao")
     @ManyToOne
     private Funcao funcao;
 
@@ -253,19 +253,19 @@ public class Pessoa implements Serializable {
         this.rg = rg;
     }
 
-    public int getIsDizimista() {
+    public Character getIsDizimista() {
         return isDizimista;
     }
 
-    public void setIsDizimista(int isDizimista) {
+    public void setIsDizimista(Character isDizimista) {
         this.isDizimista = isDizimista;
     }
 
-    public int getIsDizimistaAtivo() {
+    public Character getIsDizimistaAtivo() {
         return isDizimistaAtivo;
     }
 
-    public void setIsDizimistaAtivo(int isDizimistaAtivo) {
+    public void setIsDizimistaAtivo(Character isDizimistaAtivo) {
         this.isDizimistaAtivo = isDizimistaAtivo;
     }
 

@@ -4,19 +4,32 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
+    
     <ui:define name="titulo">Cadastrar Clérigo Paroquial</ui:define>
+    
     <ui:define name="corpo">
+        
+        <f:metadata>
+            <f:viewParam name="clerigo" value="#{clerigoBean.clerigo}"/>
+        </f:metadata>
+        
         <h:form>
+            
             <div class="titulo-opcoes">
                 <div class="titulo-pagina">
                     <h1>Cadastrar Clérigo Paroquial</h1>            
                 </div>
                 <div class="opcoes-right">
                     <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar" action="#{clerigoBean.salvar()}" update="dadospessoais,acessoaosistema, enderecos, contatos"/>
-                    <p:commandButton value="Cancelar" icon="ui-icon-cancel" title="Cancelar" disabled="true"/>
+                    <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/pessoas/clerigos-paroquiais"
+                              onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de consulta de clérigos.'))
+                                          return false">
+                    </p:button>
                 </div>     
             </div>
-            <p:messages id="messages" showDetail="true" autoUpdate="true" />
+            
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+            
             <div class="div-campos-cadastro" style="width: 69.5%; float: left">
                 <p:panel id="dadospessoais" header="Dados Pessoais" class="painel-cadastros" style="height: 300px">
                     <div class="coluna-1-2">
@@ -33,8 +46,10 @@
                             <p:inputMask id="cpf" required="true" mask="999.999.999-99" value="#{clerigoBean.clerigo.cpf}" />
                         </div>
                         <div class="campo-cadastro">
-                            <p:outputLabel value="RG:" for="rg"/>
-                            <p:inputMask id="rg" mask="99.999.999-9" value="#{clerigoBean.clerigo.rg}" />
+                            <p:outputLabel value="RG:" title="Apenas números e letras" for="rg"/>
+                            <p:inputText id="rg" title="Apenas números e letras" value="#{clerigoBean.clerigo.rg}">
+                                <p:keyFilter regEx="/[a-z0-9_]/i"/>
+                            </p:inputText>
                         </div>
                     </div>
                     <div class="coluna-1-2">
@@ -46,41 +61,47 @@
                             </p:selectOneButton>                            
                         </div>
                         <div class="campo-cadastro">
-                            <div style="width: 65%; display: inline-block">
-                                <p:outputLabel value="Estado Civil:" for="estadoCivil"/>
+                            <div style="width: 68%; display: inline-block">
+                                <p:outputLabel value="Estado Civil:" for="estadoCivil" />
                                 <p:selectOneButton id="estadoCivil" required="true" value="#{clerigoBean.clerigo.estadoCivil}" >
-                                    <f:selectItem itemLabel="Casado" itemValue="C" />
-                                    <f:selectItem itemLabel="Solteiro" itemValue="S" />
-                                    <f:selectItem itemLabel="Divorciado" itemValue="D" />
+                                    <f:selectItem itemLabel="Casado(a)" itemValue="C" />
+                                    <f:selectItem itemLabel="Solteiro(a)" itemValue="S" />
+                                    <f:selectItem itemLabel="Divorciado(a)" itemValue="D" />
                                 </p:selectOneButton>
                             </div>
                             <div style="width: 30%; display: inline-block">
-                                <p:outputLabel value="Dizimista:" for="isDizimista"/>
+                                <p:outputLabel value="Dizimista:" for="isDizimista" />
                                 <p:selectOneButton id="isDizimista" required="true" value="#{clerigoBean.clerigo.isDizimista}" >
-                                    <f:selectItem itemLabel="Sim" itemValue="1" />
-                                    <f:selectItem itemLabel="Não" itemValue="0" />
+                                    <f:selectItem itemLabel="Sim" itemValue="S" />
+                                    <f:selectItem itemLabel="Não" itemValue="N" />
                                 </p:selectOneButton>
                             </div>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Data de Nascimento:" for="dataNascimento"/>
-                            <p:inputMask id="dataNascimento" mask="99/99/9999" required="true" value="#{clerigoBean.clerigo.dataNascimento}" >
+                            <p:inputMask id="dataNascimento" mask="99/99/9999" required="true" value="#{clerigoBean.clerigo.dataNascimento}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                                 <p:watermark value="DD/MM/YYYY" for="dataNascimento" />
                             </p:inputMask>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Função:" for="funcao" />
-                            <p:autoComplete id="funcao" size="26" dropdown="true"/>
+                            <p:autoComplete id="funcao" required="true" size="26" dropdown="true" emptyMessage="Nenhuma função encontrada com este nome" scrollHeight="180"
+                                            value="#{clerigoBean.clerigo.funcao}" completeMethod="#{funcaoBean.filtrarFuncoesApenasParaClerigos}" forceSelection="true"
+                                            var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" converter="funcaoConverter">
+                            </p:autoComplete>
                         </div>
                     </div>
                 </p:panel>
             </div>
+            
             <div class="div-campos-cadastro" style="width: 29.5%; float: right">
                 <p:panel id="acessoaosistema" header="Acesso ao sistema" class="painel-cadastros" style="height: 300px">
                     <div class="campo-cadastro ">
                         <p:outputLabel value="E-mail:" for="email" />
-                        <p:inputText id="email" value="#{clerigoBean.clerigo.email}" />
+                        <p:inputText id="email" value="#{clerigoBean.clerigo.email}">
+                            <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
+                        </p:inputText>
                     </div>
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Ceder acesso ao sistema para essa pessoa: " />
@@ -89,8 +110,7 @@
                     <div class="campo-cadastro ">                 
                         <h:outputLabel for="senha1" value="Senha:" />
                         <p:password id="senha1" match="senha2" label="Senha" feedback="true" inline="true"
-                                    promptLabel="Digite a senha" weakLabel="Fraca"
-                                    goodLabel="Boa" strongLabel="Forte" disabled="true"/>
+                                    promptLabel="Digite a senha" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" disabled="true"/>
                     </div>
                     <div class="campo-cadastro ">
                         <h:outputLabel for="senha2" value="Confirme a Senha:" />
@@ -98,22 +118,23 @@
                     </div>
                 </p:panel>
             </div>
+            
             <div class="div-campos-cadastro" style="width: 69.5%; float: left">
                 <p:panel id="enderecos" header="Endereço" class="painel-cadastros">
                     <div class="coluna-1-3">
                         <div class="campo-cadastro">
-                            <p:outputLabel value="Endereço:" for="endereco" />
-                            <p:inputText id="endereco" value="#{clerigoBean.clerigo.endereco}" />
+                            <p:outputLabel value="Endereço:" for="endereco" title="Nome da rua, número"/>
+                            <p:inputText id="endereco" value="#{clerigoBean.clerigo.endereco}" title="Nome da rua, número"/>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Bairro:" for="bairro" />
-                            <p:inputText id="bairro" value="#{clerigoBean.clerigo.bairro}" />
+                            <p:inputText id="bairro" value="#{clerigoBean.clerigo.bairro}"/>
                         </div>
                     </div>
                     <div class="coluna-1-3">
                         <div class="campo-cadastro">
                             <p:outputLabel value="CEP:" for="cep" />
-                            <p:inputMask id="cep" mask="99999-999" value="#{clerigoBean.clerigo.CEP}" />
+                            <p:inputMask id="cep" mask="99999-999" value="#{clerigoBean.clerigo.CEP}"/>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Complemento:" for="complemento" />
@@ -123,7 +144,7 @@
                     <div class="coluna-1-3">
                         <div class="campo-cadastro">
                             <p:outputLabel value="Cidade:" for="cidade" />
-                            <p:inputText id="cidade" value="#{clerigoBean.clerigo.cidade}" />
+                            <p:inputText id="cidade" value="#{clerigoBean.clerigo.cidade}"/>
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Estado:" for="box-selecao-estado" />
@@ -161,18 +182,22 @@
                     </div>
                 </p:panel>
             </div>
+            
             <div class="div-campos-cadastro" style="width: 29.5%; float: right">
                 <p:panel id="contatos" header="Contatos" class="painel-cadastros">
                     <div class="campo-cadastro ">
                         <p:outputLabel value="Telefone Fixo:" for="telefonefixo" />
-                        <p:inputMask id="telefonefixo" mask="(99) 9999-9999" value="#{clerigoBean.clerigo.telefoneFixo}" />
+                        <p:inputMask id="telefonefixo" mask="(99) 9999-9999" value="#{clerigoBean.clerigo.telefoneFixo}"/>
                     </div>
                     <div class="campo-cadastro ">
                         <p:outputLabel value="Telefone Celular:" for="telefonecelular" />
-                        <p:inputMask id="telefonecelular" mask="(99) 99999-9999" value="#{clerigoBean.clerigo.telefoneCelular}" />
+                        <p:inputMask id="telefonecelular" mask="(99) 99999-9999" value="#{clerigoBean.clerigo.telefoneCelular}"/>
                     </div>
                 </p:panel>
             </div>
+            
         </h:form>
+        
     </ui:define>
+    
 </ui:composition>

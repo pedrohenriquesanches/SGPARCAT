@@ -6,12 +6,10 @@
 package br.com.sgparcat.controllers;
 
 import br.com.sgparcat.models.Funcao;
-import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Funcoes;
-import br.com.sgparcat.repositories.Pessoas;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,7 +19,7 @@ import javax.inject.Named;
  */
 
 @Named
-@SessionScoped
+@ViewScoped
 public class FuncaoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,12 +27,12 @@ public class FuncaoBean implements Serializable {
     @Inject
     Funcoes repositorioFuncoes;
         
-    public List<Funcao> listarFuncoesPorNome(String input){
-        return repositorioFuncoes.retornaFuncoesPorNome(input);
+    public List<Funcao> filtrarFuncoesApenasParaClerigos(String input){
+        return repositorioFuncoes.retornaFuncoesApenasParaClerigos(input);
     }
     
-    public List<Funcao> listarFuncoes(){
-        return repositorioFuncoes.retornaFuncoes();
+    public List<Funcao> filtrarFuncoesQueNaoSaoApenasParaClerigos(String input){
+        return repositorioFuncoes.retornaFuncoesQueNaoSaoApenasParaClerigos(input);
     }
-
+    
 }

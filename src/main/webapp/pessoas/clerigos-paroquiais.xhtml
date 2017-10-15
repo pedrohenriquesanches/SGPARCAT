@@ -4,11 +4,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    <f:metadata>
-        <f:event listener="#{clerigoBean.listar()}" type="preRenderView"/>
-    </f:metadata>
+
     <ui:define name="titulo">Clérigo Paroquial</ui:define>
+
     <ui:define name="corpo">
+
+        <f:metadata>
+            <f:event listener="#{clerigoBean.filtrarClerigos()}" type="preRenderView"/>
+        </f:metadata>
+
         <div class="titulo-opcoes">
             <div class="titulo-pagina">
                 <h1>Gestão do Clérigo Paroquial</h1>            
@@ -17,44 +21,66 @@
                 <p:button outcome="/pessoas/cadastrar-clerigo" value="Cadastrar Clérigo" icon="ui-icon-plus"/>
             </div>     
         </div>
+
+        <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
         <h:form>
             <p:toolbar class="tollbartabela">
+
                 <f:facet name="left">
                     <p:outputLabel value="Função:" for="box-selecao-funcoes" />
-                    <h:selectOneMenu id="box-selecao-funcoes">
-                        <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="Padre" itemValue="Padre" />
-                        <f:selectItem itemLabel="Diácono" itemValue="Diácono" />
-                        <f:selectItem itemLabel="Monsenhor" itemValue="Monsenhor" />
-                        <f:selectItem itemLabel="Vigário" itemValue="Vigário" />
+                    <h:selectOneMenu id="box-selecao-funcoes" value="#{clerigoBean.funcaoSelecionada}" converter="funcaoConverter">
+                        <f:selectItem  itemLabel="Todas" itemValue="-1"/>
+                        <f:selectItems value="#{funcaoBean.filtrarFuncoesApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}"/>
+                        <p:ajax event="change" listener="#{clerigoBean.filtrarClerigos()}" update="tabelaClerigos" />
                     </h:selectOneMenu>
                 </f:facet>
+
                 <f:facet name="right">
-                    <p:inputText placeholder="Pesquisar"/>
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{clerigoBean.inputPesquisa}" >
+                        <p:ajax event="keyup" listener="#{clerigoBean.filtrarClerigos()}" update="tabelaClerigos" />                    
+                    </p:inputText>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{clerigoBean.filtrarClerigos()}" update="@form"/>
                 </f:facet>
+
             </p:toolbar>
-            <p:dataTable class="tabela" id="tabelaClerigos" var="clerigo" value="#{clerigoBean.clerigos}" rowKey="#{clerigo.idPessoa}" rows="12" paginator="true" paginatorPosition="bottom">
-                <p:column selectionMode="multiple" style="width:16px"/>
+
+            <p:dataTable class="tabela" id="tabelaClerigos" var="clerigo" value="#{clerigoBean.clerigos}" rowKey="#{clerigo.idPessoa}"
+                         rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum registro encontrado" >
                 <p:column headerText="ID" style="width: 50px;text-align: center">
                     <h:outputText value="#{clerigo.idPessoa}" />
                 </p:column>
+
                 <p:column headerText="Função" style="width: 150px">
                     <h:outputText value="#{clerigo.funcao.titulo}" />
                 </p:column>
+
                 <p:column headerText="Nome" style="width: 250px">
                     <h:outputText value="#{clerigo.nomeCompleto}" />
                 </p:column>
+
                 <p:column headerText="Telefone" style="width: 80px">
                     <h:outputText value="#{clerigo.telefoneFixo}" />
                 </p:column>
+
                 <p:column headerText="Endereço" style="width: 250px">
                     <h:outputText value="#{clerigo.endereco} - #{clerigo.cidade}" />
                 </p:column>
+
                 <p:column style="width:80px;text-align: center">
-                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>
-                    <p:commandButton  icon="ui-icon-trash" title="Remover"/>
+                    <p:button style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" outcome="/pessoas/cadastrar-clerigo">
+                        <f:param value="#{clerigo.idPessoa}" name="clerigo"/>                        
+                    </p:button>
+                    <p:commandButton icon="ui-icon-trash" title="Remover" update="@form" actionListener="#{clerigoBean.excluir(clerigo)}" ajax="false"
+                                     onclick="if (!confirm('Tem certeza? Os dados de #{clerigo.nomeCompleto} serão excluídos!'))
+                                                 return false">
+                    </p:commandButton>
                 </p:column>
+
             </p:dataTable>
+
         </h:form>
+
     </ui:define>
+
 </ui:composition>

@@ -1,0 +1,13 @@
+insert into funcao values (1,'S','Diácono');
+insert into funcao values ('S','Padre');
+insert into funcao values (3,'S','Monsenhor');
+insert into funcao values (4,'S','Vigário');
+insert into funcao values (5,'S','Religioso(a)');
+insert into funcao values (6,'N','Ministro(a)');
+insert into funcao values (6,'N','Coordenador(a)');
+insert into funcao values (7,'N','Coordenador(a)');
+insert into funcao values (8,'N','Tesoureiro(a)');
+insert into funcao values (8,'N','Secretário(a)');
+insert into funcao values (9,'N','Secretário(a)');
+insert into funcao values (10,'N','Catequista');
+

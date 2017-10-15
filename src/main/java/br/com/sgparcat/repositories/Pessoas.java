@@ -39,63 +39,63 @@ public class Pessoas implements Serializable {
     public void remover(Pessoa pessoa) {
         EntityTransaction et = manager.getTransaction();
         et.begin();
-
         pessoa = manager.find(Pessoa.class, pessoa.getIdPessoa());
         manager.remove(pessoa);
-
         et.commit();
     }
-    
-    public List<Pessoa> retornaParoquianos(Funcao funcaoFiltro, String nomePesquisado) {
+
+    public List<Pessoa> retornaParoquianoso(Funcao funcaoFiltro, String nomePesquisado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
         c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
-        
-        if(nomePesquisado != null && !nomePesquisado.equals("")){
+        c.add(Restrictions.isNotNull("funcao"));
+
+        if (nomePesquisado != null && !nomePesquisado.equals("")) {
             c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
-            System.out.println("Pesquisou pelo nome");
         }
-        
-        if(funcaoFiltro.isFuncaoValida()){
+
+        if (funcaoFiltro.isFuncaoValida()) {
             c.add(Restrictions.eq("funcao", funcaoFiltro));
-            System.out.println("Filtrou pela funcao");
         }
-        
-        System.out.println("Retornou todos");
+
         c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
     }
 
-    public List<Pessoa> retornaTodosOsParoquianos() {
-        Session session = manager.unwrap(Session.class);
-        Criteria c = session.createCriteria(Pessoa.class);
-        c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
-        c.addOrder(Order.asc("nomeCompleto"));
-        return c.list();
-    }
-    
-    public List<Pessoa> retornaParoquianosPorNome(String nome) {
-        Session session = manager.unwrap(Session.class);
-        Criteria c = session.createCriteria(Pessoa.class);
-        c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
-        c.add(Restrictions.like("nomeCompleto", nome, MatchMode.ANYWHERE));
-        c.addOrder(Order.asc("nomeCompleto"));
-        return c.list();
-    }
-    
-    public List<Pessoa> retornaParoquianosPorFuncao(Funcao funcao) {
-        Session session = manager.unwrap(Session.class);
-        Criteria c = session.createCriteria(Pessoa.class);
-        c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
-        c.add(Restrictions.eq("funcao", funcao));
-        c.addOrder(Order.asc("nomeCompleto"));
-        return c.list();
-    }
-
-    public List<Pessoa> retornaClerigos() {
+    public List<Pessoa> retornaClerigos(Funcao funcaoFiltro, String nomePesquisado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
         c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.CLERIGO));
+
+        if (nomePesquisado != null && !nomePesquisado.equals("")) {
+            c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
+        }
+
+        if (funcaoFiltro.isFuncaoValida()) {
+            c.add(Restrictions.eq("funcao", funcaoFiltro));
+        }
+
+        c.addOrder(Order.asc("nomeCompleto"));
+        return c.list();
+    }
+
+    public List<Pessoa> retornaDizimistas(Character statusSelecionado, String nomePesquisado) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Pessoa.class);
+        c.add(Restrictions.like("isDizimista", 'S'));
+
+        if (statusSelecionado != null) {
+            if (statusSelecionado == 'S') {
+                c.add(Restrictions.like("isDizimistaAtivo", 'S'));
+            } else if (statusSelecionado == 'N') {
+                c.add(Restrictions.like("isDizimistaAtivo", 'N'));
+            }
+        }
+
+        if (nomePesquisado != null && !nomePesquisado.equals("")) {
+            c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
+        }
+
         c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
     }
@@ -105,3 +105,20 @@ public class Pessoas implements Serializable {
     }
 
 }
+
+//    public List<Pessoa> retornaPessoas(Funcao funcaoFiltro, String nomePesquisado, Pessoa.TipoPessoa tipoPessoa) {
+//        Session session = manager.unwrap(Session.class);
+//        Criteria c = session.createCriteria(Pessoa.class);
+//        c.add(Restrictions.eq("tipoPessoa", tipoPessoa));
+//        
+//        if(nomePesquisado != null && !nomePesquisado.equals("")){
+//            c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
+//        }
+//        
+//        if(funcaoFiltro.isFuncaoValida()){
+//            c.add(Restrictions.eq("funcao", funcaoFiltro));
+//        }
+//        
+//        c.addOrder(Order.asc("nomeCompleto"));
+//        return c.list();
+//    }

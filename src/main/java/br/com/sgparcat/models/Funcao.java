@@ -34,6 +34,9 @@ public class Funcao implements Serializable {
     @Column(nullable = false,unique = true)
     private String titulo;
     
+    @Column(nullable = false)
+    private Character apenasParaClerigos;
+        
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
     private List<Pessoa> pessoas;
     
@@ -59,6 +62,14 @@ public class Funcao implements Serializable {
         this.titulo = titulo;
     }
 
+    public Character getApenasParaClerigos() {
+        return apenasParaClerigos;
+    }
+
+    public void setApenasParaClerigos(Character apenasParaClerigos) {
+        this.apenasParaClerigos = apenasParaClerigos;
+    }
+    
     public List<Pessoa> getPessoas() {
         return pessoas;
     }
