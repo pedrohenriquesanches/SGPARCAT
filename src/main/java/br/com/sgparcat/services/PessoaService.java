@@ -20,7 +20,7 @@ public class PessoaService implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Inject
-    private Pessoas pessoas;
+    private Pessoas repositorioPessoas;
     
     public void salvar(Pessoa pessoa){
         
@@ -32,11 +32,11 @@ public class PessoaService implements Serializable{
             pessoa.setIsDizimistaAtivo('N');
         }
         
-        pessoas.guardar(pessoa);
+        repositorioPessoas.guardar(pessoa);
     }
 
     public void excluir(Pessoa pessoa) {
-        pessoas.remover(pessoa);
+        repositorioPessoas.remover(pessoa);
     }
     
 }

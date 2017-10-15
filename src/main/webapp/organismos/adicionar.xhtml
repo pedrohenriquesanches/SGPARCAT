@@ -4,25 +4,42 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:define name="titulo">Adicionar Organismo</ui:define>
-    <ui:define name="corpo">
-        <div class="titulo-opcoes">
-            <div class="titulo-pagina">
-                <h1>Cadastrar Organismo</h1>            
-            </div>
-        </div>
-        <div class="opcoes-right">
 
-        </div> 
-        <h:form style="margin-top: 15px">
+    <ui:define name="titulo">Adicionar Organismo</ui:define>
+
+    <ui:define name="corpo">
+
+        <f:metadata>
+            <f:viewParam name="paroquiano" value="#{organismoBean.organismo}"/>
+        </f:metadata>
+
+        <h:form>
+
+            <div class="titulo-opcoes">
+                <div class="titulo-pagina">
+                    <h1>Cadastrar Organismo</h1>        
+                </div>
+                <div class="opcoes-right">
+                    <p:commandButton style="margin-right: 5px" value="Salvar" icon="ui-icon-disk" title="Salvar" action="#{organismoBean.salvar()}" update="" />
+                    <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/organismos/gerenciar"
+                              onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de gestão de organismos.'))
+                                      return false">
+                    </p:button>
+                </div>
+            </div>
+
             <div class="div-campos-cadastro" style="width: 100%">
-                <div class="campo-cadastro">
+                <div class="campo-cadastro coluna-1-10">
+                    <p:outputLabel value="ID:" for="id"/>
+                    <p:inputText id="id" value="#{paroquianoBean.paroquiano.idPessoa}" disabled="true" />
+                </div>
+                <div class="campo-cadastro coluna-1-5">
                     <p:outputLabel value="Nome:" for="nome"/>
                     <p:inputText id="nome" required="True" />
                 </div>
-                <div class="campo-cadastro">
+                <div class="campo-cadastro coluna-1-5">
                     <p:outputLabel value="Tipo:" for="box-selecao-estado" />
-                    <h:selectOneMenu id="box-selecao-estado" required="true" style="height:23px; width:90px; margin-right: 15px">
+                    <h:selectOneMenu id="box-selecao-estado" required="true" style="height:26px">
                         <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
                         <f:selectItem itemLabel="Pastoral" itemValue="Pastoral" />
                         <f:selectItem itemLabel="Movimento" itemValue="Movimento" />

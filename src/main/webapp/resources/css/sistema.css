@@ -215,6 +215,17 @@ select {
     border-radius: 0;
 }
 
+.coluna-1-10{
+    display:inline-table;
+    width: 10%;
+    margin-right: 10px;
+}
+
+.coluna-1-5{
+    display:inline-table;
+    width: 20%;
+}
+
 .coluna-1-3{
     display:inline-table;
     width: 33%;
@@ -271,8 +282,9 @@ select {
 }
 
 @media (max-width:768px) {
-    .coluna-1-2, .coluna-1-3{
+    .coluna-1-2, .coluna-1-3, .coluna-1-5, .coluna-1-10{
         width: 100%;
+        margin-right: 0;
     }
 
     .campo-cadastro > input {
