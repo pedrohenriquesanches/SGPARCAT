@@ -6,6 +6,7 @@
 package br.com.sgparcat.repositories;
 
 import br.com.sgparcat.models.Funcao;
+import br.com.sgparcat.models.Organismo;
 import br.com.sgparcat.models.Pessoa;
 import java.io.Serializable;
 import java.util.List;
@@ -102,6 +103,10 @@ public class Pessoas implements Serializable {
 
     public Pessoa retornaPorId(Long id) {
         return manager.find(Pessoa.class, id);
+    }
+
+    public List<Pessoa> retornaPessoasQueNãoFazemParteDoOrganismo(Organismo organismo) {
+        return null;
     }
 
 }

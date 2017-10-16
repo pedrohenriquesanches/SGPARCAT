@@ -80,6 +80,14 @@ public class Organismo implements Serializable {
         this.tipoOrganismo = tipoOrganismo;
     }
 
+    public List<Membro> getMembros() {
+        return membros;
+    }
+
+    public void setMembros(List<Membro> membros) {
+        this.membros = membros;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;

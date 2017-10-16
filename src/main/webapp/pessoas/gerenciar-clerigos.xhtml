@@ -28,7 +28,7 @@
             <p:toolbar class="tollbartabela">
 
                 <f:facet name="left">
-                    <p:outputLabel value="Função:" for="box-selecao-funcoes" />
+                    <p:outputLabel value="Principal Função na Paróquia:" for="box-selecao-funcoes" />
                     <h:selectOneMenu id="box-selecao-funcoes" value="#{clerigoBean.funcaoSelecionada}" converter="funcaoConverter" style="height:26px">
                         <f:selectItem  itemLabel="Todas" itemValue="-1"/>
                         <f:selectItems value="#{funcaoBean.filtrarFuncoesApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}"/>
@@ -51,7 +51,7 @@
                     <h:outputText value="#{clerigo.idPessoa}" />
                 </p:column>
 
-                <p:column headerText="Função" style="width: 150px">
+                <p:column headerText="Principal Função na Paróquia" style="width: 150px">
                     <h:outputText value="#{clerigo.funcao.titulo}" />
                 </p:column>
 

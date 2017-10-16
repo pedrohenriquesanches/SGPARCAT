@@ -85,7 +85,7 @@
                             </p:inputMask>
                         </div>
                         <div class="campo-cadastro">
-                            <p:outputLabel value="Função:" for="funcao" />
+                            <p:outputLabel value="Principal Função na Paróquia:" for="funcao" />
                             <p:autoComplete id="funcao" required="true" size="26" dropdown="true" emptyMessage="Nenhuma função encontrada com este nome" scrollHeight="180"
                                             value="#{clerigoBean.clerigo.funcao}" completeMethod="#{funcaoBean.filtrarFuncoesApenasParaClerigos}" forceSelection="true"
                                             var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" converter="funcaoConverter">
