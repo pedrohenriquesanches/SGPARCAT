@@ -171,11 +171,27 @@ select {
     float: right;
 }
 
+.div-pessoa-to-membro {
+    margin-top: 15px;
+    padding: 0.6em !important;
+    color: #000000;    
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px ;    
+}
+
+.centralizado{
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+}
+
 .div-campos-cadastro {
     margin-top: 15px;
 }
 
-.opcoes-right .ui-icon , .div-campos-cadastro .ui-icon , .tabela .ui-icon {
+.opcoes-right .ui-icon , .div-campos-cadastro .ui-icon , .tabela .ui-icon , .div-pessoa-to-membro .ui-icon{
     background-image: url(/sgparcat/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-excite-bike);
 }
 
@@ -280,6 +296,10 @@ select {
     border: 1px solid #aaaaaa !important;
 }
 
+.campo-cadastro-centralizado > span > button {
+    margin-right: 0;
+}
+
 .campo-cadastro .ui-autocomplete {
     width: 100%;
 }
@@ -296,6 +316,13 @@ select {
     .coluna-1-2, .coluna-1-3, .coluna-1-5, .coluna-1-10, .coluna-2-5{
         width: 100% !important;
         margin-right: 0;
+    }
+
+    .centralizado{
+        padding: 0 !important;
+        left: auto;
+        position: initial;
+        transform: none;
     }
 
     .campo-cadastro > input {

@@ -5,6 +5,7 @@
  */
 package br.com.sgparcat.controllers;
 
+import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Membro;
 import br.com.sgparcat.models.Organismo;
 import br.com.sgparcat.models.Pessoa;
@@ -46,6 +47,13 @@ public class OrganismoBean implements Serializable {
     
     private List<Membro> membros;
     
+    private List<Pessoa> pessoasSelecionadas;
+    
+    private List<Membro> membrosSelecionados;
+    
+    @Inject
+    private Funcao funcaoSelecionada;
+    
     private String inputPesquisaPessoa;
     
     private String inputPesquisaMembro;
@@ -82,6 +90,30 @@ public class OrganismoBean implements Serializable {
 
     public void setMembros(List<Membro> membros) {
         this.membros = membros;
+    }
+
+    public List<Pessoa> getPessoasSelecionadas() {
+        return pessoasSelecionadas;
+    }
+
+    public void setPessoasSelecionadas(List<Pessoa> pessoasSelecionadas) {
+        this.pessoasSelecionadas = pessoasSelecionadas;
+    }
+
+    public List<Membro> getMembrosSelecionados() {
+        return membrosSelecionados;
+    }
+
+    public void setMembrosSelecionados(List<Membro> membrosSelecionados) {
+        this.membrosSelecionados = membrosSelecionados;
+    }
+
+    public Funcao getFuncaoSelecionada() {
+        return funcaoSelecionada;
+    }
+
+    public void setFuncaoSelecionada(Funcao funcaoSelecionada) {
+        this.funcaoSelecionada = funcaoSelecionada;
     }
     
     public String getInputPesquisaPessoa() {
