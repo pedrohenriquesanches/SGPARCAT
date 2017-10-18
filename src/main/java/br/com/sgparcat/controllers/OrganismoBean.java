@@ -17,47 +17,47 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.DragDropEvent;
 
 /**
  *
  * @author pedrohensanches
  */
-
 @Named
 @ViewScoped
 public class OrganismoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Inject
     OrganismoService organismoService;
-    
+
     @Inject
     Organismos repositorioOrganismos;
-    
+
     @Inject
     Pessoas repositorioPessoas;
-    
+
     @Inject
     private Organismo organismo;
-    
+
     private List<Organismo> organismos;
-    
+
     private List<Pessoa> pessoas;
-    
+
     private List<Membro> membros;
-    
+
     private List<Pessoa> pessoasSelecionadas;
-    
+
     private List<Membro> membrosSelecionados;
-    
+
     @Inject
     private Funcao funcaoSelecionada;
-    
+
     private String inputPesquisaPessoa;
-    
+
     private String inputPesquisaMembro;
-    
+
     private Organismo.TipoOrganismo tipoOrganismoSelecionado;
 
     public Organismo getOrganismo() {
@@ -115,7 +115,7 @@ public class OrganismoBean implements Serializable {
     public void setFuncaoSelecionada(Funcao funcaoSelecionada) {
         this.funcaoSelecionada = funcaoSelecionada;
     }
-    
+
     public String getInputPesquisaPessoa() {
         return inputPesquisaPessoa;
     }
@@ -131,7 +131,7 @@ public class OrganismoBean implements Serializable {
     public void setInputPesquisaMembro(String inputPesquisaMembro) {
         this.inputPesquisaMembro = inputPesquisaMembro;
     }
-    
+
     public Organismo.TipoOrganismo getTipoOrganismoSelecionado() {
         return tipoOrganismoSelecionado;
     }
@@ -139,17 +139,27 @@ public class OrganismoBean implements Serializable {
     public void setTipoOrganismoSelecionado(Organismo.TipoOrganismo tipoOrganismoSelecionado) {
         this.tipoOrganismoSelecionado = tipoOrganismoSelecionado;
     }
-    
-    public void salvar(){
+
+    public void salvar() {
         organismoService.salvar(organismo);
     }
-    
+
     public void filtrarPessoas() {
-        pessoas = repositorioPessoas.retornaPessoasQueNãoFazemParteDoOrganismo(organismo);
+        pessoas = repositorioPessoas.retornaParoquianoso(new Funcao(), "a");
+        //pessoas = repositorioPessoas.retornaPessoasQueNãoFazemParteDoOrganismo(organismo);
     }
-    
+
     public void filtrarMembros() {
         membros = organismo.getMembros();
     }
-    
+
+    public void onDrop(DragDropEvent ddEvent) {
+        
+        System.out.println("CHEGOU");
+//        Pessoa pessoa = ((Pessoa) ddEvent.getData());        
+//
+//        membros.add(pessoa);
+//        pessoas.remove(pessoa);
+    }
+
 }

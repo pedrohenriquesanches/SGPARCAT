@@ -137,6 +137,16 @@ select {
     border-bottom-left-radius: 0;
 }
 
+.tabela tr:hover {
+    background: none !important;
+    background-color: #d9dfe4 !important;
+}
+
+.tabela .ui-datatable-empty-message {
+    font-size: 17px;
+    height: 50px !important;
+}
+
 .tabela .ui-state-default {
     border-color: gray;
 }
@@ -310,6 +320,12 @@ select {
 
 .ui-dialog .ui-dialog-title {
     color: black;
+}
+
+.borda {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #aaaaaa;
 }
 
 @media (max-width:768px) {
