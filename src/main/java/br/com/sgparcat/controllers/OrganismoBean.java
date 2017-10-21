@@ -13,7 +13,9 @@ import br.com.sgparcat.repositories.Organismos;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.OrganismoService;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -60,6 +62,12 @@ public class OrganismoBean implements Serializable {
 
     private Organismo.TipoOrganismo tipoOrganismoSelecionado;
 
+    @PostConstruct
+    public void OrganismoBean() {
+        filtrarPessoas();
+        filtrarMembros();
+    }
+    
     public Organismo getOrganismo() {
         return organismo;
     }
@@ -145,21 +153,42 @@ public class OrganismoBean implements Serializable {
     }
 
     public void filtrarPessoas() {
-        pessoas = repositorioPessoas.retornaParoquianoso(new Funcao(), "a");
-        //pessoas = repositorioPessoas.retornaPessoasQueNãoFazemParteDoOrganismo(organismo);
+        //Se o organismo esta sendo criado agora, retornar todas as pessoas
+        if (organismo.getIdOrganismo() == null) {
+            pessoas = repositorioPessoas.retornaTodasAsPessoas();
+        } else {
+            pessoas = repositorioPessoas.retornaPessoasQueNãoMembrosDoOrganismo(organismo);
+        }
     }
 
     public void filtrarMembros() {
         membros = organismo.getMembros();
+        if (membros == null) {
+            membros = new ArrayList<>();
+        }
     }
 
+    public void adicionarMembro(Pessoa pessoa) {
+        Membro membro = new Membro();
+        membro.setPessoa(pessoa);
+        membro.setOrganismo(organismo);
+        membro.setFuncao(null);
+        membros.add(membro);
+        pessoas.remove(pessoa);
+        System.out.println(pessoas);
+    }
+    
     public void onDrop(DragDropEvent ddEvent) {
-        
-        System.out.println("CHEGOU");
-//        Pessoa pessoa = ((Pessoa) ddEvent.getData());        
-//
-//        membros.add(pessoa);
-//        pessoas.remove(pessoa);
+        Pessoa pessoa = ((Pessoa) ddEvent.getData());
+        Membro membro = new Membro();
+        membro.setPessoa(pessoa);
+        membro.setOrganismo(organismo);
+        membro.setFuncao(null);
+        membros.add(membro);
+        pessoas.remove(pessoa);
+
+        System.out.println("Pessoas: " + pessoas);
+        System.out.println("Membros: " + membros);
     }
 
 }

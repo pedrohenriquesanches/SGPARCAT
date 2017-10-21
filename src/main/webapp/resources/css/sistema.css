@@ -160,6 +160,10 @@ select {
     border: 1px solid #aaaaaa; 
 }
 
+.tabelaDragIcon .ui-icon {
+    background-image: url(/sgparcat/javax.faces.resource/images/ui-icons_0a82eb_256x240.png.xhtml?ln=primefaces-excite-bike) !important;
+}
+
 .tabelaCadastro .ui-state-default {
     border: none;
     background: #e0e0e0;

@@ -6,6 +6,7 @@
 package br.com.sgparcat.repositories;
 
 import br.com.sgparcat.models.Funcao;
+import br.com.sgparcat.models.Membro;
 import br.com.sgparcat.models.Organismo;
 import br.com.sgparcat.models.Pessoa;
 import java.io.Serializable;
@@ -15,9 +16,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 
 /**
  *
@@ -105,8 +108,25 @@ public class Pessoas implements Serializable {
         return manager.find(Pessoa.class, id);
     }
 
-    public List<Pessoa> retornaPessoasQueNãoFazemParteDoOrganismo(Organismo organismo) {
-        return null;
+    public List<Pessoa> retornaPessoasQueNãoMembrosDoOrganismo(Organismo organismo) {
+        Session session = manager.unwrap(Session.class);
+
+        //Reconhece quem são os membros do organismo
+        DetachedCriteria subCriteria = DetachedCriteria.forClass(Membro.class);
+        subCriteria.add(Restrictions.eq("idOrganismo", organismo.getIdOrganismo()));
+
+        Criteria c = session.createCriteria(Pessoa.class);
+        c.add(Subqueries.propertyNotIn("idPessoa", subCriteria));
+        c.addOrder(Order.asc("nomeCompleto"));
+
+        return c.list();
+    }
+
+    public List<Pessoa> retornaTodasAsPessoas() {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Pessoa.class);
+        c.addOrder(Order.asc("nomeCompleto"));
+        return c.list();
     }
 
 }

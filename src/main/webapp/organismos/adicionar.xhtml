@@ -19,8 +19,6 @@
 
         <f:metadata>
             <f:viewParam name="paroquiano" value="#{organismoBean.organismo}"/>
-            <f:event listener="#{organismoBean.filtrarPessoas()}" type="preRenderView"/>
-            <f:event listener="#{organismoBean.filtrarMembros()}" type="preRenderView"/>
         </f:metadata>
 
         <h:form>
@@ -80,7 +78,7 @@
 
                     </p:toolbar>
 
-                    <p:dataTable class="tabela" id="tabelaPessoas" var="pessoa" value="#{organismoBean.pessoas}" rowKey="#{pessoa.idPessoa}"
+                    <p:dataTable class="tabela tabelaDragIcon" id="tabelaPessoas" var="pessoa" value="#{organismoBean.pessoas}" rowKey="#{pessoa.idPessoa}"
                                  rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum registro encontrado">
 
                         <p:column headerText="ID" style="width: 50px">
@@ -95,56 +93,58 @@
                             <h:outputText value="#{pessoa.funcao.titulo}" />
                         </p:column>
 
-                        <p:column style="width: 20px">
+                        <p:column style="width: 15px">
                             <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
                             <p:draggable for="dragIcon" revert="true" helper="clone" />
                         </p:column>
-
+                        
                     </p:dataTable>
 
                 </div>
 
                 <div class="coluna-1-2" style="float: right">
 
-                    <p:toolbar class="tollbartabela" style="padding: 0">
+                    <p:outputPanel id="dropArea">
+                        <p:toolbar class="tollbartabela" style="padding: 0">
 
-                        <f:facet name="left">
-                            <h3 class="title-facet">Membros</h3>
-                        </f:facet>
+                            <f:facet name="left">
+                                <h3 class="title-facet">Membros</h3>
+                            </f:facet>
 
-                        <f:facet name="right">
-                            <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
-                            </p:inputText>
-                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.filtrarMembros()}" update="tabelaMembros"/>
-                        </f:facet>
+                            <f:facet name="right">
+                                <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
+                                    <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
+                                </p:inputText>
+                                <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.filtrarMembros()}" update="tabelaMembros"/>
+                            </f:facet>
 
-                    </p:toolbar>
+                        </p:toolbar>
 
-                    <p:dataTable class="tabela" id="tabelaMembros" var="membro" value="#{organismoBean.membros}" rowKey="#{membro.pessoa.idPessoa}"
-                                 rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum membro adicionado, arraste pessoas aqui"
-                                 >
+                        <p:dataTable class="tabela" id="tabelaMembros" var="membro" value="#{organismoBean.membros}" rowKey="#{membro.pessoa.idPessoa}"
+                                     rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum membro adicionado, arraste pessoas aqui"
+                                     >
 
-                        <p:column headerText="ID" style="width: 50px" >
-                            <h:outputText value="#{membro.pessoa.idPessoa}" />
-                        </p:column>
+                            <p:column headerText="ID" style="width: 50px" >
+                                <h:outputText value="#{membro.pessoa.idPessoa}" />
+                            </p:column>
 
-                        <p:column headerText="Nome" >
-                            <h:outputText value="#{membro.pessoa.nomeCompleto}" />
-                        </p:column>
+                            <p:column headerText="Nome" >
+                                <h:outputText value="#{membro.pessoa.nomeCompleto}" />
+                            </p:column>
 
-                        <p:column headerText="Função Nesse Organismo" >
-                            <h:outputText value="#{membro.funcao.titulo}" />
-                        </p:column>
+                            <p:column headerText="Função Nesse Organismo" >
+                                <h:outputText value="#{membro.funcao.titulo}" />
+                            </p:column>
 
-                    </p:dataTable>
+                        </p:dataTable>                        
+                    </p:outputPanel>
 
                 </div>
 
-                <p:droppable for="tabelaMembros" tolerance="touch"
+                <p:droppable for="dropArea" tolerance="touch"
                              activeStyleClass="ui-state-highlight" datasource="tabelaPessoas"
                              onDrop="handleDrop">
-                    <p:ajax listener="#{organismoBean.onDrop}"
+                    <p:ajax listener="#{organismoBean.onDrop}" partialSubmit="true" process="@this"
                             update="tabelaMembros tabelaPessoas" />
                 </p:droppable>
 
