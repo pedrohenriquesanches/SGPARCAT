@@ -28,5 +28,9 @@ public class Organismos implements Serializable{
     public void remover(Organismo organismo) {
         
     }
+
+    public Object retornaPorId(Integer id) {
+        return manager.find(Organismo.class, id);
+    }
     
 }

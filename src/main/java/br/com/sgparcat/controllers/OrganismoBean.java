@@ -151,6 +151,21 @@ public class OrganismoBean implements Serializable {
     public void salvar() {
         organismoService.salvar(organismo);
     }
+    
+    public void teste(){
+        Pessoa pessoa = pessoas.get(2);
+        
+        Membro membro = new Membro();
+        membro.setPessoa(pessoa);
+        membro.setOrganismo(organismo);
+        membro.setFuncao(null);
+        
+        pessoas.remove(2);
+        membros.add(membro);
+        
+        System.out.println(membros);
+        System.out.println("ETESRARAS");
+    }
 
     public void filtrarPessoas() {
         //Se o organismo esta sendo criado agora, retornar todas as pessoas
@@ -169,6 +184,7 @@ public class OrganismoBean implements Serializable {
     }
 
     public void adicionarMembro(Pessoa pessoa) {
+        System.out.println("Executouuuuuuu");
         Membro membro = new Membro();
         membro.setPessoa(pessoa);
         membro.setOrganismo(organismo);
