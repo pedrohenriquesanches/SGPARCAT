@@ -87,8 +87,9 @@
                             <h:outputText value="#{pessoa.funcao.titulo}" />
                         </p:column>
 
-                        <p:column style="width: 15px">
-
+                        <p:column style="width: 32px">
+                            <p:commandButton icon="ui-icon-circle-plus" title="Adicionar como membro" actionListener="#{organismoBean.adicionarMembro(pessoa)}"
+                                             update="tabelaPessoas, @form:tabelaMembros" process="@this" class="botao-adicionar"/>
                         </p:column>
 
                     </p:dataTable>
@@ -113,7 +114,7 @@
                     </p:toolbar>
 
                     <p:dataTable class="tabela" id="tabelaMembros" var="membro" value="#{organismoBean.membros}" rowKey="#{membro.pessoa.idPessoa}"
-                                 rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum membro adicionado, arraste pessoas aqui"
+                                 rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum membro adicionado"
                                  >
 
                         <p:column headerText="ID" style="width: 50px" >
@@ -126,6 +127,11 @@
 
                         <p:column headerText="Função Nesse Organismo" >
                             <h:outputText value="#{membro.funcao.titulo}" />
+                        </p:column>
+                        
+                        <p:column style="width: 32px">
+                            <p:commandButton icon="ui-icon-circle-minus" title="Remover membro" actionListener="#{organismoBean.removerMembro(membro)}"
+                                             update="@form:tabelaPessoas, tabelaMembros" process="@this" class="botao-remover"/>
                         </p:column>
 
                     </p:dataTable>

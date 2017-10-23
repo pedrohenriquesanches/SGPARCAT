@@ -5,13 +5,13 @@
  */
 package br.com.sgparcat.controllers;
 
-import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Membro;
 import br.com.sgparcat.models.Organismo;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Organismos;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.OrganismoService;
+import br.com.sgparcat.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,124 +49,42 @@ public class OrganismoBean implements Serializable {
 
     private List<Membro> membros;
 
-    private List<Pessoa> pessoasSelecionadas;
-
-    private List<Membro> membrosSelecionados;
-
-    @Inject
-    private Funcao funcaoSelecionada;
-
     private String inputPesquisaPessoa;
 
     private String inputPesquisaMembro;
-
-    private Organismo.TipoOrganismo tipoOrganismoSelecionado;
 
     @PostConstruct
     public void OrganismoBean() {
         filtrarPessoas();
         filtrarMembros();
     }
-    
+
     public Organismo getOrganismo() {
         return organismo;
-    }
-
-    public void setOrganismo(Organismo organismo) {
-        this.organismo = organismo;
-    }
-
-    public List<Organismo> getOrganismos() {
-        return organismos;
-    }
-
-    public void setOrganismos(List<Organismo> organismos) {
-        this.organismos = organismos;
     }
 
     public List<Pessoa> getPessoas() {
         return pessoas;
     }
 
-    public void setPessoas(List<Pessoa> pessoas) {
-        this.pessoas = pessoas;
-    }
-
     public List<Membro> getMembros() {
         return membros;
-    }
-
-    public void setMembros(List<Membro> membros) {
-        this.membros = membros;
-    }
-
-    public List<Pessoa> getPessoasSelecionadas() {
-        return pessoasSelecionadas;
-    }
-
-    public void setPessoasSelecionadas(List<Pessoa> pessoasSelecionadas) {
-        this.pessoasSelecionadas = pessoasSelecionadas;
-    }
-
-    public List<Membro> getMembrosSelecionados() {
-        return membrosSelecionados;
-    }
-
-    public void setMembrosSelecionados(List<Membro> membrosSelecionados) {
-        this.membrosSelecionados = membrosSelecionados;
-    }
-
-    public Funcao getFuncaoSelecionada() {
-        return funcaoSelecionada;
-    }
-
-    public void setFuncaoSelecionada(Funcao funcaoSelecionada) {
-        this.funcaoSelecionada = funcaoSelecionada;
     }
 
     public String getInputPesquisaPessoa() {
         return inputPesquisaPessoa;
     }
 
-    public void setInputPesquisaPessoa(String inputPesquisaPessoa) {
-        this.inputPesquisaPessoa = inputPesquisaPessoa;
-    }
-
     public String getInputPesquisaMembro() {
         return inputPesquisaMembro;
-    }
-
-    public void setInputPesquisaMembro(String inputPesquisaMembro) {
-        this.inputPesquisaMembro = inputPesquisaMembro;
-    }
-
-    public Organismo.TipoOrganismo getTipoOrganismoSelecionado() {
-        return tipoOrganismoSelecionado;
-    }
-
-    public void setTipoOrganismoSelecionado(Organismo.TipoOrganismo tipoOrganismoSelecionado) {
-        this.tipoOrganismoSelecionado = tipoOrganismoSelecionado;
-    }
+    }    
 
     public void salvar() {
         organismoService.salvar(organismo);
+        FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
+        //limpar();
     }
     
-    public void teste(){
-        Pessoa pessoa = pessoas.get(2);
-        
-        Membro membro = new Membro();
-        membro.setPessoa(pessoa);
-        membro.setOrganismo(organismo);
-        membro.setFuncao(null);
-        
-        pessoas.remove(2);
-        membros.add(membro);
-        
-        System.out.println(membros);
-        System.out.println("ETESRARAS");
-    }
-
     public void filtrarPessoas() {
         //Se o organismo esta sendo criado agora, retornar todas as pessoas
         if (organismo.getIdOrganismo() == null) {
@@ -184,14 +102,18 @@ public class OrganismoBean implements Serializable {
     }
 
     public void adicionarMembro(Pessoa pessoa) {
-        System.out.println("Executouuuuuuu");
         Membro membro = new Membro();
         membro.setPessoa(pessoa);
         membro.setOrganismo(organismo);
         membro.setFuncao(null);
         membros.add(membro);
         pessoas.remove(pessoa);
-        System.out.println(pessoas);
+    }
+    
+    public void removerMembro(Membro membro) {
+        membros.remove(membro);
+        
+        //atualizar a lista de Pessoas
     }
     
     public void onDrop(DragDropEvent ddEvent) {
@@ -202,9 +124,16 @@ public class OrganismoBean implements Serializable {
         membro.setFuncao(null);
         membros.add(membro);
         pessoas.remove(pessoa);
-
-        System.out.println("Pessoas: " + pessoas);
-        System.out.println("Membros: " + membros);
+    }
+    
+    public void teste(){
+        Pessoa pessoa = pessoas.get(2);
+        Membro membro = new Membro();
+        membro.setPessoa(pessoa);
+        membro.setOrganismo(organismo);
+        membro.setFuncao(null);        
+        pessoas.remove(2);
+        membros.add(membro);
     }
 
 }

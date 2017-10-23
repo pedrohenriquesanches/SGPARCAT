@@ -91,6 +91,22 @@ select {
     float: left;
 }
 
+.botao-adicionar {
+    background: #c09853 !important;
+}
+
+.botao-adicionar:hover {
+    background: #8c6c34 !important;
+}
+
+.botao-remover {
+    background: #ff0000 !important;
+}
+
+.botao-remover:hover {
+    background: #c50000 !important;
+}
+
 .titulo-opcoes{
     margin-top: 20px;
     display: flow-root;
