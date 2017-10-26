@@ -4,21 +4,25 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    <f:metadata>
 
-    </f:metadata> 
     <ui:define name="titulo">Organismos</ui:define>
+
     <ui:define name="corpo">
+
         <div class="titulo-opcoes">
             <div class="titulo-pagina">
                 <h1>Gestão de Organismos de Igreja</h1>            
             </div>
             <div class="opcoes-right">
-                <p:button outcome="/organismos/adicionar" value="Adicionar Organismo" icon="ui-icon-plus"/>
+                <p:commandButton value="Adicionar Organismo" icon="ui-icon-plus" actionListener="#{organismoBean.preCadastro()}" />
+                <!--<p:button outcome="/organismos/adicionar" value="Adicionar Organismo" icon="ui-icon-plus"/>-->
             </div>     
         </div>
+
         <h:form>
+
             <p:toolbar class="tollbartabela">
+
                 <f:facet name="left">
                     <p:outputLabel value="Tipo:" for="box-selecao-tipo-organismo" />
                     <h:selectOneMenu id="box-selecao-tipo-organismo" >
@@ -27,36 +31,50 @@
                         <f:selectItem itemLabel="Movimentos" itemValue="Movimentos" />
                         <f:selectItem itemLabel="Grupos de Oração" itemValue="Grupos de Oração" />
                     </h:selectOneMenu>
+
                 </f:facet>
                 <f:facet name="right">
                     <p:inputText placeholder="Pesquisar"/>
                 </f:facet>
+
             </p:toolbar>
-            <p:dataTable class="tabela" id="tabelaOrganismos" var="organismo" value="#{OrganismoBean.organismos}" rowKey="#{organismo.idOrganismo}" rows="12" paginator="true" paginatorPosition="bottom">
-                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+            <p:dataTable class="tabela" id="tabelaOrganismos" var="organismo" value="#{OrganismoBean.organismos}"
+                         rowKey="#{organismo.idOrganismo}" rows="12" paginator="true" paginatorPosition="bottom">
+
                 <p:column headerText="ID" style="width: 50px">
                     <h:outputText value="#{organismo.idOrganismo}" />
                 </p:column>
+
                 <p:column headerText="Nome" style="width: 250px">
                     <h:outputText value="#{organismo.nome}" />
                 </p:column>
+
                 <p:column headerText="Tipo" style="width: 70px">
                     <h:outputText value="#{organismo.tipoOrganismo}" />
                 </p:column>
+
                 <p:column headerText="Coordenador" style="width: 150px">
                     <h:outputText value="#{organismo.coordenador}" />
                 </p:column>
+
                 <p:column headerText="Tesoureiro" style="width: 250px">
                     <h:outputText value="#{organismo.tesoureiro}" />
                 </p:column>
+
                 <p:column headerText="Contato Principal" style="width: 250px">
                     <h:outputText value="#{organismo.contatoPrincipal}" />
                 </p:column>
+
                 <p:column style="width:80px;text-align: center">
                     <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>
                     <p:commandButton  icon="ui-icon-trash" title="Remover"/>
                 </p:column>
+
             </p:dataTable>
+            
         </h:form>
+        
     </ui:define>
+    
 </ui:composition>

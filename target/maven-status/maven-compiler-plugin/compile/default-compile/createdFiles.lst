@@ -14,6 +14,7 @@ br/com/sgparcat/controllers/OrganismoBean.class
 br/com/sgparcat/util/jpa/GeraTabelas.class
 br/com/sgparcat/util/jpa/EntityManagerProducer.class
 br/com/sgparcat/models/Pessoa$TipoPessoa.class
+br/com/sgparcat/converters/OrganismoConverter.class
 br/com/sgparcat/converters/ParoquianoConverter.class
 br/com/sgparcat/models/Contribuicao$TipoContribuicao.class
 br/com/sgparcat/controllers/DizimistaBean.class

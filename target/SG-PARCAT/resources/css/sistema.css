@@ -375,6 +375,19 @@ select {
 }
 
 
+@media (max-width:340px) {
+    .centralizado{
+        left: 50%;
+        position: absolute;
+        transform: translateX(-50%);
+    }
+
+    .campo-cadastro > input {
+        width: 97%;
+    }
+}
+
+
 /*.icon-bt-adicionar {
     background-image: url(/sgparcat/resources/imagens/bt-adicionar16.png) !important;
 }

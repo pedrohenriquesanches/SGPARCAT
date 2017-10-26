@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <h:outputStylesheet library="css" name="sistema.css"/>
+    </h:head>
+
+    <h:body>
+
+        <h:form>
+
+            <div style="width: 90%" class="centralizado">
+
+                <div class="campo-cadastro">
+                    <p:outputLabel value="Nome:" for="nome"/>
+                    <p:inputText id="nome" value="#{organismoBean.organismo.nome}" required="true"
+                                 style="height: 20px"/>
+                </div>
+
+                <div class="campo-cadastro">
+                    <p:outputLabel value="Tipo:" for="box-selecao-tipo-organismo" />
+                    <h:selectOneMenu id="box-selecao-tipo-organismo" required="true" style="height:30px; width: 100%; margin-right: 0 !important;">
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Pastoral" itemValue="Pastoral" />
+                        <f:selectItem itemLabel="Movimento" itemValue="Movimento" />
+                        <f:selectItem itemLabel="Grupo de Oração" itemValue="Grupo de Oração" />
+                        <f:selectItem itemLabel="Outro" itemValue="Outro" />
+                    </h:selectOneMenu>
+                </div>
+
+                <p:commandButton value="Salve para adicionar membros" title="Salvar" update="@form"
+                                 actionListener="#{organismoBean.salvar()}" class="botao-adicionar"
+                                 oncomplete="#{organismoBean.fecharDialogoERedirecionar()}"
+                                 style="width: 100%;border: none;height: 45px;font-size: 14px;margin-top: 5px;"/>
+
+            </div>
+
+        </h:form>
+
+    </h:body>
+
+</html>

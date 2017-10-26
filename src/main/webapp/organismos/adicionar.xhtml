@@ -20,7 +20,7 @@
                 </div>
                 <div class="opcoes-right">
                     <p:commandButton style="margin-right: 5px" value="Salvar" title="Salvar" icon="ui-icon-disk"
-                                     actionListener="#{organismoBean.teste()}" update="@form"/>
+                                     actionListener="#{organismoBean.salvar()}" update="@form"/>
                     <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/organismos/gerenciar"
                               onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de gestão de organismos.'))
                                           return false">
@@ -65,9 +65,9 @@
 
                         <f:facet name="right">
                             <p:inputText id="campoPesquisaPessoa" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaPessoa}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.filtrarPessoas()}" update="tabelaPessoas" />
+                                <p:ajax event="keyup" listener="#{organismoBean.PesquisarPessoa()}" update="tabelaPessoas" />
                             </p:inputText>
-                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.teste()}" update="tabelaPessoas, tabelaMembros" process="@this"/>
+                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.PesquisarPessoa()}" update="tabelaPessoas, tabelaMembros" process="@this"/>
                         </f:facet>
 
                     </p:toolbar>
@@ -106,9 +106,9 @@
 
                         <f:facet name="right">
                             <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
+                                <p:ajax event="keyup" listener="#{organismoBean.PesquisarMembro()}" update="tabelaMembros" />
                             </p:inputText>
-                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.teste()}" update="tabelaMembros, tabelaPessoas" process="@this"/>
+                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.PesquisarMembro()}" update="tabelaMembros, tabelaPessoas" process="@this"/>
                         </f:facet>
 
                     </p:toolbar>
