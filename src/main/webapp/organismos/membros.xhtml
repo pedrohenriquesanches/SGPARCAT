@@ -128,7 +128,7 @@
                         <p:column headerText="Função Nesse Organismo" >
                             <h:outputText value="#{membro.funcao.titulo}" />
                         </p:column>
-                        
+
                         <p:column style="width: 32px">
                             <p:commandButton icon="ui-icon-circle-minus" title="Remover membro" actionListener="#{organismoBean.removerMembro(membro)}"
                                              update="@form:tabelaPessoas, tabelaMembros" process="@this" class="botao-remover"/>
@@ -139,7 +139,6 @@
                 </div>
 
             </div>
-
 
 
         </h:form>

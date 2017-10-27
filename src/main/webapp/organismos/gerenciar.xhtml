@@ -14,8 +14,7 @@
                 <h1>Gestão de Organismos de Igreja</h1>            
             </div>
             <div class="opcoes-right">
-                <p:commandButton value="Adicionar Organismo" icon="ui-icon-plus" actionListener="#{organismoBean.preCadastro()}" />
-                <!--<p:button outcome="/organismos/adicionar" value="Adicionar Organismo" icon="ui-icon-plus"/>-->
+                <p:commandButton value="Adicionar Organismo" icon="ui-icon-plus" onclick="PF('dlg').show();" />
             </div>     
         </div>
 
@@ -72,9 +71,46 @@
                 </p:column>
 
             </p:dataTable>
-            
+
         </h:form>
-        
+
+        <h:form id="dialogForm">
+
+            <p:dialog header="Cadastrar Organismo" widgetVar="dlg" resizable="false" height="200" width="320">
+
+                <p:outputPanel id="PreCadastro">
+
+                    <div style="width: 90%" class="centralizado">
+
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Nome:" for="nome"/>
+                            <p:inputText id="nome" value="#{organismoBean.organismo.nome}" required="true"
+                                         style="height: 20px;width: 96% !important"/>
+                        </div>
+
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Tipo:" for="box-selecao-tipo-organismo-cadastro" />
+                            <h:selectOneMenu id="box-selecao-tipo-organismo-cadastro" required="true" style="height:30px; width: 100%; margin-right: 0 !important;">
+                                <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Pastoral" itemValue="Pastoral" />
+                                <f:selectItem itemLabel="Movimento" itemValue="Movimento" />
+                                <f:selectItem itemLabel="Grupo de Oração" itemValue="Grupo de Oração" />
+                                <f:selectItem itemLabel="Outro" itemValue="Outro" />
+                            </h:selectOneMenu>
+                        </div>
+
+                        <p:commandButton process="dialogForm" update="PreCadastro" value="Salve para adicionar membros" title="Salvar"
+                                         action="#{organismoBean.salvar()}" class="botao-adicionar"
+                                         style="width: 100%;border: none;height: 45px;font-size: 14px;margin-top: 5px;"/>
+
+                    </div>
+
+                </p:outputPanel>
+
+            </p:dialog>
+
+        </h:form>
+
     </ui:define>
-    
+
 </ui:composition>
