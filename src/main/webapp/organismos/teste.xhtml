@@ -65,7 +65,7 @@
 
                         <f:facet name="right">
                             <p:inputText id="campoPesquisaPessoa" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaPessoa}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.listarPessoasQueNaoEstaoNesseOrganismo()}" update="tabelaPessoas" />
+                                <p:ajax event="keyup" listener="#{organismoBean.filtrarPessoasQueNaoEstaoNesseOrganismo()}" update="tabelaPessoas" />
                             </p:inputText>
                             <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.teste()}" update="tabelaPessoas, tabelaMembros" process="@this"/>
                         </f:facet>
@@ -105,7 +105,7 @@
 
                         <f:facet name="right">
                             <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.listarMembros()}" update="tabelaMembros" />
+                                <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
                             </p:inputText>
                             <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.teste()}" update="tabelaMembros, tabelaPessoas" process="@this"/>
                         </f:facet>

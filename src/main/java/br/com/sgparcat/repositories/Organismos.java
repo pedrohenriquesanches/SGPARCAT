@@ -28,11 +28,12 @@ public class Organismos implements Serializable{
     @Inject
     private EntityManager manager;
     
-    public void guardar(Organismo organismo) {
+    public Organismo guardar(Organismo organismo) {
         EntityTransaction et = manager.getTransaction();
         et.begin();
-        manager.merge(organismo);
-        et.commit();    
+        organismo = manager.merge(organismo);
+        et.commit();
+        return organismo;
     }
 
     public void remover(Organismo organismo) {
@@ -60,6 +61,7 @@ public class Organismos implements Serializable{
     }
 
     public Object retornaPorId(Integer id) {
+        Object ob = manager.find(Organismo.class, id);
         return manager.find(Organismo.class, id);
     }
     

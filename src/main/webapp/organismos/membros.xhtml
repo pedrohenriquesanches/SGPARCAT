@@ -6,6 +6,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:define name="titulo">Adicionar Organismo</ui:define>
+
     <ui:define name="corpo">
 
         <f:metadata>
@@ -65,9 +66,9 @@
 
                         <f:facet name="right">
                             <p:inputText id="campoPesquisaPessoa" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaPessoa}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.PesquisarPessoa()}" update="tabelaPessoas" />
+                                <p:ajax event="keyup" listener="#{organismoBean.filtrarPessoasQueNaoEstaoNesseOrganismo()}" update="tabelaPessoas" />
                             </p:inputText>
-                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.PesquisarPessoa()}" update="tabelaPessoas, tabelaMembros" process="@this"/>
+                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.filtrarPessoasQueNaoEstaoNesseOrganismo()}" update="tabelaPessoas, tabelaMembros" process="@this"/>
                         </f:facet>
 
                     </p:toolbar>
@@ -106,9 +107,9 @@
 
                         <f:facet name="right">
                             <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.PesquisarMembro()}" update="tabelaMembros" />
+                                <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
                             </p:inputText>
-                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.PesquisarMembro()}" update="tabelaMembros, tabelaPessoas" process="@this"/>
+                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.filtrarMembros()}" update="tabelaMembros, tabelaPessoas" process="@this"/>
                         </f:facet>
 
                     </p:toolbar>

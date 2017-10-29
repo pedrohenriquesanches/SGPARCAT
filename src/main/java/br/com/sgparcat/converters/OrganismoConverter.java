@@ -18,7 +18,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author pedrohensanches
  */
-@FacesConverter(forClass = Organismo.class,value="organismoConverter")
+@FacesConverter(forClass = Organismo.class)
 public class OrganismoConverter implements Converter {
 
     private Organismos repositorioOrganismos;

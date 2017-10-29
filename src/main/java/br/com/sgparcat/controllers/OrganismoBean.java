@@ -59,8 +59,8 @@ public class OrganismoBean implements Serializable {
     @PostConstruct
     public void OrganismoBean() {
         filtrarOrganismos();
-        listarPessoasQueNaoEstaoNesseOrganismo();
-        listarMembros();
+        filtrarPessoasQueNaoEstaoNesseOrganismo();
+        filtrarMembros();
     }
 
     public Organismo getOrganismo() {
@@ -132,10 +132,10 @@ public class OrganismoBean implements Serializable {
     }
 
     public String salvarPreCadastro() {
-        organismoService.salvar(organismo);
+        organismo = organismoService.salvar(organismo);
         //FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
         //esperar 2 segundos para redirecionar
-        return "/organismos/membros?faces-redirect=true";
+        return "/organismos/membros?organismo="+organismo.getIdOrganismo()+"&faces-redirect=true";
     }
     
     public void salvar() {
@@ -161,7 +161,7 @@ public class OrganismoBean implements Serializable {
         organismos = repositorioOrganismos.retornaOrganismos(tipoOrganismoSelecionado, inputPesquisaOrganismo);
     }
 
-    public void listarPessoasQueNaoEstaoNesseOrganismo() {
+    public void filtrarPessoasQueNaoEstaoNesseOrganismo() {
         //Se o organismo esta sendo criado agora, retornar todas as pessoas
         if (organismo.getIdOrganismo() == null) {
             pessoas = repositorioPessoas.retornaTodasAsPessoas();
@@ -170,7 +170,7 @@ public class OrganismoBean implements Serializable {
         }
     }
 
-    public void listarMembros() {
+    public void filtrarMembros() {
         membros = organismo.getMembros();
         if (membros == null) {
             membros = new ArrayList<>();
@@ -190,10 +190,6 @@ public class OrganismoBean implements Serializable {
         membros.remove(membro);
 
         //atualizar a lista de Pessoas
-    }
-    
-    public void teste(){
-        System.out.println("OLHA: "+ organismo.getTipoOrganismo());
     }
 
 }

@@ -21,8 +21,8 @@ public class OrganismoService implements Serializable{
     @Inject
     private Organismos repositorioOrganismos;
     
-    public void salvar(Organismo organismo){
-        repositorioOrganismos.guardar(organismo);
+    public Organismo salvar(Organismo organismo){
+        return repositorioOrganismos.guardar(organismo);
     }
     
     public void excluir(Organismo organismo){
