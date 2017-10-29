@@ -95,6 +95,6 @@ public class ParoquianoBean implements Serializable {
     }
 
     public void filtrarParoquianos() {
-        paroquianos = repositorioPessoas.retornaParoquianoso(funcaoSelecionada, inputPesquisa);
+        paroquianos = repositorioPessoas.retornaParoquianos(funcaoSelecionada, inputPesquisa);
     }
 }

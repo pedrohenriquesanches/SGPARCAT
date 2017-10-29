@@ -24,22 +24,26 @@
 
                 <f:facet name="left">
                     <p:outputLabel value="Tipo:" for="box-selecao-tipo-organismo" />
-                    <h:selectOneMenu id="box-selecao-tipo-organismo" >
-                        <f:selectItem itemLabel="Todos" itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="Pastorais" itemValue="Pastorais" />
-                        <f:selectItem itemLabel="Movimentos" itemValue="Movimentos" />
-                        <f:selectItem itemLabel="Grupos de Oração" itemValue="Grupos de Oração" />
+                    <h:selectOneMenu id="box-selecao-tipo-organismo" value="#{organismoBean.tipoOrganismoSelecionado}" >
+                        <f:selectItem itemLabel="Selecione" />
+                        <f:selectItems value="#{organismoBean.tiposDeOrganismo()}" var="tipoOrganismo"
+                                       itemValue="#{tipoOrganismo}" itemLabel="#{tipoOrganismo.label}"/>
+                        <p:ajax event="change" listener="#{organismoBean.filtrarOrganismos()}" update="tabelaOrganismos" />
                     </h:selectOneMenu>
-
                 </f:facet>
+
                 <f:facet name="right">
-                    <p:inputText placeholder="Pesquisar"/>
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaOrganismo}" >
+                        <p:ajax event="keyup" listener="#{organismoBean.filtrarOrganismos()}" update="tabelaOrganismos" />                    
+                    </p:inputText>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.filtrarOrganismos()}" update="tabelaOrganismos"/>
                 </f:facet>
 
             </p:toolbar>
 
-            <p:dataTable class="tabela" id="tabelaOrganismos" var="organismo" value="#{OrganismoBean.organismos}"
-                         rowKey="#{organismo.idOrganismo}" rows="12" paginator="true" paginatorPosition="bottom">
+            <p:dataTable class="tabela" id="tabelaOrganismos" var="organismo" value="#{organismoBean.organismos}"
+                         rowKey="#{organismo.idOrganismo}" rows="12" paginator="true" paginatorPosition="bottom"
+                         emptyMessage="Nenhum registro encontrado">
 
                 <p:column headerText="ID" style="width: 50px">
                     <h:outputText value="#{organismo.idOrganismo}" />
@@ -50,24 +54,26 @@
                 </p:column>
 
                 <p:column headerText="Tipo" style="width: 70px">
-                    <h:outputText value="#{organismo.tipoOrganismo}" />
+                    <h:outputText value="#{organismo.tipoOrganismo.label}" />
                 </p:column>
 
                 <p:column headerText="Coordenador" style="width: 150px">
-                    <h:outputText value="#{organismo.coordenador}" />
                 </p:column>
 
                 <p:column headerText="Tesoureiro" style="width: 250px">
-                    <h:outputText value="#{organismo.tesoureiro}" />
                 </p:column>
 
                 <p:column headerText="Contato Principal" style="width: 250px">
-                    <h:outputText value="#{organismo.contatoPrincipal}" />
                 </p:column>
 
                 <p:column style="width:80px;text-align: center">
-                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>
-                    <p:commandButton  icon="ui-icon-trash" title="Remover"/>
+                    <p:button style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" outcome="/organismos/membros">
+                        <f:param value="#{organismo.idOrganismo}" name="organismo"/>                        
+                    </p:button>
+                    <p:commandButton icon="ui-icon-trash" title="Remover" update="tabelaOrganismos" actionListener="#{organismoBean.excluir(organismo)}" ajax="false"
+                                     onclick="if (!confirm('Tem certeza? Não será possível desfazer a exclusão!'))
+                                                 return false">
+                    </p:commandButton>
                 </p:column>
 
             </p:dataTable>
@@ -90,18 +96,17 @@
 
                         <div class="campo-cadastro">
                             <p:outputLabel value="Tipo:" for="box-selecao-tipo-organismo-cadastro" />
-                            <h:selectOneMenu id="box-selecao-tipo-organismo-cadastro" required="true" style="height:30px; width: 100%; margin-right: 0 !important;">
+                            <h:selectOneMenu id="box-selecao-tipo-organismo-cadastro" required="true" value="#{organismoBean.organismo.tipoOrganismo}"
+                                             style="height:30px; width: 100%; margin-right: 0 !important;">
                                 <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
-                                <f:selectItem itemLabel="Pastoral" itemValue="Pastoral" />
-                                <f:selectItem itemLabel="Movimento" itemValue="Movimento" />
-                                <f:selectItem itemLabel="Grupo de Oração" itemValue="Grupo de Oração" />
-                                <f:selectItem itemLabel="Outro" itemValue="Outro" />
+                                <f:selectItems value="#{organismoBean.tiposDeOrganismo()}" var="tipoOrganismo"
+                                               itemValue="#{tipoOrganismo}" itemLabel="#{tipoOrganismo.label}"/>
                             </h:selectOneMenu>
                         </div>
 
                         <p:commandButton process="dialogForm" update="PreCadastro" value="Salve para adicionar membros" title="Salvar"
-                                         action="#{organismoBean.salvar()}" class="botao-adicionar"
-                                         style="width: 100%;border: none;height: 45px;font-size: 14px;margin-top: 5px;"/>
+                                         action="#{organismoBean.salvarPreCadastro()}" class="botao-adicionar"
+                                         style="width: 100%;border: none;height: 45px;font-size: 14px;margin-top: 5px;" />
 
                     </div>
 

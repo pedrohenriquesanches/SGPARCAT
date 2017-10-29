@@ -26,27 +26,37 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "organismo")
 public class Organismo implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     public enum TipoOrganismo {
-        GRUPO_DE_ORACAO, MOVIMENTO, PASTORAL, CONSELHO;
+        GRUPO_DE_ORACAO("Grupo de oração"), MOVIMENTO("Movimento"), PASTORAL("Pastoral"), CONSELHO("Conselho");
+
+        private final String label;
+
+        TipoOrganismo(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
     }
-    
-    @Id    
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrganismo;
-    
+
     @Column(nullable = false)
     private String nome;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
     private TipoOrganismo tipoOrganismo;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organismo")
     private List<Membro> membros;
-    
+
     public Organismo() {
     }
 
@@ -87,7 +97,7 @@ public class Organismo implements Serializable {
     public void setMembros(List<Membro> membros) {
         this.membros = membros;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -129,5 +139,5 @@ public class Organismo implements Serializable {
     public String toString() {
         return "Organismo{" + "idOrganismo=" + idOrganismo + ", nome=" + nome + ", tipoOrganismo=" + tipoOrganismo + ", membros=" + membros + '}';
     }
-    
+
 }

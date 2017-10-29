@@ -48,18 +48,27 @@ public class OrganismoBean implements Serializable {
 
     private List<Membro> membros;
 
+    private String inputPesquisaOrganismo;
+
     private String inputPesquisaPessoa;
 
     private String inputPesquisaMembro;
 
+    private Organismo.TipoOrganismo tipoOrganismoSelecionado;
+
     @PostConstruct
     public void OrganismoBean() {
+        filtrarOrganismos();
         listarPessoasQueNaoEstaoNesseOrganismo();
         listarMembros();
     }
 
     public Organismo getOrganismo() {
         return organismo;
+    }
+
+    public void setOrganismo(Organismo organismo) {
+        this.organismo = organismo;
     }
 
     public List<Organismo> getOrganismos() {
@@ -74,28 +83,82 @@ public class OrganismoBean implements Serializable {
         return pessoas;
     }
 
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
+    }
+
     public List<Membro> getMembros() {
         return membros;
+    }
+
+    public void setMembros(List<Membro> membros) {
+        this.membros = membros;
+    }
+
+    public Organismo.TipoOrganismo getTipoOrganismoSelecionado() {
+        return tipoOrganismoSelecionado;
+    }
+
+    public void setTipoOrganismoSelecionado(Organismo.TipoOrganismo tipoOrganismoSelecionado) {
+        this.tipoOrganismoSelecionado = tipoOrganismoSelecionado;
     }
 
     public String getInputPesquisaPessoa() {
         return inputPesquisaPessoa;
     }
 
+    public void setInputPesquisaPessoa(String inputPesquisaPessoa) {
+        this.inputPesquisaPessoa = inputPesquisaPessoa;
+    }
+
     public String getInputPesquisaMembro() {
         return inputPesquisaMembro;
     }
 
-    public String salvar() {
-        organismo.setTipoOrganismo(Organismo.TipoOrganismo.MOVIMENTO);
+    public void setInputPesquisaMembro(String inputPesquisaMembro) {
+        this.inputPesquisaMembro = inputPesquisaMembro;
+    }
+
+    public String getInputPesquisaOrganismo() {
+        return inputPesquisaOrganismo;
+    }
+
+    public void setInputPesquisaOrganismo(String inputPesquisaOrganismo) {
+        this.inputPesquisaOrganismo = inputPesquisaOrganismo;
+    }
+
+    public Organismo.TipoOrganismo[] tiposDeOrganismo() {
+        return Organismo.TipoOrganismo.values();
+    }
+
+    public String salvarPreCadastro() {
+        organismoService.salvar(organismo);
+        //FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
+        //esperar 2 segundos para redirecionar
+        return "/organismos/membros?faces-redirect=true";
+    }
+    
+    public void salvar() {
         organismoService.salvar(organismo);
         //FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
         //limpar();
-        return "/organismos/membros?faces-redirect=true";
+    }
+    
+    public void excluir(Organismo organismo) {
+        organismoService.excluir(organismo);
+        organismos.remove(organismo);
+        FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi excluido com sucesso!");
+        limpar();
+    }
+    
+    public void limpar() {
+        organismo = new Organismo();
+        tipoOrganismoSelecionado = null;
+        inputPesquisaOrganismo = null;        
     }
 
-    public String redirecionar() {
-        return "/organismos/adicionar?faces-redirect=true";
+    public void filtrarOrganismos() {
+        organismos = repositorioOrganismos.retornaOrganismos(tipoOrganismoSelecionado, inputPesquisaOrganismo);
     }
 
     public void listarPessoasQueNaoEstaoNesseOrganismo() {
@@ -128,12 +191,13 @@ public class OrganismoBean implements Serializable {
 
         //atualizar a lista de Pessoas
     }
+    
+    public void teste(){
+        System.out.println("OLHA: "+ organismo.getTipoOrganismo());
+    }
 
 }
 
-//organismoService.salvar(organismo);
-//FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
-//limpar();
 //    public void onDrop(DragDropEvent ddEvent) {
 //        Pessoa pessoa = ((Pessoa) ddEvent.getData());
 //        Membro membro = new Membro();
@@ -144,12 +208,3 @@ public class OrganismoBean implements Serializable {
 //        pessoas.remove(pessoa);
 //    }
 //    
-//    public void teste(){
-//        Pessoa pessoa = pessoas.get(2);
-//        Membro membro = new Membro();
-//        membro.setPessoa(pessoa);
-//        membro.setOrganismo(organismo);
-//        membro.setFuncao(null);        
-//        pessoas.remove(2);
-//        membros.add(membro);
-//    }

@@ -18,7 +18,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author pedrohensanches
  */
-@FacesConverter(forClass = Organismo.class)
+@FacesConverter(forClass = Organismo.class,value="organismoConverter")
 public class OrganismoConverter implements Converter {
 
     private Organismos repositorioOrganismos;
@@ -34,7 +34,7 @@ public class OrganismoConverter implements Converter {
         }
 
         if (!value.matches("\\d+")) {
-            throw new ConverterException("O valor não é ID válido: " + value);
+            throw new ConverterException("O valor não é um ID válido: " + value);
         }
 
         Integer id = new Integer(value);

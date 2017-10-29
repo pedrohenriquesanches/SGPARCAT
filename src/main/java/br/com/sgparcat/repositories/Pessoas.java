@@ -48,7 +48,7 @@ public class Pessoas implements Serializable {
         et.commit();
     }
 
-    public List<Pessoa> retornaParoquianoso(Funcao funcaoFiltro, String nomePesquisado) {
+    public List<Pessoa> retornaParoquianos(Funcao funcaoFiltro, String nomePesquisado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
         c.add(Restrictions.eq("tipoPessoa", Pessoa.TipoPessoa.PAROQUIANO));
