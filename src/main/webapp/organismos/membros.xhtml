@@ -11,6 +11,8 @@
 
         <f:metadata>
             <f:viewParam name="organismo" value="#{organismoBean.organismo}"/>
+            <f:viewAction phase="UPDATE_MODEL_VALUES" action="#{organismoBean.filtrarPessoasQueNaoEstaoNesseOrganismo()}"/>
+            <f:viewAction phase="UPDATE_MODEL_VALUES" action="#{organismoBean.filtrarMembros()}"/>
         </f:metadata>
 
         <h:form>
@@ -42,12 +44,11 @@
                     </div>
                     <div class="campo-cadastro coluna-1-5">
                         <p:outputLabel value="Tipo:" for="box-selecao-tipo-organismo" />
-                        <h:selectOneMenu id="box-selecao-tipo-organismo" required="true" style="height:26px">
-                            <f:selectItem itemLabel="Selecione" />
-                            <f:selectItem itemLabel="Pastoral" itemValue="Pastoral" />
-                            <f:selectItem itemLabel="Movimento" itemValue="Movimento" />
-                            <f:selectItem itemLabel="Grupo de Oração" itemValue="Grupo de Oração" />
-                            <f:selectItem itemLabel="Outro" itemValue="Outro" />
+                        <h:selectOneMenu id="box-selecao-tipo-organismo" required="true" value="#{organismoBean.organismo.tipoOrganismo}"
+                                         style="height:30px; width: 100%; margin-right: 0 !important;">
+                            <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+                            <f:selectItems value="#{organismoBean.tiposDeOrganismo()}" var="tipoOrganismo"
+                                           itemValue="#{tipoOrganismo}" itemLabel="#{tipoOrganismo.label}"/>
                         </h:selectOneMenu>
                     </div>
 
@@ -68,7 +69,8 @@
                             <p:inputText id="campoPesquisaPessoa" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaPessoa}" >
                                 <p:ajax event="keyup" listener="#{organismoBean.filtrarPessoasQueNaoEstaoNesseOrganismo()}" update="tabelaPessoas" />
                             </p:inputText>
-                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.filtrarPessoasQueNaoEstaoNesseOrganismo()}" update="tabelaPessoas, tabelaMembros" process="@this"/>
+                            <p:commandButton actionListener="#{organismoBean.filtrarPessoasQueNaoEstaoNesseOrganismo()}" update="tabelaPessoas" process="@this"
+                                             icon="ui-icon-search" title="Pesquisar" class="botaopesquisa"/>
                         </f:facet>
 
                     </p:toolbar>
@@ -109,12 +111,13 @@
                             <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
                                 <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
                             </p:inputText>
-                            <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" actionListener="#{organismoBean.filtrarMembros()}" update="tabelaMembros, tabelaPessoas" process="@this"/>
+                            <p:commandButton actionListener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" process="@this"
+                                             icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" />
                         </f:facet>
 
                     </p:toolbar>
 
-                    <p:dataTable class="tabela" id="tabelaMembros" var="membro" value="#{organismoBean.membros}" rowKey="#{membro.pessoa.idPessoa}"
+                    <p:dataTable class="tabela" id="tabelaMembros" var="membro" value="#{organismoBean.organismo.membros}" rowKey="#{membro.idMembro}"
                                  rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum membro adicionado"
                                  >
 

@@ -137,7 +137,7 @@ public class Organismo implements Serializable {
 
     @Override
     public String toString() {
-        return "Organismo{" + "idOrganismo=" + idOrganismo + ", nome=" + nome + ", tipoOrganismo=" + tipoOrganismo + ", membros=" + membros + '}';
+        return "Organismo{" + "idOrganismo=" + idOrganismo + ", nome=" + nome + ", tipoOrganismo=" + tipoOrganismo + '}';
     }
 
 }

@@ -13,7 +13,6 @@ import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.OrganismoService;
 import br.com.sgparcat.util.jsf.FacesUtil;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -46,8 +45,6 @@ public class OrganismoBean implements Serializable {
 
     private List<Pessoa> pessoas;
 
-    private List<Membro> membros;
-
     private String inputPesquisaOrganismo;
 
     private String inputPesquisaPessoa;
@@ -59,8 +56,6 @@ public class OrganismoBean implements Serializable {
     @PostConstruct
     public void OrganismoBean() {
         filtrarOrganismos();
-        filtrarPessoasQueNaoEstaoNesseOrganismo();
-        filtrarMembros();
     }
 
     public Organismo getOrganismo() {
@@ -85,14 +80,6 @@ public class OrganismoBean implements Serializable {
 
     public void setPessoas(List<Pessoa> pessoas) {
         this.pessoas = pessoas;
-    }
-
-    public List<Membro> getMembros() {
-        return membros;
-    }
-
-    public void setMembros(List<Membro> membros) {
-        this.membros = membros;
     }
 
     public Organismo.TipoOrganismo getTipoOrganismoSelecionado() {
@@ -135,26 +122,26 @@ public class OrganismoBean implements Serializable {
         organismo = organismoService.salvar(organismo);
         //FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
         //esperar 2 segundos para redirecionar
-        return "/organismos/membros?organismo="+organismo.getIdOrganismo()+"&faces-redirect=true";
+        return "/organismos/membros?organismo=" + organismo.getIdOrganismo() + "&faces-redirect=true";
     }
-    
+
     public void salvar() {
         organismoService.salvar(organismo);
         //FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
         //limpar();
     }
-    
+
     public void excluir(Organismo organismo) {
         organismoService.excluir(organismo);
         organismos.remove(organismo);
         FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi excluido com sucesso!");
         limpar();
     }
-    
+
     public void limpar() {
         organismo = new Organismo();
         tipoOrganismoSelecionado = null;
-        inputPesquisaOrganismo = null;        
+        inputPesquisaOrganismo = null;
     }
 
     public void filtrarOrganismos() {
@@ -162,34 +149,30 @@ public class OrganismoBean implements Serializable {
     }
 
     public void filtrarPessoasQueNaoEstaoNesseOrganismo() {
-        //Se o organismo esta sendo criado agora, retornar todas as pessoas
-        if (organismo.getIdOrganismo() == null) {
+
+        //Se o organismo não tem membros, retornar todas as pessoas
+        if (organismo.getMembros() == null || organismo.getMembros().isEmpty()) {
             pessoas = repositorioPessoas.retornaTodasAsPessoas();
         } else {
-            pessoas = repositorioPessoas.retornaPessoasQueNãoMembrosDoOrganismo(organismo);
+            pessoas = repositorioPessoas.retornaPessoasQueNãoMembrosDoOrganismo(organismo, inputPesquisaPessoa);
         }
     }
 
     public void filtrarMembros() {
-        membros = organismo.getMembros();
-        if (membros == null) {
-            membros = new ArrayList<>();
-        }
+        System.out.println("TESTE");
     }
 
     public void adicionarMembro(Pessoa pessoa) {
         Membro membro = new Membro();
         membro.setPessoa(pessoa);
         membro.setOrganismo(organismo);
-        membro.setFuncao(null);
-        membros.add(membro);
+        organismo.getMembros().add(membro);
         pessoas.remove(pessoa);
     }
 
     public void removerMembro(Membro membro) {
-        membros.remove(membro);
-
-        //atualizar a lista de Pessoas
+        pessoas.add(membro.getPessoa());
+        organismo.getMembros().remove(membro);
     }
 
 }
