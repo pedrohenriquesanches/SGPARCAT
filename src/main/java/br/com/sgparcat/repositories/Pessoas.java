@@ -112,11 +112,11 @@ public class Pessoas implements Serializable {
         Session session = manager.unwrap(Session.class);
         
         //Reconhece quem são os membros do organismo
-        DetachedCriteria subCriteria = DetachedCriteria.forClass(Membro.class);
-        subCriteria.add(Restrictions.eq("organismo", organismo.getIdOrganismo()));
+        //DetachedCriteria subCriteria = DetachedCriteria.forClass(Membro.class);
+        //subCriteria.add(Restrictions.eq("organismo", organismo.getIdOrganismo()));
 
         Criteria c = session.createCriteria(Pessoa.class);
-        c.add(Subqueries.propertyNotIn("idPessoa", subCriteria));
+        //c.add(Subqueries.propertyNotIn("idPessoa", subCriteria));
         
         if (nomePesquisado != null && !nomePesquisado.equals("")) {
             c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));

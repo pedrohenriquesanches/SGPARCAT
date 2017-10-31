@@ -5,9 +5,11 @@
  */
 package br.com.sgparcat.controllers;
 
+import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Membro;
 import br.com.sgparcat.models.Organismo;
 import br.com.sgparcat.models.Pessoa;
+import br.com.sgparcat.repositories.Funcoes;
 import br.com.sgparcat.repositories.Organismos;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.OrganismoService;
@@ -37,6 +39,9 @@ public class OrganismoBean implements Serializable {
 
     @Inject
     Pessoas repositorioPessoas;
+    
+    @Inject
+    Funcoes repositorioFuncoes;
 
     @Inject
     private Organismo organismo;
@@ -52,10 +57,14 @@ public class OrganismoBean implements Serializable {
     private String inputPesquisaMembro;
 
     private Organismo.TipoOrganismo tipoOrganismoSelecionado;
+    
+    @Inject
+    private Funcao funcaoPadraoParaMembro;
 
     @PostConstruct
     public void OrganismoBean() {
         filtrarOrganismos();
+        //funcaoPadraoParaMembro = repositorioFuncoes.retornaFuncaoPadraoParaMembro();
     }
 
     public Organismo getOrganismo() {
@@ -149,7 +158,6 @@ public class OrganismoBean implements Serializable {
     }
 
     public void filtrarPessoasQueNaoEstaoNesseOrganismo() {
-
         //Se o organismo não tem membros, retornar todas as pessoas
         if (organismo.getMembros() == null || organismo.getMembros().isEmpty()) {
             pessoas = repositorioPessoas.retornaTodasAsPessoas();
@@ -166,11 +174,14 @@ public class OrganismoBean implements Serializable {
         Membro membro = new Membro();
         membro.setPessoa(pessoa);
         membro.setOrganismo(organismo);
+        //membro.setFuncao(funcaoPadraoParaMembro);
+        membro.setFuncao(new Funcao(new Integer("-2"), "Selecione"));
         organismo.getMembros().add(membro);
         pessoas.remove(pessoa);
     }
 
     public void removerMembro(Membro membro) {
+        System.out.println("PESSOAS: "+pessoas);
         pessoas.add(membro.getPessoa());
         organismo.getMembros().remove(membro);
     }

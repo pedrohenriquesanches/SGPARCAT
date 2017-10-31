@@ -119,7 +119,7 @@
 
                     <p:dataTable class="tabela" id="tabelaMembros" var="membro" value="#{organismoBean.organismo.membros}" rowKey="#{membro.idMembro}"
                                  rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum membro adicionado"
-                                 >
+                                 editable="true" editMode="cell">
 
                         <p:column headerText="ID" style="width: 50px" >
                             <h:outputText value="#{membro.pessoa.idPessoa}" />
@@ -130,7 +130,16 @@
                         </p:column>
 
                         <p:column headerText="Função Nesse Organismo" >
-                            <h:outputText value="#{membro.funcao.titulo}" />
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{membro.funcao.titulo}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu id="box-selecao-funcoes" required="true" value="#{membro.funcao}" converter="funcaoConverter" style="width:80%">
+                                        <!--<f:selectItem  itemLabel="Todas" itemValue="-2" noSelectionOption="true"/>-->
+                                        <f:selectItem  itemLabel="Selecione" noSelectionOption="true"/>
+                                        <f:selectItems value="#{funcaoBean.filtrarFuncoesQueNaoSaoApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" />
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
 
                         <p:column style="width: 32px">

@@ -41,16 +41,6 @@ public class Membro implements Serializable {
     @ManyToOne
     private Pessoa pessoa;
 
-    public Membro() {
-    }
-
-    public Membro(Long idMembro, Funcao funcao, Organismo organismo, Pessoa pessoa) {
-        this.idMembro = idMembro;
-        this.funcao = funcao;
-        this.organismo = organismo;
-        this.pessoa = pessoa;
-    }
-
     public Long getIdMembro() {
         return idMembro;
     }

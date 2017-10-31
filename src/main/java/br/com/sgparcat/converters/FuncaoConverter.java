@@ -29,17 +29,22 @@ public class FuncaoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
+        System.out.println(value);
         if (value == null || value.isEmpty()) {
             return null;
         }
         
         if(value.equals("-1")){
             return new Funcao();
-        } 
-
+        }
+        
+//        if(value.equals("-2")){
+//            return repositorioFuncoes.retornaFuncaoPadrãoParaMembro();
+//        }
+        
         if (!value.matches("\\d+")) {
             throw new ConverterException("O valor não é um ID válido: " + value);
-        }
+        }        
         
         Integer id = new Integer(value);
         return repositorioFuncoes.retornaPorId(id);
@@ -47,6 +52,7 @@ public class FuncaoConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext fc, UIComponent uic, Object value) {
+        System.out.println(value);
         if (value == null) {
             return null;
         }
@@ -57,7 +63,7 @@ public class FuncaoConverter implements Converter {
         
         if (!(value instanceof Funcao)) {
             throw new ConverterException("Esse valor não é uma Função Válida: " + value);
-        }       
+        }     
 
         Integer id = ((Funcao) value).getIdFuncao();
         return (id != null) ? String.valueOf(id) : null;

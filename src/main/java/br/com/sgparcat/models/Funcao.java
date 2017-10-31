@@ -46,6 +46,14 @@ public class Funcao implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
     private List<Participante> participantes;
 
+    public Funcao() {
+    }
+
+    public Funcao(Integer idFuncao, String titulo) {
+        this.idFuncao = idFuncao;
+        this.titulo = titulo;
+    }
+
     public Integer getIdFuncao() {
         return idFuncao;
     }
