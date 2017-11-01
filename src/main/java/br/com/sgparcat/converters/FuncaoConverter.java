@@ -29,7 +29,6 @@ public class FuncaoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-        System.out.println(value);
         if (value == null || value.isEmpty()) {
             return null;
         }
@@ -52,7 +51,6 @@ public class FuncaoConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext fc, UIComponent uic, Object value) {
-        System.out.println(value);
         if (value == null) {
             return null;
         }

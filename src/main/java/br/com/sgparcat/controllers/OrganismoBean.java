@@ -181,7 +181,6 @@ public class OrganismoBean implements Serializable {
     }
 
     public void removerMembro(Membro membro) {
-        System.out.println("PESSOAS: "+pessoas);
         pessoas.add(membro.getPessoa());
         organismo.getMembros().remove(membro);
     }
