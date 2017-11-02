@@ -6,19 +6,20 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:define name="titulo">Organismos</ui:define>
-
     <ui:define name="corpo">
 
-        <div class="titulo-opcoes">
-            <div class="titulo-pagina">
-                <h1>Gestão de Organismos de Igreja</h1>            
-            </div>
-            <div class="opcoes-right">
-                <p:commandButton value="Adicionar Organismo" icon="ui-icon-plus" onclick="PF('dlg').show();" />
-            </div>     
-        </div>
-
         <h:form>
+
+            <div class="titulo-opcoes">
+                <div class="titulo-pagina">
+                    <h1>Gestão de Organismos de Igreja</h1>            
+                </div>
+                <div class="opcoes-right">
+                    <p:commandButton value="Adicionar Organismo" icon="ui-icon-plus" onclick="PF('dlg').show();" />
+                </div>     
+            </div>
+
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
             <p:toolbar class="tollbartabela">
 
@@ -82,12 +83,12 @@
 
         <h:form id="dialogForm">
 
-            <p:dialog header="Cadastrar Organismo" widgetVar="dlg" resizable="false" height="200" width="320">
+            <p:dialog header="Cadastrar Organismo" widgetVar="dlg" resizable="false" height="220" width="320">
 
                 <p:outputPanel id="PreCadastro">
 
                     <div style="width: 90%" class="centralizado">
-
+                        
                         <div class="campo-cadastro">
                             <p:outputLabel value="Nome:" for="nome"/>
                             <p:inputText id="nome" value="#{organismoBean.organismo.nome}" required="true"

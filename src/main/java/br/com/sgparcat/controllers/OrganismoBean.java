@@ -12,6 +12,7 @@ import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Funcoes;
 import br.com.sgparcat.repositories.Organismos;
 import br.com.sgparcat.repositories.Pessoas;
+import br.com.sgparcat.services.MembroService;
 import br.com.sgparcat.services.OrganismoService;
 import br.com.sgparcat.util.jsf.FacesUtil;
 import java.io.Serializable;
@@ -31,6 +32,9 @@ public class OrganismoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Inject
+    MembroService membroService;
+    
     @Inject
     OrganismoService organismoService;
 
@@ -127,14 +131,19 @@ public class OrganismoBean implements Serializable {
         return Organismo.TipoOrganismo.values();
     }
 
-    public String salvarPreCadastro() {
+    public String salvarPreCadastro() throws InterruptedException {
         organismo = organismoService.salvar(organismo);
-        //FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
-        //esperar 2 segundos para redirecionar
+        FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
+        //Thread.sleep(2000);
         return "/organismos/membros?organismo=" + organismo.getIdOrganismo() + "&faces-redirect=true";
     }
 
     public void salvar() {
+        if(organismo.getIdOrganismo() == null){
+            FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi adicionado com sucesso!");
+        }else{
+            FacesUtil.addInfoMessage("Edição concluída com sucesso");
+        }
         organismoService.salvar(organismo);
         //FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
         //limpar();
@@ -175,7 +184,6 @@ public class OrganismoBean implements Serializable {
         membro.setPessoa(pessoa);
         membro.setOrganismo(organismo);
         //membro.setFuncao(funcaoPadraoParaMembro);
-        membro.setFuncao(new Funcao(new Integer("-2"), "Selecione"));
         organismo.getMembros().add(membro);
         pessoas.remove(pessoa);
     }
@@ -183,6 +191,7 @@ public class OrganismoBean implements Serializable {
     public void removerMembro(Membro membro) {
         pessoas.add(membro.getPessoa());
         organismo.getMembros().remove(membro);
+        membroService.excluir(membro);        
     }
 
 }

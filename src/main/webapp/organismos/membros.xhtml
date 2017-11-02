@@ -30,6 +30,8 @@
                 </div>
             </div>
 
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
             <div class="div-campos-cadastro" style="width: 100%">
                 <p:panel id="dados-organismo" class="painel-cadastros">
 
@@ -136,6 +138,7 @@
                                         <!--<f:selectItem  itemLabel="Todas" itemValue="-2" noSelectionOption="true"/>-->
                                         <f:selectItem  itemLabel="Selecione" noSelectionOption="true"/>
                                         <f:selectItems value="#{funcaoBean.filtrarFuncoesQueNaoSaoApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" />
+                                        <!--<p:ajax event="change" update="tabelaMembros" />-->
                                     </h:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
@@ -143,7 +146,10 @@
 
                         <p:column style="width: 32px">
                             <p:commandButton icon="ui-icon-circle-minus" title="Remover membro" actionListener="#{organismoBean.removerMembro(membro)}"
-                                             update="@form:tabelaPessoas, tabelaMembros" process="@this" class="botao-remover"/>
+                                             update="@form:tabelaPessoas, tabelaMembros" process="@this" class="botao-remover" ajax="false"
+                                             onclick="if (!confirm('Tem certeza? Não será possível desfazer a exclusão!'))
+                                                         return false">
+                            </p:commandButton>
                         </p:column>
 
                     </p:dataTable>
