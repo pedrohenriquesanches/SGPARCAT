@@ -9,6 +9,7 @@ import br.com.sgparcat.models.Membro;
 import br.com.sgparcat.models.Organismo;
 import br.com.sgparcat.models.Pessoa;
 import br.com.sgparcat.repositories.Funcoes;
+import br.com.sgparcat.repositories.Membros;
 import br.com.sgparcat.repositories.Organismos;
 import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.MembroService;
@@ -45,6 +46,9 @@ public class OrganismoBean implements Serializable {
 
     @Inject
     Funcoes repositorioFuncoes;
+    
+    @Inject
+    Membros repositorioMembros;
 
     @Inject
     private Organismo organismo;
@@ -166,6 +170,10 @@ public class OrganismoBean implements Serializable {
         } else {
             pessoas = repositorioPessoas.retornaPessoasQueNãoMembrosDoOrganismo(organismo, inputPesquisaPessoa);
         }
+    }
+    
+    public void filtrarMembros(){
+        organismo.setMembros(repositorioMembros.pesquisarMembro(organismo, inputPesquisaMembro));
     }
 
     public void adicionarMembro(Pessoa pessoa) {
