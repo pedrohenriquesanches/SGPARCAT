@@ -20,6 +20,10 @@ public class MembroService implements Serializable{
     
     @Inject
     private Membros repositorioMembros;
+    
+    public Membro salvar(Membro membro){        
+        return repositorioMembros.guardar(membro);
+    }
 
     public void excluir(Membro membro) {
         repositorioMembros.remover(membro);

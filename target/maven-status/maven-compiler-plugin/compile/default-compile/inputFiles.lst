@@ -1,10 +1,12 @@
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/converters/ParoquianoConverter.java
+/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/repositories/Membros.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/MembroBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/services/OrganismoService.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/OrganismoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/converters/OrganismoConverter.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/models/Organismo.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/ParticipanteBean.java
+/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/services/MembroService.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/DizimistaBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/EventoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/ContribuicaoBean.java

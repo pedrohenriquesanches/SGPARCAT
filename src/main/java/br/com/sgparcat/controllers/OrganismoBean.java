@@ -5,7 +5,6 @@
  */
 package br.com.sgparcat.controllers;
 
-import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Membro;
 import br.com.sgparcat.models.Organismo;
 import br.com.sgparcat.models.Pessoa;
@@ -34,7 +33,7 @@ public class OrganismoBean implements Serializable {
 
     @Inject
     MembroService membroService;
-    
+
     @Inject
     OrganismoService organismoService;
 
@@ -43,7 +42,7 @@ public class OrganismoBean implements Serializable {
 
     @Inject
     Pessoas repositorioPessoas;
-    
+
     @Inject
     Funcoes repositorioFuncoes;
 
@@ -61,14 +60,10 @@ public class OrganismoBean implements Serializable {
     private String inputPesquisaMembro;
 
     private Organismo.TipoOrganismo tipoOrganismoSelecionado;
-    
-    @Inject
-    private Funcao funcaoPadraoParaMembro;
 
     @PostConstruct
     public void OrganismoBean() {
         filtrarOrganismos();
-        //funcaoPadraoParaMembro = repositorioFuncoes.retornaFuncaoPadraoParaMembro();
     }
 
     public Organismo getOrganismo() {
@@ -139,14 +134,12 @@ public class OrganismoBean implements Serializable {
     }
 
     public void salvar() {
-        if(organismo.getIdOrganismo() == null){
+        if (organismo.getIdOrganismo() == null) {
             FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi adicionado com sucesso!");
-        }else{
+        } else {
             FacesUtil.addInfoMessage("Edição concluída com sucesso");
         }
-        organismoService.salvar(organismo);
-        //FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
-        //limpar();
+         organismo = organismoService.salvar(organismo);
     }
 
     public void excluir(Organismo organismo) {
@@ -175,23 +168,22 @@ public class OrganismoBean implements Serializable {
         }
     }
 
-    public void filtrarMembros() {
-        System.out.println("TESTE");
-    }
-
     public void adicionarMembro(Pessoa pessoa) {
-        Membro membro = new Membro();
-        membro.setPessoa(pessoa);
-        membro.setOrganismo(organismo);
-        //membro.setFuncao(funcaoPadraoParaMembro);
-        organismo.getMembros().add(membro);
-        pessoas.remove(pessoa);
+        if (organismo.getIdOrganismo() == null) {
+            FacesUtil.addInfoMessage("Primeiro crie e salve o organismo para poder adicionar membros");
+        } else {
+            Membro membro = new Membro(organismo, pessoa);
+            membroService.salvar(membro);
+            pessoas.remove(pessoa);
+        }
     }
 
     public void removerMembro(Membro membro) {
         pessoas.add(membro.getPessoa());
         organismo.getMembros().remove(membro);
-        membroService.excluir(membro);        
+        if (membro.getIdMembro() != null) {
+            membroService.excluir(membro);
+        }
     }
 
 }

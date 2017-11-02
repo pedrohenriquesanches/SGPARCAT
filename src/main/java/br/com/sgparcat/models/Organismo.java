@@ -53,6 +53,9 @@ public class Organismo implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
     private TipoOrganismo tipoOrganismo;
+    
+    @Column
+    private String telefoneParaContato;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "organismo")
     private List<Membro> membros;
@@ -70,6 +73,14 @@ public class Organismo implements Serializable {
         return idOrganismo;
     }
 
+    public String getTelefoneParaContato() {
+        return telefoneParaContato;
+    }
+
+    public void setTelefoneParaContato(String telefoneParaContato) {
+        this.telefoneParaContato = telefoneParaContato;
+    }
+    
     public void setIdOrganismo(Integer idOrganismo) {
         this.idOrganismo = idOrganismo;
     }

@@ -27,8 +27,15 @@ public class Membros implements Serializable{
         et.begin();
         membro = manager.find(Membro.class, membro.getIdMembro());
         manager.remove(membro);
-        System.out.println("AQUI");
         et.commit();
+    }
+
+    public Membro guardar(Membro membro) {
+        EntityTransaction et = manager.getTransaction();
+        et.begin();
+        membro = manager.merge(membro);
+        et.commit();
+        return membro;
     }
     
 }

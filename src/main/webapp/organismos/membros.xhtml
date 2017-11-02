@@ -18,7 +18,7 @@
 
             <div class="titulo-opcoes">
                 <div class="titulo-pagina">
-                    <h1>Cadastrar Organismo</h1>
+                    <h1>Editar Organismo e Membros</h1>
                 </div>
                 <div class="opcoes-right">
                     <p:commandButton style="margin-right: 5px" value="Salvar" title="Salvar" icon="ui-icon-disk"
@@ -42,6 +42,12 @@
                     <div class="campo-cadastro coluna-1-5">
                         <p:outputLabel value="Nome:" for="nome"/>
                         <p:inputText id="nome" value="#{organismoBean.organismo.nome}" required="true" />
+                    </div>
+                    <div class="campo-cadastro coluna-1-5">
+                        <p:outputLabel value="Principal Número para Contato:" for="contato"/>
+                        <p:inputText id="contato" value="#{organismoBean.organismo.telefoneParaContato}">
+                            <p:keyFilter mask="num"/>
+                        </p:inputText>
                     </div>
                     <div class="campo-cadastro coluna-1-5">
                         <p:outputLabel value="Tipo:" for="box-selecao-tipo-organismo" />
@@ -134,9 +140,8 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{membro.funcao.titulo}" /></f:facet>
                                 <f:facet name="input">
-                                    <h:selectOneMenu id="box-selecao-funcoes" required="true" value="#{membro.funcao}" converter="funcaoConverter" style="width:80%">
-                                        <!--<f:selectItem  itemLabel="Todas" itemValue="-2" noSelectionOption="true"/>-->
-                                        <f:selectItem  itemLabel="Selecione" noSelectionOption="true"/>
+                                    <h:selectOneMenu id="box-selecao-funcoes" value="#{membro.funcao}" converter="funcaoConverter" style="width:80%">
+                                        <f:selectItem  itemLabel="Selecione"/>
                                         <f:selectItems value="#{funcaoBean.filtrarFuncoesQueNaoSaoApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" />
                                         <!--<p:ajax event="change" update="tabelaMembros" />-->
                                     </h:selectOneMenu>

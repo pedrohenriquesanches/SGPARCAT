@@ -29,7 +29,7 @@ public class Membro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMembro;
     
-    @JoinColumn(nullable = false, name = "idFuncao")
+    @JoinColumn(name = "idFuncao")
     @ManyToOne
     private Funcao funcao;
     
@@ -40,6 +40,13 @@ public class Membro implements Serializable {
     @JoinColumn(nullable = false, name = "idPessoa") //unique=true
     @ManyToOne
     private Pessoa pessoa;
+
+    public Membro() {}
+    
+    public Membro(Organismo organismo, Pessoa pessoa) {
+        this.organismo = organismo;
+        this.pessoa = pessoa;
+    }
 
     public Long getIdMembro() {
         return idMembro;
