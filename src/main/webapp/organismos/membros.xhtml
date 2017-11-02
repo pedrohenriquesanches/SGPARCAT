@@ -44,7 +44,7 @@
                     <div class="campo-cadastro coluna-1-5">
                         <p:outputLabel value="Tipo:" for="box-selecao-tipo-organismo" />
                         <h:selectOneMenu id="box-selecao-tipo-organismo" required="true" value="#{organismoBean.organismo.tipoOrganismo}"
-                                         style="height:30px; width: 100%; margin-right: 0 !important;">
+                                         style="height:26px; width: 100%; margin-right: 0 !important;">
                             <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
                             <f:selectItems value="#{organismoBean.tiposDeOrganismo()}" var="tipoOrganismo"
                                            itemValue="#{tipoOrganismo}" itemLabel="#{tipoOrganismo.label}"/>

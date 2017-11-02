@@ -19,6 +19,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 
@@ -107,29 +109,26 @@ public class Pessoas implements Serializable {
     public Pessoa retornaPorId(Long id) {
         return manager.find(Pessoa.class, id);
     }
-    
-    public List<Pessoa> retornaPessoasQueNãoMembrosDoOrganismo(Organismo organismo, String nomePesquisado) {
-        
-        return manager.createQuery("from Pessoa where idPessoa not in"
-                + "(select pessoa from Membro where idOrganismo = :idOrganismo)").
-                setParameter("idOrganismo", ""+organismo.getIdOrganismo()).getResultList();
 
-//        Session session = manager.unwrap(Session.class);
-//        
-//        //Reconhece quem são os membros do organismo
-//        DetachedCriteria subCriteria = DetachedCriteria.forClass(Membro.class);
-//        subCriteria.add(Restrictions.eq("idOrganismo", organismo.getIdOrganismo()));
-//
-//        Criteria c = session.createCriteria(Pessoa.class);
-//        c.add(Subqueries.propertyNotIn("idPessoa", subCriteria));
-//        
-//        if (nomePesquisado != null && !nomePesquisado.equals("")) {
-//            c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
-//        }
-//        
-//        c.addOrder(Order.asc("nomeCompleto"));
-//
-//        return c.list();
+    public List<Pessoa> retornaPessoasQueNãoMembrosDoOrganismo(Organismo organismo, String nomePesquisado) {
+
+//        return manager.createQuery("from Pessoa where idPessoa not in"
+//                + "(select pessoa from Membro where idOrganismo = :idOrganismo)").
+//                setParameter("idOrganismo", ""+organismo.getIdOrganismo()).getResultList();
+
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Pessoa.class)
+                .add(Subqueries.propertyNotIn("idPessoa", DetachedCriteria.forClass(Membro.class)
+                        .add(Restrictions.eq("organismo", organismo))
+                        .setProjection(Property.forName("pessoa"))
+                ));
+        
+        if (nomePesquisado != null && !nomePesquisado.equals("")) {
+            c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
+        }
+
+        c.addOrder(Order.asc("nomeCompleto"));
+        return c.list();
     }
 
     public List<Pessoa> retornaTodasAsPessoas() {
