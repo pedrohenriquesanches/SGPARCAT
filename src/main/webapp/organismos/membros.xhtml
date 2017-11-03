@@ -62,6 +62,10 @@
                 </p:panel>
             </div>
 
+        </h:form>
+
+        <h:form id="formTabelas">
+
             <div style="width: 100%; ">
 
                 <div class="coluna-1-2" style="float: left">
@@ -99,7 +103,7 @@
 
                         <p:column style="width: 32px">
                             <p:commandButton icon="ui-icon-circle-plus" title="Adicionar como membro" actionListener="#{organismoBean.adicionarMembro(pessoa)}"
-                                             update="tabelaPessoas, @form:tabelaMembros" process="@this" class="botao-adicionar"/>
+                                             update="tabelaPessoas, formTabelas:tabelaMembros" process="@this" class="botao-adicionar"/>
                         </p:column>
 
                     </p:dataTable>
@@ -116,9 +120,9 @@
 
                         <f:facet name="right">
                             <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="@form:tabelaMembros" />
+                                <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
                             </p:inputText>
-                            <p:commandButton actionListener="#{organismoBean.filtrarMembros()}" update="@form:tabelaMembros" process="@this"
+                            <p:commandButton actionListener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" process="@this"
                                              icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" />
                         </f:facet>
 
@@ -143,7 +147,6 @@
                                     <h:selectOneMenu id="box-selecao-funcoes" value="#{membro.funcao}" converter="funcaoConverter" style="width:80%">
                                         <f:selectItem  itemLabel="Selecione"/>
                                         <f:selectItems value="#{funcaoBean.filtrarFuncoesQueNaoSaoApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" />
-                                        <!--<p:ajax event="change" update="tabelaMembros" />-->
                                     </h:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
@@ -151,9 +154,9 @@
 
                         <p:column style="width: 32px">
                             <p:commandButton icon="ui-icon-circle-minus" title="Remover membro" actionListener="#{organismoBean.removerMembro(membro)}"
-                                             update="@form:tabelaPessoas, tabelaMembros" process="@this" class="botao-remover" ajax="false"
+                                             update="formTabelas:tabelaPessoas, tabelaMembros" process="@this" class="botao-remover" ajax="false"
                                              onclick="if (!confirm('Tem certeza? Não será possível desfazer a exclusão!'))
-                                                         return false">
+                                                     return false">
                             </p:commandButton>
                         </p:column>
 
@@ -162,7 +165,6 @@
                 </div>
 
             </div>
-
 
         </h:form>
 
