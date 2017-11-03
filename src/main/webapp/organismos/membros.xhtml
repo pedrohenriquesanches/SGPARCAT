@@ -116,9 +116,9 @@
 
                         <f:facet name="right">
                             <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
-                                <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
+                                <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="@form:tabelaMembros" />
                             </p:inputText>
-                            <p:commandButton actionListener="#{organismoBean.teste()}" update="tabelaMembros" process="@this"
+                            <p:commandButton actionListener="#{organismoBean.filtrarMembros()}" update="@form:tabelaMembros" process="@this"
                                              icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" />
                         </f:facet>
 

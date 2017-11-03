@@ -194,10 +194,6 @@ public class OrganismoBean implements Serializable {
             membroService.excluir(membro);
         }
     }
-    
-    public void teste(){
-        System.out.println("LISTAAAA: "+organismo.getMembros());
-    }
 
 }
 
