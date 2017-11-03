@@ -183,6 +183,7 @@ public class OrganismoBean implements Serializable {
             Membro membro = new Membro(organismo, pessoa);
             membroService.salvar(membro);
             pessoas.remove(pessoa);
+            filtrarMembros();
         }
     }
 
@@ -192,6 +193,10 @@ public class OrganismoBean implements Serializable {
         if (membro.getIdMembro() != null) {
             membroService.excluir(membro);
         }
+    }
+    
+    public void teste(){
+        System.out.println("LISTAAAA: "+organismo.getMembros());
     }
 
 }

@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <ui:define name="titulo">Adicionar Organismo</ui:define>
+    <ui:define name="titulo">Editar Organismo e Membros</ui:define>
 
     <ui:define name="corpo">
 
@@ -118,7 +118,7 @@
                             <p:inputText id="campoPesquisaMembro" placeholder="Pesquisar" value="#{organismoBean.inputPesquisaMembro}" >
                                 <p:ajax event="keyup" listener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" />
                             </p:inputText>
-                            <p:commandButton actionListener="#{organismoBean.filtrarMembros()}" update="tabelaMembros" process="@this"
+                            <p:commandButton actionListener="#{organismoBean.teste()}" update="tabelaMembros" process="@this"
                                              icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" />
                         </f:facet>
 
