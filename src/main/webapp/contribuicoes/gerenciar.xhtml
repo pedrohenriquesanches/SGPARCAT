@@ -4,21 +4,25 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    <f:metadata>
 
-    </f:metadata>
     <ui:define name="titulo">Contribuições</ui:define>
     <ui:define name="corpo">
-        <div class="titulo-opcoes">
-            <div class="titulo-pagina">
-                <h1>Gestão de Contribuições</h1>            
-            </div>
-            <div class="opcoes-right">
-                <p:button outcome="/contribuicoes/registrar" value="Registrar Contribuição" icon="ui-icon-plus"/>
-            </div>
-        </div>
+
         <h:form>
+
+            <div class="titulo-opcoes">
+                <div class="titulo-pagina">
+                    <h1>Gestão de Contribuições</h1>            
+                </div>
+                <div class="opcoes-right">
+                    <p:button outcome="/contribuicoes/registrar" value="Registrar Contribuição" icon="ui-icon-plus"/>
+                </div>
+            </div>
+
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
             <p:toolbar class="tollbartabela">
+                
                 <f:facet name="left">
                     <div>
                         <p:outputLabel value="Tipo:" for="box-selecao-tipo-contribuicao" />
@@ -50,6 +54,7 @@
                             <f:selectItems value="#{contribuicaoBean.anos}" var="ano" itemValue="#{contribuicaoBean.anos}"/>
                         </h:selectOneMenu>
                     </div>
+                    
                     <div style="margin-top: 10px">
                         <p:outputLabel value="Período:" />
                         <p:commandButton type="button" title="Histórico Completo" class="tollbarbotao ativo" />
@@ -58,35 +63,61 @@
                         <p:commandButton type="button" title="Intervalo Personalizado" class="tollbarbotao" />
                     </div>
                 </f:facet>
+                
                 <f:facet name="right">
-                    <p:inputText style="margin-top: 15px" placeholder="Pesquisar"/>
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="" style="margin-top: 15px" >
+                        <!--<p:ajax event="keyup" listener="" update="tabelaContribuicoes" />-->
+                    </p:inputText>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" update="tabelaContribuicoes"/>
                 </f:facet>
+                
             </p:toolbar>
-            <p:dataTable class="tabela" id="tabelaContribuicoes" var="contribuicao" value="#{contribuicaoBean.contribuicoes}" rowKey="#{contribuicao.numeroContribuicao}" rows="12" paginator="true" paginatorPosition="bottom">
-                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            
+            <p:dataTable class="tabela" id="tabelaContribuicoes" var="contribuicao" value="#{contribuicaoBean.contribuicoes}"
+                         rowKey="#{contribuicao.numeroContribuicao}" rows="12" paginator="true" paginatorPosition="bottom"
+                         emptyMessage="Nenhum registro encontrado">
+                
                 <p:column headerText="Número" style="width: 50px">
                     <h:outputText value="#{contribuicao.numeroContribuicao}" />
                 </p:column>
+                
                 <p:column headerText="Tipo" style="width: 70px">
                     <h:outputText value="#{contribuicao.tipoContribuicao}" />
                 </p:column>
+                
                 <p:column headerText="Descrição" style="width: 250px">
                     <h:outputText value="#{contribuicao.descricao}" />
                 </p:column>
+                
                 <p:column headerText="Valor" style="width: 150px">
-                    <h:outputText value="#{contribuicao.valor}" />
+                    <h:outputText value="R$ #{contribuicao.valor}" />
                 </p:column>
+                
                 <p:column headerText="Contribuinte" style="width: 250px">
-                    <h:outputText value="#{contribuicao.pessoaContribuinte}" />
+                    <h:outputText value="#{contribuicao.pessoaContribuinte.nomeCompleto}" />
                 </p:column>
+                
                 <p:column headerText="Data" style="width: 250px">
                     <h:outputText value="#{contribuicao.dataRegistro}" />
                 </p:column>
+                
                 <p:column style="width:80px;text-align: center">
                     <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>
                     <p:commandButton  icon="ui-icon-trash" title="Remover"/>
                 </p:column>
+                
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column footerText="Total:" colspan="3" class="resultados-rodape" style="text-align:right" />
+                        <p:column footerText="R$" class="resultados-rodape" style="text-align:left" />
+                        <p:column colspan="3" class="resultados-rodape" />
+                    </p:row>
+                </p:columnGroup>
+                
             </p:dataTable>
+        
         </h:form>
+    
     </ui:define>
+
 </ui:composition>

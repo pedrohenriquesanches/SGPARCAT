@@ -196,14 +196,3 @@ public class OrganismoBean implements Serializable {
     }
 
 }
-
-//    public void onDrop(DragDropEvent ddEvent) {
-//        Pessoa pessoa = ((Pessoa) ddEvent.getData());
-//        Membro membro = new Membro();
-//        membro.setPessoa(pessoa);
-//        membro.setOrganismo(organismo);
-//        membro.setFuncao(null);
-//        membros.add(membro);
-//        pessoas.remove(pessoa);
-//    }
-//    

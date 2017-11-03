@@ -153,6 +153,19 @@ select {
     border-bottom-left-radius: 0;
 }
 
+.resultados-rodape {
+    background: none;
+    color: #202020;
+    border-width: 0 !important;
+}
+
+.tabela tfoot tr{
+    border-style: solid;
+    border-color: #cccccc;
+    border-width: 1px;
+    background: #cccccc
+}
+
 .tabela tr:hover {
     background: none !important;
     background-color: #d9dfe4 !important;
@@ -237,6 +250,10 @@ select {
 .tollbartabela .tollbarbotao:hover {
     color: #1484e6;
     cursor: pointer;
+}
+
+.tollbartabela .tollbarbotao:last-child {
+    border-width: 0;
 }
 
 .tollbartabela .ativo {
