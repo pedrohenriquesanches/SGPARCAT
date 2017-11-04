@@ -14,9 +14,13 @@ and open the template in the editor.
         <title>Registrar Contribuição</title>
         <f:viewParam name="contribuicao" value="#{registrarContribuicaoBean.contribuicao}"/>
         <h:outputStylesheet library="css" name="sistema.css"/>
+        <h:outputScript library="js" name="jquery.maskMoney.js"/>
     </h:head>
 
     <h:body>
+
+        <!-- AjaxStatus configura o componente da classe (loading). Sempre que existir uma requisao ajax a mascara de moeda é configurada novamente -->
+        <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()" />
 
         <h:form>
 
@@ -44,7 +48,10 @@ and open the template in the editor.
                         </div>
                         <div class="campo-cadastro">
                             <p:outputLabel value="Valor:" for="valor" />
-                            <p:inputText id="valor" value="#{registrarContribuicaoBean.contribuicao.valor}"/>
+                            <p:inputText id="valor" size="10" maxlength="10" styleClass="moeda"
+                                         value="#{registrarContribuicaoBean.contribuicao.valor}" >
+                                <f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+                            </p:inputText>
                         </div>
                     </div>
 
@@ -53,7 +60,7 @@ and open the template in the editor.
                             <div class="coluna-1-2">
                                 <div class="campo-cadastro">
                                     <p:outputLabel value="Referente a Data:" for="dataReferente"/>
-                                    <p:calendar id="dataReferente" pattern="dd/MM/yyyy" mask="true" navigator="true" mindate="1/1/2010"
+                                    <p:calendar id="dataReferente" locale="pt" pattern="dd/MM/yyyy" mask="true" navigator="true" mindate="1/1/2010"
                                                 value="#{registrarContribuicaoBean.contribuicao.dataReferente}" required="true" class="campo-data"/>
                                 </div>
                             </div>
@@ -82,6 +89,48 @@ and open the template in the editor.
             </div>
 
         </h:form>
+
+        <!-- Script para máscaras nas moedas, criação de uma forma dinamica -->
+        <script>
+            /* JQuery */
+            function configurarMoeda() {
+                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});
+            }
+            /* executando a funcao, quando ele estiver pronto, execute essa funcao */
+            $(document).ready(function () {
+                configurarMoeda();
+            });
+        </script>
+
+        <!-- TRADUZINDO ALGUNS COMPONENTES DO PRIMEFACES -->
+        <script>
+            PrimeFaces.locales['pt'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Começo',
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText: 'Todo o Dia'
+            };
+        </script>
 
     </h:body>
 

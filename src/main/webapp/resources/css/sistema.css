@@ -19,6 +19,15 @@ header {
     color: #fff;
 }
 
+.ajax-status {
+    position: fixed;
+    top: 85px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    z-index: 999;
+}
+
 .ui-outputlabel.ui-state-error {
     max-width: fit-content;
 }
