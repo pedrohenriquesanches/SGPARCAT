@@ -52,6 +52,10 @@ public class Contribuicao implements Serializable {
     
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    private Date dataReferente;
+    
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
     
     @Lob
@@ -62,7 +66,7 @@ public class Contribuicao implements Serializable {
     @ManyToOne
     private Pessoa pessoaContribuinte;
     
-    @JoinColumn(nullable = false, name = "idPessoaRegistrouContribuicao")
+    @JoinColumn(nullable = true, name = "idPessoaRegistrouContribuicao")
     @ManyToOne
     private Pessoa pessoaRegistrouContribuicao;
 
@@ -107,6 +111,14 @@ public class Contribuicao implements Serializable {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public Date getDataReferente() {
+        return dataReferente;
+    }
+
+    public void setDataReferente(Date dataReferente) {
+        this.dataReferente = dataReferente;
     }
 
     public Date getDataRegistro() {

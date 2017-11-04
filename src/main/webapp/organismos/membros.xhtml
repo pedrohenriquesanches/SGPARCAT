@@ -45,7 +45,7 @@
                     </div>
                     <div class="campo-cadastro coluna-1-5">
                         <p:outputLabel value="Principal Número para Contato:" for="contato"/>
-                        <p:inputText id="contato" value="#{organismoBean.organismo.telefoneParaContato}">
+                        <p:inputText id="contato" maxlength="11" value="#{organismoBean.organismo.telefoneParaContato}">
                             <p:keyFilter mask="num"/>
                         </p:inputText>
                     </div>

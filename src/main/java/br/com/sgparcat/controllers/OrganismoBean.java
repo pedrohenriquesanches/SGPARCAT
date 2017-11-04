@@ -178,7 +178,7 @@ public class OrganismoBean implements Serializable {
 
     public void adicionarMembro(Pessoa pessoa) {
         if (organismo.getIdOrganismo() == null) {
-            FacesUtil.addInfoMessage("Primeiro crie e salve o organismo para poder adicionar membros");
+            FacesUtil.addWarMessage("Primeiro crie e salve o organismo para poder adicionar membros");
         } else {
             Membro membro = new Membro(organismo, pessoa);
             membroService.salvar(membro);

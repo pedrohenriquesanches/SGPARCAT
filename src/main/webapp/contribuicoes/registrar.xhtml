@@ -1,10 +1,80 @@
-<ui:composition template="/templates/pagina.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:define name="titulo">Registrar Contribuição</ui:define>
-    <ui:define name="corpo">
-    </ui:define>
-</ui:composition>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:viewParam name="contribuicao" value="#{registrarContribuicaoBean.contribuicao}"/>
+        <h:outputStylesheet library="css" name="sistema.css"/>
+    </h:head>
+
+    <h:body>
+
+        <h:form>
+
+            <div id="conteudo">
+
+                <div class="titulo-opcoes">
+                    <div class="titulo-pagina">
+                        <h1>Registrar Contribuição</h1>            
+                    </div>
+                    <div class="opcoes-right">
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" title="Salvar"
+                                         action="#{registrarContribuicaoBean.salvar()}" update="@form" />
+                    </div>
+                </div>
+
+                <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <div class="div-campos-cadastro">
+                    <p:panel id="dadospessoais" header="Dados Pessoais" class="painel-cadastros" style="height: 300px">
+                        <div class="coluna-1-2">
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Número:" for="numero"/>
+                                <p:inputText id="numero" value="#{registrarContribuicaoBean.contribuicao.numeroContribuicao}" disabled="true" />
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Tipo de Contribuição:" for="tipo" />
+                                <p:selectOneButton id="tipo" required="true" value="#{registrarContribuicaoBean.contribuicao.tipoContribuicao}" >
+                                    <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                                </p:selectOneButton>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Descrição:" for="descricao"/>
+                                <p:inputText id="descricao" required="true" value="#{registrarContribuicaoBean.contribuicao.descricao}"/>
+                            </div>
+                        </div>
+                        <div class="coluna-1-2">
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Contribuinte:" for="contribuinte" />
+                                <p:autoComplete id="contribuinte" size="26" emptyMessage="Nenhuma pessoa encontrada com este nome" scrollHeight="180"
+                                                value="#{registrarContribuicaoBean.contribuicao.pessoaContribuinte}" completeMethod="#{pessoaBean.pesquisarPessoa(input)}" forceSelection="true"
+                                                var="pessoa" itemLabel="#{pessoa.nomeCompleto}" itemValue="#{pessoa}" converter="pessoaConverter">
+                                </p:autoComplete>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Valor:" for="valor" />
+                                <p:inputText id="valor" value="#{registrarContribuicaoBean.contribuicao.valor}"/>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Referente a Data:" for="dataReferente"/>
+                                <p:inputText id="dataReferente" required="true" value="#{registrarContribuicaoBean.contribuicao.dataReferente}"/>
+                            </div>
+                        </div>
+                    </p:panel>
+                </div>
+
+            </div>
+
+        </h:form>
+
+    </h:body>
+
+</html>

@@ -136,22 +136,17 @@ public class Pessoas implements Serializable {
         c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
     }
+    
+    public List<Pessoa> retornaTodasAsPessoas(String nomePesquisado) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Pessoa.class);
+        
+        if (nomePesquisado != null && !nomePesquisado.equals("")) {
+            c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
+        }
+        
+        c.addOrder(Order.asc("nomeCompleto"));
+        return c.list();
+    }
 
 }
-
-//    public List<Pessoa> retornaPessoas(Funcao funcaoFiltro, String nomePesquisado, Pessoa.TipoPessoa tipoPessoa) {
-//        Session session = manager.unwrap(Session.class);
-//        Criteria c = session.createCriteria(Pessoa.class);
-//        c.add(Restrictions.eq("tipoPessoa", tipoPessoa));
-//        
-//        if(nomePesquisado != null && !nomePesquisado.equals("")){
-//            c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
-//        }
-//        
-//        if(funcaoFiltro.isFuncaoValida()){
-//            c.add(Restrictions.eq("funcao", funcaoFiltro));
-//        }
-//        
-//        c.addOrder(Order.asc("nomeCompleto"));
-//        return c.list();
-//    }
