@@ -11,6 +11,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
+        <title>Registrar Contribuição</title>
         <f:viewParam name="contribuicao" value="#{registrarContribuicaoBean.contribuicao}"/>
         <h:outputStylesheet library="css" name="sistema.css"/>
     </h:head>
@@ -21,54 +22,61 @@ and open the template in the editor.
 
             <div id="conteudo">
 
-                <div class="titulo-opcoes">
-                    <div class="titulo-pagina">
-                        <h1>Registrar Contribuição</h1>            
-                    </div>
-                    <div class="opcoes-right">
-                        <p:commandButton value="Salvar" icon="ui-icon-disk" title="Salvar"
-                                         action="#{registrarContribuicaoBean.salvar()}" update="@form" />
-                    </div>
-                </div>
-
                 <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
                 <div class="div-campos-cadastro">
-                    <p:panel id="dadospessoais" header="Dados Pessoais" class="painel-cadastros" style="height: 300px">
-                        <div class="coluna-1-2">
-                            <div class="campo-cadastro">
-                                <p:outputLabel value="Número:" for="numero"/>
-                                <p:inputText id="numero" value="#{registrarContribuicaoBean.contribuicao.numeroContribuicao}" disabled="true" />
+
+                    <div class="coluna-1-2">
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Número:" for="numero"/>
+                            <p:inputText id="numero" value="#{registrarContribuicaoBean.contribuicao.numeroContribuicao}" disabled="true" />
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Descrição:" for="descricao"/>
+                            <p:inputText id="descricao" required="true" value="#{registrarContribuicaoBean.contribuicao.descricao}"/>
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Contribuinte:" for="contribuinte" />
+                            <p:autoComplete id="contribuinte" size="26" emptyMessage="Nenhuma pessoa encontrada com este nome" scrollHeight="180"
+                                            value="#{registrarContribuicaoBean.contribuicao.pessoaContribuinte}" completeMethod="#{pessoaBean.pesquisarPessoa(input)}" forceSelection="true"
+                                            var="pessoa" itemLabel="#{pessoa.nomeCompleto}" itemValue="#{pessoa}" converter="pessoaConverter">
+                            </p:autoComplete>
+                        </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Valor:" for="valor" />
+                            <p:inputText id="valor" value="#{registrarContribuicaoBean.contribuicao.valor}"/>
+                        </div>
+                    </div>
+
+                    <div class="coluna-1-2">
+                        <div>
+                            <div class="coluna-1-2">
+                                <div class="campo-cadastro">
+                                    <p:outputLabel value="Referente a Data:" for="dataReferente"/>
+                                    <p:calendar id="dataReferente" pattern="dd/MM/yyyy" mask="true" navigator="true" mindate="1/1/2010"
+                                                value="#{registrarContribuicaoBean.contribuicao.dataReferente}" required="true" class="campo-data"/>
+                                </div>
                             </div>
-                            <div class="campo-cadastro">
-                                <p:outputLabel value="Tipo de Contribuição:" for="tipo" />
-                                <p:selectOneButton id="tipo" required="true" value="#{registrarContribuicaoBean.contribuicao.tipoContribuicao}" >
-                                    <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-                                </p:selectOneButton>
-                            </div>
-                            <div class="campo-cadastro">
-                                <p:outputLabel value="Descrição:" for="descricao"/>
-                                <p:inputText id="descricao" required="true" value="#{registrarContribuicaoBean.contribuicao.descricao}"/>
+                            <div class="coluna-1-2">
+                                <div class="campo-cadastro">
+                                    <p:outputLabel value="Tipo de Contribuição:" for="tipo" />
+                                    <h:selectOneMenu id="tipo" required="true" value="#{registrarContribuicaoBean.contribuicao.tipoContribuicao}"
+                                                     style="height:26px" >
+                                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                                    </h:selectOneMenu>
+                                </div>
                             </div>
                         </div>
-                        <div class="coluna-1-2">
-                            <div class="campo-cadastro">
-                                <p:outputLabel value="Contribuinte:" for="contribuinte" />
-                                <p:autoComplete id="contribuinte" size="26" emptyMessage="Nenhuma pessoa encontrada com este nome" scrollHeight="180"
-                                                value="#{registrarContribuicaoBean.contribuicao.pessoaContribuinte}" completeMethod="#{pessoaBean.pesquisarPessoa(input)}" forceSelection="true"
-                                                var="pessoa" itemLabel="#{pessoa.nomeCompleto}" itemValue="#{pessoa}" converter="pessoaConverter">
-                                </p:autoComplete>
-                            </div>
-                            <div class="campo-cadastro">
-                                <p:outputLabel value="Valor:" for="valor" />
-                                <p:inputText id="valor" value="#{registrarContribuicaoBean.contribuicao.valor}"/>
-                            </div>
-                            <div class="campo-cadastro">
-                                <p:outputLabel value="Referente a Data:" for="dataReferente"/>
-                                <p:inputText id="dataReferente" required="true" value="#{registrarContribuicaoBean.contribuicao.dataReferente}"/>
-                            </div>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Observações:" for="observacao" />
+                            <p:inputTextarea id="observacao" value="#{registrarContribuicaoBean.contribuicao.observacao}" rows="5" />
                         </div>
-                    </p:panel>
+                        <div>
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" title="Salvar" class="botao-adicionar" style="height: 30px"
+                                             action="#{registrarContribuicaoBean.salvar()}" update="@form" />
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

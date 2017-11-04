@@ -58,9 +58,10 @@ public class GerenciarContribuicaoBean implements Serializable {
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);
         options.put("width", 770);
-        options.put("height", 450);
+        options.put("height", 300);
         options.put("contentWidth", "100%");
         options.put("contentHeight", "100%");
+        options.put("headerElement", "customheader");
         RequestContext.getCurrentInstance().openDialog("registrar", options, null);
     }
 
