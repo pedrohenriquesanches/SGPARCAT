@@ -144,7 +144,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{membro.funcao.titulo}" /></f:facet>
                                 <f:facet name="input">
-                                    <h:selectOneMenu id="box-selecao-funcoes" value="#{membro.funcao}" converter="funcaoConverter" style="width:80%">
+                                    <h:selectOneMenu id="box-selecao-funcoes" value="#{membro.funcao}" style="width:80%">
                                         <f:selectItem  itemLabel="Selecione"/>
                                         <f:selectItems value="#{funcaoBean.filtrarFuncoesQueNaoSaoApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" />
                                     </h:selectOneMenu>

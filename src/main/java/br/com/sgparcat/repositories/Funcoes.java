@@ -60,9 +60,5 @@ public class Funcoes implements Serializable{
     public Funcao retornaPorId(Integer id) {
         return manager.find(Funcao.class, id);
     }
-
-    public Funcao retornaFuncaoPadraoParaMembro() {
-        return manager.find(Funcao.class, new Integer("-2"));
-    }
     
 }

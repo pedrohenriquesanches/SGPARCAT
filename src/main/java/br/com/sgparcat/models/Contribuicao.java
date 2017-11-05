@@ -31,55 +31,54 @@ import javax.persistence.TemporalType;
 public class Contribuicao implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     public enum TipoContribuicao {
-        DIZIMO, OFERTA, DOACAO;
+        DIZIMO("Dízimo"), OFERTA("Oferta"), DOACAO("Doação");
+
+        private final String label;
+
+        TipoContribuicao(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
     }
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numeroContribuicao;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoContribuicao tipoContribuicao;
-    
+
     @Column(nullable = false)
     private String descricao;
-    
+
     @Column(precision = 10, scale = 2)
     private BigDecimal valor;
-    
+
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataReferente;
-    
+
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
-    
+
     @Lob
     @Column
     private String observacao;
-    
+
     @JoinColumn(nullable = true, name = "idPessoaContribuinte")
     @ManyToOne
     private Pessoa pessoaContribuinte;
-    
+
     @JoinColumn(nullable = true, name = "idPessoaRegistrouContribuicao")
     @ManyToOne
     private Pessoa pessoaRegistrouContribuicao;
-
-    public Contribuicao() {
-    }
-
-    public Contribuicao(Long numeroContribuicao, TipoContribuicao tipoContribuicao, String descricao, Date dataRegistro, Pessoa pessoaRegistrouContribuicao) {
-        this.numeroContribuicao = numeroContribuicao;
-        this.tipoContribuicao = tipoContribuicao;
-        this.descricao = descricao;
-        this.dataRegistro = dataRegistro;
-        this.pessoaRegistrouContribuicao = pessoaRegistrouContribuicao;
-    }
 
     public Long getNumeroContribuicao() {
         return numeroContribuicao;
@@ -177,5 +176,5 @@ public class Contribuicao implements Serializable {
     public String toString() {
         return "br.com.sgparcat.models.Contribuicao[ numeroContribuicao=" + numeroContribuicao + " ]";
     }
-    
+
 }

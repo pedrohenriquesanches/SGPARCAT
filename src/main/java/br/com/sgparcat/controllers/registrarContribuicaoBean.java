@@ -6,6 +6,7 @@
 package br.com.sgparcat.controllers;
 
 import br.com.sgparcat.models.Contribuicao;
+import br.com.sgparcat.services.ContribuicaoService;
 import java.io.Serializable;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -18,11 +19,14 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class registrarContribuicaoBean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Inject
     private Contribuicao contribuicao;
+    
+    @Inject
+    private ContribuicaoService contribuicaoService;
 
     public Contribuicao getContribuicao() {
         return contribuicao;
@@ -31,10 +35,13 @@ public class registrarContribuicaoBean implements Serializable {
     public void setContribuicao(Contribuicao contribuicao) {
         this.contribuicao = contribuicao;
     }
-    
-    public void salvar(){
-        
+
+    public void salvar() {
+        contribuicao = contribuicaoService.salvar(contribuicao);
     }
-    
-    
+
+    public Contribuicao.TipoContribuicao[] tiposDeContribuicoes() {
+        return Contribuicao.TipoContribuicao.values();
+    }
+
 }

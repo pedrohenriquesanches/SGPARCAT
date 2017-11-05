@@ -18,7 +18,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author pedrohensanches
  */
-@FacesConverter(forClass = Funcao.class,value="funcaoConverter")
+@FacesConverter(forClass = Funcao.class)
 public class FuncaoConverter implements Converter {
 
     private Funcoes repositorioFuncoes;
@@ -36,10 +36,6 @@ public class FuncaoConverter implements Converter {
         if(value.equals("-1")){
             return new Funcao();
         }
-        
-//        if(value.equals("-2")){
-//            return repositorioFuncoes.retornaFuncaoPadrãoParaMembro();
-//        }
         
         if (!value.matches("\\d+")) {
             throw new ConverterException("O valor não é um ID válido: " + value);

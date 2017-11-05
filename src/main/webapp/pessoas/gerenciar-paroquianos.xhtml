@@ -28,7 +28,7 @@
                 
                 <f:facet name="left">
                     <p:outputLabel value="Função:" for="box-selecao-funcoes" />
-                    <h:selectOneMenu id="box-selecao-funcoes" value="#{paroquianoBean.funcaoSelecionada}" converter="funcaoConverter" style="height:26px">
+                    <h:selectOneMenu id="box-selecao-funcoes" value="#{paroquianoBean.funcaoSelecionada}" style="height:26px">
                         <f:selectItem  itemLabel="Todas" itemValue="-1"/>
                         <f:selectItems value="#{funcaoBean.filtrarFuncoesQueNaoSaoApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}"/>
                         <p:ajax event="change" listener="#{paroquianoBean.filtrarParoquianos()}" update="tabelaParoquianos" />

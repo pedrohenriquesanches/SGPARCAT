@@ -12,7 +12,6 @@ and open the template in the editor.
 
     <h:head>
         <title>Registrar Contribuição</title>
-        <f:viewParam name="contribuicao" value="#{registrarContribuicaoBean.contribuicao}"/>
         <h:outputStylesheet library="css" name="sistema.css"/>
         <h:outputScript library="js" name="jquery.maskMoney.js"/>
     </h:head>
@@ -21,6 +20,10 @@ and open the template in the editor.
 
         <!-- AjaxStatus configura o componente da classe (loading). Sempre que existir uma requisao ajax a mascara de moeda é configurada novamente -->
         <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()" />
+
+        <f:metadata>
+            <f:viewParam name="contribuicao" value="#{registrarContribuicaoBean.contribuicao}"/>
+        </f:metadata>
 
         <h:form>
 
@@ -43,7 +46,7 @@ and open the template in the editor.
                             <p:outputLabel value="Contribuinte:" for="contribuinte" />
                             <p:autoComplete id="contribuinte" size="26" emptyMessage="Nenhuma pessoa encontrada com este nome" scrollHeight="180"
                                             value="#{registrarContribuicaoBean.contribuicao.pessoaContribuinte}" completeMethod="#{pessoaBean.pesquisarPessoa(input)}" forceSelection="true"
-                                            var="pessoa" itemLabel="#{pessoa.nomeCompleto}" itemValue="#{pessoa}" converter="pessoaConverter">
+                                            var="pessoa" itemLabel="#{pessoa.nomeCompleto}" itemValue="#{pessoa}" >
                             </p:autoComplete>
                         </div>
                         <div class="campo-cadastro">
@@ -69,7 +72,9 @@ and open the template in the editor.
                                     <p:outputLabel value="Tipo de Contribuição:" for="tipo" />
                                     <h:selectOneMenu id="tipo" required="true" value="#{registrarContribuicaoBean.contribuicao.tipoContribuicao}"
                                                      style="height:26px" >
-                                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+                                        <f:selectItems value="#{registrarContribuicaoBean.tiposDeContribuicoes()}" var="tipoContribuicao"
+                                                       itemValue="#{tipoContribuicao}" itemLabel="#{tipoContribuicao.label}"/>
                                     </h:selectOneMenu>
                                 </div>
                             </div>

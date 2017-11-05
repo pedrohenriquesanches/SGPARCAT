@@ -26,12 +26,13 @@
                 <f:facet name="left">
                     <div>
                         <p:outputLabel value="Tipo:" for="box-selecao-tipo-contribuicao" />
-                        <h:selectOneMenu id="box-selecao-tipo-contribuicao" >
-                            <f:selectItem itemLabel="Todos" itemValue="" noSelectionOption="true" />
-                            <f:selectItem itemLabel="Ofertas" itemValue="Ofertas" />
-                            <f:selectItem itemLabel="Doações" itemValue="Doações" />
-                            <f:selectItem itemLabel="Dízimos" itemValue="Dízimos" />
+                        <h:selectOneMenu id="box-selecao-tipo-contribuicao" value="#{gerenciarContribuicaoBean.tipoContribuicaoSelecionado}" >
+                            <f:selectItem itemLabel="Selecione" />
+                            <f:selectItems value="#{gerenciarContribuicaoBean.tiposDeContribuicoes()}" var="tipoContribuicao"
+                                           itemValue="#{tipoContribuicao}" itemLabel="#{tipoContribuicao.label}"/>
+                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes" />
                         </h:selectOneMenu>
+
                         <p:outputLabel value="Mês:" for="box-selecao-meses" />
                         <h:selectOneMenu id="box-selecao-meses" >
                             <f:selectItem itemLabel="Todos" itemValue="" noSelectionOption="true" />
@@ -82,7 +83,7 @@
                 </p:column>
 
                 <p:column headerText="Tipo" style="width: 70px">
-                    <h:outputText value="#{contribuicao.tipoContribuicao}" />
+                    <h:outputText value="#{contribuicao.tipoContribuicao.label}" />
                 </p:column>
 
                 <p:column headerText="Descrição" style="width: 250px">
@@ -97,13 +98,17 @@
                     <h:outputText value="#{contribuicao.pessoaContribuinte.nomeCompleto}" />
                 </p:column>
 
-                <p:column headerText="Data" style="width: 250px">
-                    <h:outputText value="#{contribuicao.dataRegistro}" />
+                <p:column headerText="Data Referente" style="width: 250px">
+                    <h:outputText value="#{contribuicao.dataReferente}" />
                 </p:column>
 
                 <p:column style="width:80px;text-align: center">
-                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar"/>
-                    <p:commandButton  icon="ui-icon-trash" title="Remover"/>
+                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" update="tabelaContribuicoes"
+                                     actionListener="#{gerenciarContribuicaoBean.mostrarDialogDeEdicao(contribuicao)}"/>
+                    <p:commandButton icon="ui-icon-trash" title="Remover" update="tabelaContribuicoes" actionListener="#{gerenciarContribuicaoBean.excluir(contribuicao)}" ajax="false"
+                                     onclick="if (!confirm('Tem certeza? Não será possível desfazer a exclusão!'))
+                                                 return false">
+                    </p:commandButton>
                 </p:column>
 
                 <p:columnGroup type="footer">

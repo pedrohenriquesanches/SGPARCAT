@@ -19,6 +19,7 @@ br/com/sgparcat/converters/OrganismoConverter.class
 br/com/sgparcat/controllers/GerenciarContribuicaoBean.class
 br/com/sgparcat/models/Contribuicao$TipoContribuicao.class
 br/com/sgparcat/controllers/DizimistaBean.class
+br/com/sgparcat/converters/ContribuicaoConverter.class
 br/com/sgparcat/controllers/ClerigoBean.class
 br/com/sgparcat/services/OrganismoService.class
 br/com/sgparcat/converters/PessoaConverter.class
@@ -31,7 +32,9 @@ br/com/sgparcat/controllers/EventoBean.class
 br/com/sgparcat/models/Pessoa.class
 br/com/sgparcat/repositories/Membros.class
 br/com/sgparcat/repositories/Organismos.class
+br/com/sgparcat/repositories/Contribuicoes.class
 br/com/sgparcat/controllers/FuncaoBean.class
 br/com/sgparcat/controllers/ParoquianoBean.class
+br/com/sgparcat/services/ContribuicaoService.class
 br/com/sgparcat/models/Funcao.class
 br/com/sgparcat/services/PessoaService.class

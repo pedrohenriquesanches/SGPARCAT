@@ -266,25 +266,25 @@ select {
 }
 
 .tollbartabela .tollbarbotao {
-    border: none;
-    background: none;
-    border-right-width: 1px;
-    border-right-style: outset;
-    color: gray;
+    border: none !important;
+    background: none !important;
+    border-right-width: 1px !important;
+    border-right-style: outset !important;
+    color: gray !important;
     font-weight: 600;
 }
 
 .tollbartabela .tollbarbotao:hover {
-    color: #1484e6;
-    cursor: pointer;
+    color: #1484e6 !important;
+    cursor: pointer !important;
 }
 
 .tollbartabela .tollbarbotao:last-child {
-    border-width: 0;
+    border-width: 0 !important;
 }
 
 .tollbartabela .ativo {
-    color: #0300b7;
+    color: #0300b7 !important;
 }
 
 .painel-dados .ui-widget-content {

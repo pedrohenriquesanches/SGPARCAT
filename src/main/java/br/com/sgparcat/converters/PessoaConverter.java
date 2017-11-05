@@ -18,7 +18,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author pedrohensanches
  */
-@FacesConverter(forClass = Pessoa.class,value="pessoaConverter")
+@FacesConverter(forClass = Pessoa.class)
 public class PessoaConverter implements Converter {
 
     private Pessoas repositorioPessoas;

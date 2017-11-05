@@ -71,8 +71,6 @@ public class Evento implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Participante> participantes;
 
-    public Evento() {
-    }
 
     public Integer getIdEvento() {
         return idEvento;

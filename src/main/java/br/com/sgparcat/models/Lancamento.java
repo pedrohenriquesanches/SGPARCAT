@@ -39,7 +39,7 @@ public class Lancamento implements Serializable {
     private Long numeroLancamento;
     
     @Column(nullable = false)
-    private byte isDespesa;
+    private Character isDespesa;
     
     @Column(nullable = false)
     private String descricao;
@@ -62,14 +62,14 @@ public class Lancamento implements Serializable {
     private String emitente;
     
     @Column(nullable = false)
-    private byte isParcelado;
+    private Character isParcelado;
     
     @Lob
     @Column
     private String observacao;
     
     @Column(nullable = false)
-    private byte isPago;
+    private Character isPago;
     
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -82,9 +82,6 @@ public class Lancamento implements Serializable {
     @JoinColumn(nullable = true, name = "idPessoaRegistrouLancamento")
     @ManyToOne
     private Pessoa pessoaRegistrouLancamento;
-
-    public Lancamento() {
-    }
 
     public Long getIdLancamento() {
         return idLancamento;
@@ -102,11 +99,11 @@ public class Lancamento implements Serializable {
         this.numeroLancamento = numeroLancamento;
     }
 
-    public byte getIsDespesa() {
+    public Character getIsDespesa() {
         return isDespesa;
     }
 
-    public void setIsDespesa(byte isDespesa) {
+    public void setIsDespesa(Character isDespesa) {
         this.isDespesa = isDespesa;
     }
 
@@ -158,11 +155,11 @@ public class Lancamento implements Serializable {
         this.emitente = emitente;
     }
 
-    public byte getIsParcelado() {
+    public Character getIsParcelado() {
         return isParcelado;
     }
 
-    public void setIsParcelado(byte isParcelado) {
+    public void setIsParcelado(Character isParcelado) {
         this.isParcelado = isParcelado;
     }
 
@@ -174,11 +171,11 @@ public class Lancamento implements Serializable {
         this.observacao = observacao;
     }
 
-    public byte getIsPago() {
+    public Character getIsPago() {
         return isPago;
     }
 
-    public void setIsPago(byte isPago) {
+    public void setIsPago(Character isPago) {
         this.isPago = isPago;
     }
 
@@ -204,9 +201,7 @@ public class Lancamento implements Serializable {
 
     public void setPessoaRegistrouLancamento(Pessoa pessoaRegistrouLancamento) {
         this.pessoaRegistrouLancamento = pessoaRegistrouLancamento;
-    }
-
-    
+    }    
 
     @Override
     public int hashCode() {
@@ -233,10 +228,10 @@ public class Lancamento implements Serializable {
             return false;
         }
         final Lancamento other = (Lancamento) obj;
-        if (this.isDespesa != other.isDespesa) {
+        if (!Objects.equals(this.isDespesa, other.isDespesa)) {
             return false;
         }
-        if (this.isParcelado != other.isParcelado) {
+        if (!Objects.equals(this.isParcelado, other.isParcelado)) {
             return false;
         }
         if (!Objects.equals(this.descricao, other.descricao)) {

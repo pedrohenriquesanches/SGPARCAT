@@ -2,8 +2,10 @@
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/MembroBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/services/OrganismoService.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/OrganismoBean.java
+/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/converters/ContribuicaoConverter.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/converters/PessoaConverter.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/converters/OrganismoConverter.java
+/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/repositories/Contribuicoes.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/models/Organismo.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/GerenciarContribuicaoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/ParticipanteBean.java
@@ -23,6 +25,7 @@
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/ClerigoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/PessoaBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/repositories/Pessoas.java
+/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/services/ContribuicaoService.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/models/Membro.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/ParoquianoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/registrarContribuicaoBean.java
