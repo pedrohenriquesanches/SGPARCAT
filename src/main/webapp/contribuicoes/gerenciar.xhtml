@@ -102,7 +102,9 @@
                 </p:column>
 
                 <p:column headerText="Data Referente" style="width: 250px">
-                    <h:outputText value="#{contribuicao.dataReferente}" />
+                    <h:outputText value="#{contribuicao.dataReferente}" >
+                        <f:convertDateTime pattern="dd 'de' MMMM 'de' yyyy"/>
+                    </h:outputText>
                 </p:column>
 
                 <p:column style="width:80px;text-align: center">
