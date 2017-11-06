@@ -69,10 +69,10 @@
                 </f:facet>
 
                 <f:facet name="right">
-                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="T" style="margin-top: 15px" >
-                        <!--<p:ajax event="keyup" listener="" update="tabelaContribuicoes" />-->
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{gerenciarContribuicaoBean.inputPesquisa}" style="margin-top: 15px" >
+                        <p:ajax event="keyup" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes" />
                     </p:inputText>
-                    <p:commandButton icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" update="tabelaContribuicoes"/>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" actionListener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" class="botaopesquisa" update="tabelaContribuicoes"/>
                 </f:facet>
 
             </p:toolbar>

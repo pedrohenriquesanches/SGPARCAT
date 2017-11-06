@@ -11,6 +11,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -49,6 +54,18 @@ public class Contribuicoes implements Serializable {
 //        return c.list();
 
         return manager.createQuery("from Contribuicao order by descricao asc").getResultList();
+    }
+
+    public List<Contribuicao> retornaContribuicoes(String descricaoPesquisada) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Contribuicao.class);
+        
+        if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
+            c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
+        }
+        
+        c.addOrder(Order.asc("descricao"));
+        return c.list();
     }
 
 }

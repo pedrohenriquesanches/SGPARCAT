@@ -29,6 +29,12 @@ public class GerenciarContribuicaoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Inject
+    private Contribuicoes repositorioContribuicoes;
+
+    @Inject
+    private ContribuicaoService contribuicaoService;
+
     private List<String> anos;
 
     private BigDecimal valorTotal;
@@ -36,17 +42,12 @@ public class GerenciarContribuicaoBean implements Serializable {
     private List<Contribuicao> contribuicoes;
 
     private Contribuicao.TipoContribuicao tipoContribuicaoSelecionado;
-
-    @Inject
-    private Contribuicoes repositorioContribuicoes;
-
-    @Inject
-    private ContribuicaoService contribuicaoService;
+    
+    private String inputPesquisa;
 
     @PostConstruct
     public void GerenciarContribuicaoBean() {
         listarContribuicoes();
-        calculaValorTotal();
         geraAnos();
     }
 
@@ -86,16 +87,26 @@ public class GerenciarContribuicaoBean implements Serializable {
         this.valorTotal = valorTotal;
     }
 
+    public String getInputPesquisa() {
+        return inputPesquisa;
+    }
+
+    public void setInputPesquisa(String inputPesquisa) {
+        this.inputPesquisa = inputPesquisa;
+    }
+    
     public Contribuicao.TipoContribuicao[] tiposDeContribuicoes() {
         return Contribuicao.TipoContribuicao.values();
     }
 
     public void listarContribuicoes() {
         contribuicoes = repositorioContribuicoes.retornaTodasContribuicoes();
+        calculaValorTotal();
     }
 
     public void filtrarContribuicoes() {
-
+        contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa);
+        calculaValorTotal();
     }
 
     public void excluir(Contribuicao contribuicao) {
@@ -103,10 +114,12 @@ public class GerenciarContribuicaoBean implements Serializable {
         contribuicoes.remove(contribuicao);
         FacesUtil.addInfoMessage("messages", "Contribuição excluida com sucesso!");
         limpar();
+        filtrarContribuicoes();
+        calculaValorTotal();
     }
 
     public void limpar() {
-        //limpar filtros
+        inputPesquisa = null;
     }
 
     private void calculaValorTotal() {
