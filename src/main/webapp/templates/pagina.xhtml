@@ -16,19 +16,16 @@ and open the template in the editor.
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title><ui:insert name="titulo">SG-PARCAT - Sistema para Gestão de Paróquias Católicas</ui:insert></title>
         <h:outputStylesheet library="css" name="sistema.css"/>
-        <h:outputScript library="js" name="jquery.maskMoney.js" />
+        <h:outputScript library="js" name="jquery.maskMoney.js"/>
 
     </h:head>
 
     <h:body>
 
         <!-- AjaxStatus configura o componente da classe (loading). Sempre que existir uma requisao ajax a mascara de moeda é configurada novamente -->
-        <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()" >
+        <p:ajaxStatus styleClass="ajax-status">
             <f:facet name="start">
                 <h:graphicImage library="imagens" name="loading.gif"/>
-            </f:facet>
-            <f:facet name="complete">
-                <h:outputText value="" />
             </f:facet>
         </p:ajaxStatus>
 
@@ -62,7 +59,7 @@ and open the template in the editor.
                         </p:submenu>
 
                         <p:submenu label="Contribuições" style="margin-right: 3px" >
-                            <p:menuitem value="Adicionar Contribuição" outcome="/contribuicoes/registrar"/>
+                            <p:menuitem value="Adicionar Contribuição" outcome="/contribuicoes/gerenciar"/>
                             <p:menuitem value="Ver Todas as Contribuições" outcome="/contribuicoes/gerenciar"/>
                             <p:separator style="border-top-color: rgb(210, 173, 173);border-top-style: solid;border-top-width: 1px;"/>
                             <p:menuitem value="Adicionar Dizimista" outcome="/pessoas/cadastrar"/>
@@ -95,18 +92,6 @@ and open the template in the editor.
         <div id="conteudo">
             <ui:insert name="corpo"/>
         </div>
-
-        <!-- Script para máscaras nas moedas, criação de uma forma dinamica -->
-        <script>
-            /* JQuery */
-            function configurarMoeda() {
-                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});
-            }
-            /* executando a funcao, quando ele estiver pronto, execute essa funcao */
-            $(document).ready(function () {
-                configurarMoeda();
-            });
-        </script>
 
         <!-- TRADUZINDO ALGUNS COMPONENTES DO PRIMEFACES -->
         <script>

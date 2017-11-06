@@ -19,7 +19,7 @@
                 </div>     
             </div>
 
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+            <p:messages for="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
             <p:toolbar class="tollbartabela">
 
@@ -89,6 +89,8 @@
                 <p:outputPanel id="PreCadastro">
 
                     <div style="width: 90%" class="centralizado">
+                        
+                        <p:messages for="dialogMessages" showDetail="false" autoUpdate="true" closable="true"/>
                         
                         <div class="campo-cadastro">
                             <p:outputLabel value="Nome:" for="nome"/>

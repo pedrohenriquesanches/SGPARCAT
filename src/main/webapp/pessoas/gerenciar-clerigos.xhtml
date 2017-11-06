@@ -46,7 +46,7 @@
 
             <p:dataTable class="tabela" id="tabelaClerigos" var="clerigo" value="#{clerigoBean.clerigos}" rowKey="#{clerigo.idPessoa}"
                          rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum registro encontrado" >
-                <p:column headerText="ID" style="width: 50px;text-align: center">
+                <p:column headerText="ID" style="width: 50px">
                     <h:outputText value="#{clerigo.idPessoa}" />
                 </p:column>
 

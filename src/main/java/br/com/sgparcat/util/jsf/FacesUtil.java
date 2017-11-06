@@ -23,18 +23,18 @@ public class FacesUtil {
         return !isPostback();
     }
     
-    public static void addErrorMessage(String message){
+    public static void addErrorMessage(String id, String message){
         FacesContext.getCurrentInstance().addMessage
-        (null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
+        (id, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
     }
     
-    public static void addInfoMessage(String message){
+    public static void addInfoMessage(String id, String message){
         FacesContext.getCurrentInstance().addMessage
-        (null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, message));
+        (id, new FacesMessage(FacesMessage.SEVERITY_INFO, message, message));
     }
     
-    public static void addWarMessage(String message){
+    public static void addWarMessage(String id, String message){
         FacesContext.getCurrentInstance().addMessage
-        (null, new FacesMessage(FacesMessage.SEVERITY_WARN, message, message));
+        (id, new FacesMessage(FacesMessage.SEVERITY_WARN, message, message));
     }
 }

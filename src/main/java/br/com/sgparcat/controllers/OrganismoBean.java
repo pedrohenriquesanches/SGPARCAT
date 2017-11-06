@@ -130,26 +130,29 @@ public class OrganismoBean implements Serializable {
         return Organismo.TipoOrganismo.values();
     }
 
-    public String salvarPreCadastro() throws InterruptedException {
+    public String salvarPreCadastro() {
         organismo = organismoService.salvar(organismo);
-        FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi criado com sucesso");
+        FacesUtil.addInfoMessage("dialogMessages","O organismo " + organismo.getNome() + " foi criado com sucesso");
         //Thread.sleep(2000);
         return "/organismos/membros?organismo=" + organismo.getIdOrganismo() + "&faces-redirect=true";
     }
 
     public void salvar() {
-        if (organismo.getIdOrganismo() == null) {
-            FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi adicionado com sucesso!");
+        Boolean estaEditando = organismo.getIdOrganismo() != null;
+        
+        organismo = organismoService.salvar(organismo);
+        
+        if (estaEditando) {
+            FacesUtil.addInfoMessage(null,"Edição concluída com sucesso");
         } else {
-            FacesUtil.addInfoMessage("Edição concluída com sucesso");
+            FacesUtil.addInfoMessage(null,"O organismo " + organismo.getNome() + " foi adicionado com sucesso!");
         }
-         organismo = organismoService.salvar(organismo);
     }
 
     public void excluir(Organismo organismo) {
         organismoService.excluir(organismo);
         organismos.remove(organismo);
-        FacesUtil.addInfoMessage("O organismo " + organismo.getNome() + " foi excluido com sucesso!");
+        FacesUtil.addInfoMessage("messages","O organismo " + organismo.getNome() + " foi excluido com sucesso!");
         limpar();
     }
 
@@ -178,7 +181,7 @@ public class OrganismoBean implements Serializable {
 
     public void adicionarMembro(Pessoa pessoa) {
         if (organismo.getIdOrganismo() == null) {
-            FacesUtil.addWarMessage("Primeiro crie e salve o organismo para poder adicionar membros");
+            FacesUtil.addWarMessage(null,"Primeiro crie e salve o organismo para poder adicionar membros");
         } else {
             Membro membro = new Membro(organismo, pessoa);
             membroService.salvar(membro);

@@ -83,14 +83,14 @@ public class ParoquianoBean implements Serializable {
     public void salvar() {
         paroquiano.setTipoPessoa(Pessoa.TipoPessoa.PAROQUIANO);
         pessoaService.salvar(paroquiano);        
-        FacesUtil.addInfoMessage("O cadastro de " + paroquiano.getNomeCompleto() + " foi realizado com sucesso");
+        FacesUtil.addInfoMessage(null,"O cadastro de " + paroquiano.getNomeCompleto() + " foi realizado com sucesso");
         limpar();
     }
 
     public void excluir(Pessoa paroquiano) {
         pessoaService.excluir(paroquiano);
         paroquianos.remove(paroquiano);
-        FacesUtil.addInfoMessage("O cadastro de" + paroquiano.getNomeCompleto() + " foi excluido com sucesso!");
+        FacesUtil.addInfoMessage(null,"O cadastro de" + paroquiano.getNomeCompleto() + " foi excluido com sucesso!");
         limpar();
     }
 

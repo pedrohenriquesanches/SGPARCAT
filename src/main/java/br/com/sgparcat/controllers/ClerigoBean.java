@@ -83,14 +83,14 @@ public class ClerigoBean implements Serializable {
     public void salvar() {
         clerigo.setTipoPessoa(Pessoa.TipoPessoa.CLERIGO);
         cadastroPessoaService.salvar(clerigo);        
-        FacesUtil.addInfoMessage("O cadastro de " + clerigo.getNomeCompleto() + " foi realizado com sucesso");
+        FacesUtil.addInfoMessage(null,"O cadastro de " + clerigo.getNomeCompleto() + " foi realizado com sucesso");
         limpar();
     }
 
     public void excluir(Pessoa clerigo) {
         cadastroPessoaService.excluir(clerigo);
         clerigos.remove(clerigo);
-        FacesUtil.addInfoMessage("O cadastro de" + clerigo.getNomeCompleto() + " foi excluido com sucesso!");
+        FacesUtil.addInfoMessage(null,"O cadastro de" + clerigo.getNomeCompleto() + " foi excluido com sucesso!");
         limpar();
     }
     

@@ -92,7 +92,7 @@ public class DizimistaBean implements Serializable {
     }
 
     public String getUltimaContribuicao() {
-        return "-";
+        return "";
     }
 
     public void filtrarDizimistas() {
@@ -102,7 +102,7 @@ public class DizimistaBean implements Serializable {
     public void excluir(Pessoa dizimista) {
         pessoaService.excluir(dizimista);
         dizimistas.remove(dizimista);
-        FacesUtil.addInfoMessage("O cadastro de" + dizimista.getNomeCompleto() + " foi excluido com sucesso!");
+        FacesUtil.addInfoMessage(null,"O cadastro de" + dizimista.getNomeCompleto() + " foi excluido com sucesso!");
         limpar();
     }
 }

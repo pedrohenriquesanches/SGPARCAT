@@ -29,4 +29,5 @@ public class PessoaBean implements Serializable {
     public List<Pessoa> pesquisarPessoa(String input){
         return repositorioPessoas.retornaTodasAsPessoas(input);
     }
+    
 }

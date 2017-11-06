@@ -8,18 +8,21 @@
     <ui:define name="titulo">Contribuições</ui:define>
     <ui:define name="corpo">
 
-        <h:form>
+        <!-- AjaxStatus configura o componente da classe (loading). Sempre que existir uma requisao ajax a mascara de moeda é configurada novamente -->
+        <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()" />
+
+        <h:form id="tabelaForm">
 
             <div class="titulo-opcoes">
                 <div class="titulo-pagina">
                     <h1>Gestão de Contribuições</h1>            
                 </div>
                 <div class="opcoes-right">
-                    <p:commandButton value="Registrar Contribuição" actionListener="#{gerenciarContribuicaoBean.mostrarDialogDeRegistro()}" icon="ui-icon-plus"/>
+                    <p:commandButton value="Registrar Contribuição" onclick="PF('dlg').show();" icon="ui-icon-plus" />
                 </div>
             </div>
 
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+            <p:messages for="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
             <p:toolbar class="tollbartabela">
 
@@ -91,7 +94,7 @@
                 </p:column>
 
                 <p:column headerText="Valor" style="width: 150px">
-                    <h:outputText value="R$ #{contribuicao.valor}" />
+                    <h:outputText value="#{contribuicao.valor > 0 ? ('R$ ').concat(contribuicao.valor) : null}" />
                 </p:column>
 
                 <p:column headerText="Contribuinte" style="width: 250px">
@@ -103,8 +106,9 @@
                 </p:column>
 
                 <p:column style="width:80px;text-align: center">
-                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" update="tabelaContribuicoes"
-                                     actionListener="#{gerenciarContribuicaoBean.mostrarDialogDeEdicao(contribuicao)}"/>
+                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" onclick="PF('dlg').show();" update="dialogForm:painel">
+                        <f:setPropertyActionListener value="#{contribuicao}" target="#{registrarContribuicaoBean.contribuicao}" />
+                    </p:commandButton>
                     <p:commandButton icon="ui-icon-trash" title="Remover" update="tabelaContribuicoes" actionListener="#{gerenciarContribuicaoBean.excluir(contribuicao)}" ajax="false"
                                      onclick="if (!confirm('Tem certeza? Não será possível desfazer a exclusão!'))
                                                  return false">
@@ -114,7 +118,7 @@
                 <p:columnGroup type="footer">
                     <p:row>
                         <p:column footerText="Total:" colspan="3" class="resultados-rodape" style="text-align:right" />
-                        <p:column footerText="R$" class="resultados-rodape" style="text-align:left" />
+                        <p:column footerText="#{gerenciarContribuicaoBean.valorTotal > 0 ? ('R$ ').concat(gerenciarContribuicaoBean.valorTotal) : 'R$ 0.00'}" class="resultados-rodape" style="text-align:left" />
                         <p:column colspan="3" class="resultados-rodape" />
                     </p:row>
                 </p:columnGroup>
@@ -122,6 +126,96 @@
             </p:dataTable>
 
         </h:form>
+
+        <h:form id="dialogForm">
+
+            <p:dialog id="dialog" header="#{registrarContribuicaoBean.estaEditando() ? 'Editar Contribuição' : 'Registrar Contribuição'}"
+                      widgetVar="dlg" resizable="false" width="770" height="330" modal="true">
+                
+                <p:ajax event="close" listener="#{registrarContribuicaoBean.limpar}" update="painel"/>
+                
+                <p:outputPanel id="painel">
+
+                    <p:messages for="dialogMessages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                    <div class="div-campos-cadastro">
+
+                        <div class="coluna-1-2">
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Número:" for="numero"/>
+                                <p:inputText id="numero" value="#{registrarContribuicaoBean.contribuicao.numeroContribuicao}" disabled="true" />
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Descrição:" for="descricao"/>
+                                <p:inputText id="descricao" required="true" value="#{registrarContribuicaoBean.contribuicao.descricao}"/>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Contribuinte:" for="contribuinte" />
+                                <p:autoComplete id="contribuinte" size="26" emptyMessage="Nenhuma pessoa encontrada com este nome" scrollHeight="180"
+                                                value="#{registrarContribuicaoBean.contribuicao.pessoaContribuinte}" completeMethod="#{pessoaBean.pesquisarPessoa}" forceSelection="true"
+                                                var="pessoa" itemLabel="#{pessoa != null ? (pessoa.nomeCompleto).concat(' - CPF: ').concat(pessoa.cpf) : null}" itemValue="#{pessoa}" >
+                                </p:autoComplete>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Valor:" for="valor" />
+                                <p:inputText id="valor" size="10" maxlength="10" styleClass="moeda"
+                                             value="#{registrarContribuicaoBean.contribuicao.valor}" >
+                                    <f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+
+                        <div class="coluna-1-2">
+                            <div>
+                                <div class="coluna-1-2">
+                                    <div class="campo-cadastro">
+                                        <p:outputLabel value="Referente a Data:" for="dataReferente"/>
+                                        <p:calendar id="dataReferente" locale="pt" pattern="dd/MM/yyyy" mask="true" navigator="true" mindate="1/1/2010"
+                                                    value="#{registrarContribuicaoBean.contribuicao.dataReferente}" required="true" class="campo-data"/>
+                                    </div>
+                                </div>
+                                <div class="coluna-1-2">
+                                    <div class="campo-cadastro">
+                                        <p:outputLabel value="Tipo de Contribuição:" for="tipo" />
+                                        <h:selectOneMenu id="tipo" required="true" value="#{registrarContribuicaoBean.contribuicao.tipoContribuicao}"
+                                                         style="height:26px" >
+                                            <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+                                            <f:selectItems value="#{registrarContribuicaoBean.tiposDeContribuicoes()}" var="tipoContribuicao"
+                                                           itemValue="#{tipoContribuicao}" itemLabel="#{tipoContribuicao.label}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Observações:" for="observacao" />
+                                <p:inputTextarea id="observacao" value="#{registrarContribuicaoBean.contribuicao.observacao}" rows="5" />
+                            </div>
+                            <div>
+                                <p:commandButton value="Salvar" icon="ui-icon-disk" title="Salvar" class="botao-adicionar" style="height: 30px"
+                                                 actionListener="#{registrarContribuicaoBean.salvar()}" action="#{gerenciarContribuicaoBean.listarContribuicoes()}"
+                                                 update="painel, :tabelaForm:tabelaContribuicoes" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </p:outputPanel>
+
+            </p:dialog>
+
+        </h:form>
+
+        <!-- Script para máscaras nas moedas, criação de uma forma dinamica -->
+        <script>
+            /* JQuery */
+            function configurarMoeda() {
+                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});
+            }
+            /* executando a funcao, quando ele estiver pronto, execute essa funcao */
+            $(document).ready(function () {
+                configurarMoeda();
+            });
+        </script>
 
     </ui:define>
 
