@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -102,19 +103,19 @@ public class Pessoa implements Serializable {
     @ManyToOne
     private Funcao funcao;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaRegistrouLancamento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaRegistrouLancamento", fetch = FetchType.LAZY)
     private List<Lancamento> lancamentosQueRegistrou;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaContribuinte")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaContribuinte", fetch = FetchType.LAZY)
     private List<Contribuicao> contribuicoesQueRealizou;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaRegistrouContribuicao")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaRegistrouContribuicao", fetch = FetchType.LAZY)
     private List<Contribuicao> contribuicoesQueRegistrou;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa", fetch = FetchType.LAZY)
     private List<Membro> membros;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa", fetch = FetchType.LAZY)
     private List<Participante> participantes;
 
     public Long getIdPessoa() {

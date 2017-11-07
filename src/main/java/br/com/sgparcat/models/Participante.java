@@ -33,11 +33,11 @@ public class Participante implements Serializable {
     @ManyToOne
     private Funcao funcao;
     
-    @JoinColumn(nullable = false, name = "idEvento") //unique=true
+    @JoinColumn(nullable = false, name = "idEvento")
     @ManyToOne
     private Evento evento;
 
-    @JoinColumn(nullable = false, name = "idPessoa") //unique=true
+    @JoinColumn(nullable = false, name = "idPessoa")
     @ManyToOne
     private Pessoa pessoa;
 

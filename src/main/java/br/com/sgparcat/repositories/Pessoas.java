@@ -59,7 +59,7 @@ public class Pessoas implements Serializable {
             c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
         }
 
-        if (funcaoFiltro.isFuncaoValida()) {
+        if (funcaoFiltro != null && funcaoFiltro.isFuncaoValida()) {
             c.add(Restrictions.eq("funcao", funcaoFiltro));
         }
 
@@ -76,7 +76,7 @@ public class Pessoas implements Serializable {
             c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
         }
 
-        if (funcaoFiltro.isFuncaoValida()) {
+        if (funcaoFiltro != null && funcaoFiltro.isFuncaoValida()) {
             c.add(Restrictions.eq("funcao", funcaoFiltro));
         }
 

@@ -56,12 +56,16 @@ public class Contribuicoes implements Serializable {
         return manager.createQuery("from Contribuicao order by descricao asc").getResultList();
     }
 
-    public List<Contribuicao> retornaContribuicoes(String descricaoPesquisada) {
+    public List<Contribuicao> retornaContribuicoes(String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
         
         if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
             c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
+        }
+        
+        if(tipoContribuicaoSelecionado != null){
+            c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
         }
         
         c.addOrder(Order.asc("descricao"));

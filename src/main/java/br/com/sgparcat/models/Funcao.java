@@ -11,6 +11,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,26 +25,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "funcao")
 public class Funcao implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFuncao;
-    
-    @Column(nullable = false,unique = true)
+
+    @Column(nullable = false, unique = true)
     private String titulo;
-    
+
     @Column(nullable = false)
     private Character apenasParaClerigos;
-        
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao", fetch = FetchType.LAZY)
     private List<Pessoa> pessoas;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao", fetch = FetchType.LAZY)
     private List<Membro> membros;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcao", fetch = FetchType.LAZY)
     private List<Participante> participantes;
 
     public Funcao() {
@@ -77,7 +78,7 @@ public class Funcao implements Serializable {
     public void setApenasParaClerigos(Character apenasParaClerigos) {
         this.apenasParaClerigos = apenasParaClerigos;
     }
-    
+
     public List<Pessoa> getPessoas() {
         return pessoas;
     }
@@ -102,10 +103,10 @@ public class Funcao implements Serializable {
         this.participantes = participantes;
     }
     
-    public boolean isFuncaoValida(){
+    public boolean isFuncaoValida() {
         return (idFuncao != null) && (titulo != null);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -139,5 +140,5 @@ public class Funcao implements Serializable {
     public String toString() {
         return "Funcao{" + "idFuncao=" + idFuncao + ", titulo=" + titulo + '}';
     }
-    
+
 }

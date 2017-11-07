@@ -33,11 +33,11 @@ public class Membro implements Serializable {
     @ManyToOne
     private Funcao funcao;
     
-    @JoinColumn(nullable = false, name = "idOrganismo") //unique=true
+    @JoinColumn(nullable = false, name = "idOrganismo")
     @ManyToOne
     private Organismo organismo;
     
-    @JoinColumn(nullable = false, name = "idPessoa") //unique=true
+    @JoinColumn(nullable = false, name = "idPessoa")
     @ManyToOne
     private Pessoa pessoa;
 

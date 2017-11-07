@@ -105,7 +105,7 @@ public class GerenciarContribuicaoBean implements Serializable {
     }
 
     public void filtrarContribuicoes() {
-        contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa);
+        contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa,tipoContribuicaoSelecionado);
         calculaValorTotal();
     }
 

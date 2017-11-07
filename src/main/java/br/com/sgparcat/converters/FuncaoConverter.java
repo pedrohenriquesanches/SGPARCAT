@@ -33,10 +33,6 @@ public class FuncaoConverter implements Converter {
             return null;
         }
         
-        if(value.equals("-1")){
-            return new Funcao();
-        }
-        
         if (!value.matches("\\d+")) {
             throw new ConverterException("O valor não é um ID válido: " + value);
         }        
@@ -49,10 +45,6 @@ public class FuncaoConverter implements Converter {
     public String getAsString(FacesContext fc, UIComponent uic, Object value) {
         if (value == null) {
             return null;
-        }
-        
-        if (value.equals("-1")){
-            return "-1";
         }
         
         if (!(value instanceof Funcao)) {

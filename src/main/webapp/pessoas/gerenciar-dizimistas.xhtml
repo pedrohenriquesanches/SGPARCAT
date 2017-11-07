@@ -29,7 +29,7 @@
                 <f:facet name="left">
                     <p:outputLabel value="Status:" for="box-selecao-status" />
                     <h:selectOneMenu id="box-selecao-status" value="#{dizimistaBean.statusSelecionado}" style="height:26px">
-                        <f:selectItem itemLabel="Ativos e Inativos" itemValue="" />
+                        <f:selectItem itemLabel="Ativos e Inativos" />
                         <f:selectItem itemLabel="Ativos" itemValue="S" />
                         <f:selectItem itemLabel="Inativos" itemValue="N" />
                         <p:ajax event="change" listener="#{dizimistaBean.filtrarDizimistas()}" update="tabelaDizimistas" />
@@ -65,7 +65,9 @@
                 </p:column>
                 
                 <p:column headerText="Última Contribuição" style="width: 150px">
-                    <h:outputText value="#{dizimistaBean.getUltimaContribuicao()}" />
+                    <h:outputText value="#{dizimista.contribuicoesQueRealizou.get(0).dataReferente}" >
+                        <f:convertDateTime pattern="MMMM 'de' yyyy"/>
+                    </h:outputText>
                 </p:column>
                 
                 <p:column headerText="Endereço" style="width: 150px">

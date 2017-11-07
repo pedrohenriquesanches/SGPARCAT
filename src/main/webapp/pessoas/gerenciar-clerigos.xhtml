@@ -29,7 +29,7 @@
                 <f:facet name="left">
                     <p:outputLabel value="Principal Função na Paróquia:" for="box-selecao-funcoes" />
                     <h:selectOneMenu id="box-selecao-funcoes" value="#{clerigoBean.funcaoSelecionada}" style="height:26px">
-                        <f:selectItem  itemLabel="Todas" itemValue="-1"/>
+                        <f:selectItem  itemLabel="Todas" />
                         <f:selectItems value="#{funcaoBean.filtrarFuncoesApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}"/>
                         <p:ajax event="change" listener="#{clerigoBean.filtrarClerigos()}" update="tabelaClerigos" />
                     </h:selectOneMenu>
