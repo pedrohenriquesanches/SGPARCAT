@@ -59,15 +59,47 @@ public class Contribuicoes implements Serializable {
     public List<Contribuicao> retornaContribuicoes(String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
-        
+
         if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
             c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
         }
-        
-        if(tipoContribuicaoSelecionado != null){
+
+        if (tipoContribuicaoSelecionado != null) {
             c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
         }
-        
+
+        c.addOrder(Order.asc("descricao"));
+        return c.list();
+    }
+
+    public List<Contribuicao> retornaContribuicoesPorPeriodo(int periodoSelecionado, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Contribuicao.class);
+
+        if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
+            c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
+        }
+
+        if (tipoContribuicaoSelecionado != null) {
+            c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
+        }
+
+        c.addOrder(Order.asc("descricao"));
+        return c.list();
+    }
+
+    public List<Contribuicao> retornaContribuicoesPorMesEAno(int mesSelecionado, int anoSelecionado, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Contribuicao.class);
+
+        if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
+            c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
+        }
+
+        if (tipoContribuicaoSelecionado != null) {
+            c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
+        }
+
         c.addOrder(Order.asc("descricao"));
         return c.list();
     }

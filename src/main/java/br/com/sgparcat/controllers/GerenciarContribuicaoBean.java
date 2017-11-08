@@ -35,32 +35,24 @@ public class GerenciarContribuicaoBean implements Serializable {
     @Inject
     private ContribuicaoService contribuicaoService;
 
-    private List<String> anos;
-
     private BigDecimal valorTotal;
 
     private List<Contribuicao> contribuicoes;
 
     private Contribuicao.TipoContribuicao tipoContribuicaoSelecionado;
-    
+
     private String inputPesquisa;
+
+    private int mesSelecionado;
+
+    private int anoSelecionado;
+
+    private int periodoSelecionado;
 
     @PostConstruct
     public void GerenciarContribuicaoBean() {
         listarContribuicoes();
-        geraAnos();
-    }
-
-    private void geraAnos() {
-        anos = new ArrayList<>();
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = 1990; i < year + 1; i++) {
-            anos.add("" + i);
-        }
-    }
-
-    public List<String> getAnos() {
-        return anos;
+        Anos();
     }
 
     public List<Contribuicao> getContribuicoes() {
@@ -94,7 +86,40 @@ public class GerenciarContribuicaoBean implements Serializable {
     public void setInputPesquisa(String inputPesquisa) {
         this.inputPesquisa = inputPesquisa;
     }
-    
+
+    public int getMesSelecionado() {
+        return mesSelecionado;
+    }
+
+    public void setMesSelecionado(int mesSelecionado) {
+        this.mesSelecionado = mesSelecionado;
+    }
+
+    public int getAnoSelecionado() {
+        return anoSelecionado;
+    }
+
+    public void setAnoSelecionado(int anoSelecionado) {
+        this.anoSelecionado = anoSelecionado;
+    }
+
+    public int getPeriodoSelecionado() {
+        return periodoSelecionado;
+    }
+
+    public void setPeriodoSelecionado(int periodoSelecionado) {
+        this.periodoSelecionado = periodoSelecionado;
+    }
+
+    public List<Integer> Anos() {
+        List<Integer> anos = new ArrayList<>();
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = 1990; i < year + 1; i++) {
+            anos.add(i);
+        }
+        return anos;
+    }
+
     public Contribuicao.TipoContribuicao[] tiposDeContribuicoes() {
         return Contribuicao.TipoContribuicao.values();
     }
@@ -105,8 +130,27 @@ public class GerenciarContribuicaoBean implements Serializable {
     }
 
     public void filtrarContribuicoes() {
-        contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa,tipoContribuicaoSelecionado);
+        if(mesSelecionado == 0 && anoSelecionado == 0 && periodoSelecionado == 0){
+            contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa, tipoContribuicaoSelecionado);
+        }else{
+            if (periodoSelecionado != 0) {
+                filtrarContribuicoesPorPeriodo();
+            } else {
+                filtrarContribuicoesPorMesEAno();
+            }
+        }
         calculaValorTotal();
+    }
+
+    public void filtrarContribuicoesPorPeriodo() {
+        mesSelecionado = 0;
+        anoSelecionado = 0;
+        contribuicoes = repositorioContribuicoes.retornaContribuicoesPorPeriodo(periodoSelecionado, inputPesquisa, tipoContribuicaoSelecionado);
+    }
+
+    public void filtrarContribuicoesPorMesEAno() {
+        periodoSelecionado = 0;
+        contribuicoes = repositorioContribuicoes.retornaContribuicoesPorMesEAno(mesSelecionado, anoSelecionado, inputPesquisa, tipoContribuicaoSelecionado);
     }
 
     public void excluir(Contribuicao contribuicao) {
@@ -114,7 +158,7 @@ public class GerenciarContribuicaoBean implements Serializable {
         contribuicoes.remove(contribuicao);
         FacesUtil.addInfoMessage("messages", "Contribuição excluida com sucesso!");
         limpar();
-        filtrarContribuicoes();
+        filtrarContribuicoesPorPeriodo();
         calculaValorTotal();
     }
 
