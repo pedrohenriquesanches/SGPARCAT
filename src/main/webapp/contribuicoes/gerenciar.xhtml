@@ -24,7 +24,7 @@
 
             <p:messages for="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-            <p:toolbar class="tollbartabela">
+            <p:toolbar id="filtros" class="tollbartabela">
 
                 <f:facet name="left">
                     <div>
@@ -33,7 +33,7 @@
                             <f:selectItem itemLabel="Selecione" />
                             <f:selectItems value="#{gerenciarContribuicaoBean.tiposDeContribuicoes()}" var="tipoContribuicao"
                                            itemValue="#{tipoContribuicao}" itemLabel="#{tipoContribuicao.label}"/>
-                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorPeriodo()}" update="tabelaContribuicoes" />
+                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes" />
                         </h:selectOneMenu>
 
                         <p:outputLabel value="Mês:" for="box-selecao-meses" />
@@ -51,33 +51,33 @@
                             <f:selectItem itemLabel="Outubro" itemValue="10" />
                             <f:selectItem itemLabel="Novembro" itemValue="11" />
                             <f:selectItem itemLabel="Dezembro" itemValue="12" />
-                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorPeriodo()}" update="tabelaContribuicoes" />
+                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes box-selecao-periodo" />
                         </h:selectOneMenu>
                         <p:outputLabel value="Ano:" for="box-selecao-anos" />
                         <h:selectOneMenu id="box-selecao-anos" value="#{gerenciarContribuicaoBean.anoSelecionado}" >
                             <f:selectItem itemLabel="Todos" />
                             <f:selectItems value="#{gerenciarContribuicaoBean.Anos()}" />
-                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorPeriodo()}" update="tabelaContribuicoes" />
+                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes box-selecao-periodo" />
                         </h:selectOneMenu>
                     </div>
 
                     <div style="margin-top: 10px">
                         <p:outputLabel value="Período:" />
-                        <p:selectOneButton value="#{gerenciarContribuicaoBean.periodoSelecionado}" >
+                        <p:selectOneButton id="box-selecao-periodo" value="#{gerenciarContribuicaoBean.periodoSelecionado}" >
                             <f:selectItem itemLabel="Histórico Completo" itemValue="1" />
                             <f:selectItem itemLabel="Últimos 30 Dias" itemValue="2" />
                             <f:selectItem itemLabel="Últimos 7 Dias" itemValue="3" />
                             <f:selectItem itemLabel="Intervalo Personalizado" itemValue="4" />
-                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorPeriodo()}" update="tabelaContribuicoes" />
+                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes tabelaForm" />
                         </p:selectOneButton>
                     </div>
                 </f:facet>
 
                 <f:facet name="right">
                     <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{gerenciarContribuicaoBean.inputPesquisa}" style="margin-top: 15px" >
-                        <p:ajax event="keyup" listener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorPeriodo()}" update="tabelaContribuicoes" />
+                        <p:ajax event="keyup" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes" />
                     </p:inputText>
-                    <p:commandButton icon="ui-icon-search" title="Pesquisar" actionListener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorPeriodo()}" class="botaopesquisa" update="tabelaContribuicoes"/>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" actionListener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" class="botaopesquisa" update="tabelaContribuicoes"/>
                 </f:facet>
 
             </p:toolbar>
@@ -131,6 +131,28 @@
                 </p:columnGroup>
 
             </p:dataTable>
+
+            <p:dialog id="dialog-intervalo-personalizado" header="Filtrar por intervalo personalizado"
+                      widgetVar="dlg-intervalo-personalizado" resizable="false" width="360" height="60" modal="true">
+
+                <p:outputPanel style="margin-top: 15px" id="painel-intervalo-personalizado">
+
+                    <div class="coluna-1-2" style="width: 44%;">
+                        <p:outputLabel value="De" for="data-inicio"/>
+                        <p:calendar id="data-inicio" locale="pt" pattern="dd/MM/yyyy" mask="true" navigator="true"
+                                    value="#{gerenciarContribuicaoBean.dataInicio}" class="campo-data-intervalo"/>
+                    </div>
+                    <div class="coluna-1-2" style="width: 44%;">
+                        <p:outputLabel value="a" for="data-fim"/>
+                        <p:calendar id="data-fim" locale="pt" pattern="dd/MM/yyyy" mask="true" navigator="true"
+                                    value="#{gerenciarContribuicaoBean.dataFim}" class="campo-data-intervalo"/>
+                    </div>
+                    <p:commandButton actionListener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorIntervaloPersonalizado()}"
+                                     icon="ui-icon-search" update="tabelaForm"/>
+
+                </p:outputPanel>
+
+            </p:dialog>
 
         </h:form>
 

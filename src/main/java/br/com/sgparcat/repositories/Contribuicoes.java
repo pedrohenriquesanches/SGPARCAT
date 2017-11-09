@@ -7,6 +7,8 @@ package br.com.sgparcat.repositories;
 
 import br.com.sgparcat.models.Contribuicao;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -75,6 +77,21 @@ public class Contribuicoes implements Serializable {
     public List<Contribuicao> retornaContribuicoesPorPeriodo(int periodoSelecionado, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
+        
+        Calendar calendar = Calendar.getInstance();
+        
+        switch (periodoSelecionado){
+            case 2:
+                calendar.add(Calendar.DAY_OF_YEAR, -30);
+                c.add(Restrictions.ge("dataReferente", calendar.getTime()));
+                break;
+            case 3:
+                calendar.add(Calendar.DAY_OF_YEAR, -7);
+                c.add(Restrictions.ge("dataReferente", calendar.getTime()));
+                break;
+            case 4:
+                
+        }
 
         if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
             c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
@@ -91,6 +108,30 @@ public class Contribuicoes implements Serializable {
     public List<Contribuicao> retornaContribuicoesPorMesEAno(int mesSelecionado, int anoSelecionado, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
+
+        if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
+            c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
+        }
+
+        if (tipoContribuicaoSelecionado != null) {
+            c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
+        }
+
+        c.addOrder(Order.asc("descricao"));
+        return c.list();
+    }
+
+    public List<Contribuicao> retornaContribuicoesPorIntervalo(Date dataInicio, Date dataFim, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Contribuicao.class);
+        
+        if(dataInicio != null){
+            c.add(Restrictions.ge("dataReferente", dataInicio));
+        }
+        
+        if(dataFim != null){
+            c.add(Restrictions.le("dataReferente", dataFim));
+        }
 
         if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
             c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));

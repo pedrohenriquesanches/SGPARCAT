@@ -13,11 +13,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -48,6 +50,10 @@ public class GerenciarContribuicaoBean implements Serializable {
     private int anoSelecionado;
 
     private int periodoSelecionado;
+
+    private Date dataInicio;
+
+    private Date dataFim;
 
     @PostConstruct
     public void GerenciarContribuicaoBean() {
@@ -111,6 +117,22 @@ public class GerenciarContribuicaoBean implements Serializable {
         this.periodoSelecionado = periodoSelecionado;
     }
 
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
+
     public List<Integer> Anos() {
         List<Integer> anos = new ArrayList<>();
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -130,11 +152,16 @@ public class GerenciarContribuicaoBean implements Serializable {
     }
 
     public void filtrarContribuicoes() {
-        if(mesSelecionado == 0 && anoSelecionado == 0 && periodoSelecionado == 0){
+        if (mesSelecionado == 0 && anoSelecionado == 0 && (periodoSelecionado == 0 || periodoSelecionado == 1)) {
             contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa, tipoContribuicaoSelecionado);
-        }else{
-            if (periodoSelecionado != 0) {
-                filtrarContribuicoesPorPeriodo();
+        } else {
+            if (periodoSelecionado > 1) {
+                if (periodoSelecionado == 4) {
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('dlg-intervalo-personalizado').show()");
+                } else {
+                    filtrarContribuicoesPorPeriodo();
+                }
             } else {
                 filtrarContribuicoesPorMesEAno();
             }
@@ -151,6 +178,12 @@ public class GerenciarContribuicaoBean implements Serializable {
     public void filtrarContribuicoesPorMesEAno() {
         periodoSelecionado = 0;
         contribuicoes = repositorioContribuicoes.retornaContribuicoesPorMesEAno(mesSelecionado, anoSelecionado, inputPesquisa, tipoContribuicaoSelecionado);
+    }
+    
+    public void filtrarContribuicoesPorIntervaloPersonalizado() {
+        mesSelecionado = 0;
+        anoSelecionado = 0;
+        contribuicoes = repositorioContribuicoes.retornaContribuicoesPorIntervalo(dataInicio, dataFim, inputPesquisa, tipoContribuicaoSelecionado);
     }
 
     public void excluir(Contribuicao contribuicao) {
