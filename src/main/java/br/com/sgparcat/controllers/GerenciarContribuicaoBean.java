@@ -59,6 +59,7 @@ public class GerenciarContribuicaoBean implements Serializable {
     public void GerenciarContribuicaoBean() {
         listarContribuicoes();
         Anos();
+        periodoSelecionado = 1;
     }
 
     public List<Contribuicao> getContribuicoes() {
@@ -154,35 +155,41 @@ public class GerenciarContribuicaoBean implements Serializable {
     public void filtrarContribuicoes() {
         if (mesSelecionado == 0 && anoSelecionado == 0 && (periodoSelecionado == 0 || periodoSelecionado == 1)) {
             contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa, tipoContribuicaoSelecionado);
+            calculaValorTotal();
         } else {
-            if (periodoSelecionado > 1) {
-                if (periodoSelecionado == 4) {
-                    RequestContext context = RequestContext.getCurrentInstance();
-                    context.execute("PF('dlg-intervalo-personalizado').show()");
-                } else {
-                    filtrarContribuicoesPorPeriodo();
-                }
+            if (periodoSelecionado != 0) {
+                filtrarContribuicoesPorPeriodo();
             } else {
                 filtrarContribuicoesPorMesEAno();
             }
         }
+    }
+
+    public void filtrarContribuicoesPorMesEAno() {
+        periodoSelecionado = 0;
+        contribuicoes = repositorioContribuicoes.retornaContribuicoesPorMesEAno(mesSelecionado, anoSelecionado, inputPesquisa, tipoContribuicaoSelecionado);
         calculaValorTotal();
     }
 
     public void filtrarContribuicoesPorPeriodo() {
         mesSelecionado = 0;
         anoSelecionado = 0;
-        contribuicoes = repositorioContribuicoes.retornaContribuicoesPorPeriodo(periodoSelecionado, inputPesquisa, tipoContribuicaoSelecionado);
+
+        if (periodoSelecionado == 1) {
+            contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa, tipoContribuicaoSelecionado);
+        } else {
+            if (periodoSelecionado == 4) {
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('dlg-intervalo-personalizado').show()");
+            } else {
+                contribuicoes = repositorioContribuicoes.retornaContribuicoesPorPeriodo(periodoSelecionado, inputPesquisa, tipoContribuicaoSelecionado);
+            }
+        }
+
+        calculaValorTotal();
     }
 
-    public void filtrarContribuicoesPorMesEAno() {
-        periodoSelecionado = 0;
-        contribuicoes = repositorioContribuicoes.retornaContribuicoesPorMesEAno(mesSelecionado, anoSelecionado, inputPesquisa, tipoContribuicaoSelecionado);
-    }
-    
     public void filtrarContribuicoesPorIntervaloPersonalizado() {
-        mesSelecionado = 0;
-        anoSelecionado = 0;
         contribuicoes = repositorioContribuicoes.retornaContribuicoesPorIntervalo(dataInicio, dataFim, inputPesquisa, tipoContribuicaoSelecionado);
     }
 
@@ -191,7 +198,7 @@ public class GerenciarContribuicaoBean implements Serializable {
         contribuicoes.remove(contribuicao);
         FacesUtil.addInfoMessage("messages", "Contribuição excluida com sucesso!");
         limpar();
-        filtrarContribuicoesPorPeriodo();
+        filtrarContribuicoes();
         calculaValorTotal();
     }
 

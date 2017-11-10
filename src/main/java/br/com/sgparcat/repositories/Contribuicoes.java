@@ -18,6 +18,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.IntegerType;
 
 /**
  *
@@ -62,13 +63,7 @@ public class Contribuicoes implements Serializable {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
 
-        if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
-            c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
-        }
-
-        if (tipoContribuicaoSelecionado != null) {
-            c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
-        }
+        adicionarRestricoesPorNomeETipo(c, descricaoPesquisada, tipoContribuicaoSelecionado);
 
         c.addOrder(Order.asc("descricao"));
         return c.list();
@@ -77,10 +72,9 @@ public class Contribuicoes implements Serializable {
     public List<Contribuicao> retornaContribuicoesPorPeriodo(int periodoSelecionado, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
-        
+
         Calendar calendar = Calendar.getInstance();
-        
-        switch (periodoSelecionado){
+        switch (periodoSelecionado) {
             case 2:
                 calendar.add(Calendar.DAY_OF_YEAR, -30);
                 c.add(Restrictions.ge("dataReferente", calendar.getTime()));
@@ -88,18 +82,9 @@ public class Contribuicoes implements Serializable {
             case 3:
                 calendar.add(Calendar.DAY_OF_YEAR, -7);
                 c.add(Restrictions.ge("dataReferente", calendar.getTime()));
-                break;
-            case 4:
-                
         }
 
-        if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
-            c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
-        }
-
-        if (tipoContribuicaoSelecionado != null) {
-            c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
-        }
+        adicionarRestricoesPorNomeETipo(c, descricaoPesquisada, tipoContribuicaoSelecionado);
 
         c.addOrder(Order.asc("descricao"));
         return c.list();
@@ -109,13 +94,17 @@ public class Contribuicoes implements Serializable {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
 
-        if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
-            c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
+        Calendar calendar = Calendar.getInstance();
+
+        if (mesSelecionado != 0) {
+            c.add(Restrictions.sqlRestriction("MONTH(dataReferente) = ? ", mesSelecionado, IntegerType.INSTANCE));
         }
 
-        if (tipoContribuicaoSelecionado != null) {
-            c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
+        if (anoSelecionado != 0) {
+            c.add(Restrictions.sqlRestriction("YEAR(dataReferente) = ? ", anoSelecionado, IntegerType.INSTANCE));
         }
+
+        adicionarRestricoesPorNomeETipo(c, descricaoPesquisada, tipoContribuicaoSelecionado);
 
         c.addOrder(Order.asc("descricao"));
         return c.list();
@@ -124,25 +113,31 @@ public class Contribuicoes implements Serializable {
     public List<Contribuicao> retornaContribuicoesPorIntervalo(Date dataInicio, Date dataFim, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
-        
-        if(dataInicio != null){
+
+        if (dataInicio != null) {
             c.add(Restrictions.ge("dataReferente", dataInicio));
         }
-        
-        if(dataFim != null){
+
+        if (dataFim != null) {
             c.add(Restrictions.le("dataReferente", dataFim));
         }
 
+        adicionarRestricoesPorNomeETipo(c, descricaoPesquisada, tipoContribuicaoSelecionado);
+
+        c.addOrder(Order.asc("descricao"));
+        return c.list();
+    }
+
+    private void adicionarRestricoesPorNomeETipo(Criteria c, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
+
         if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
-            c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
+            c.createAlias("pessoaContribuinte", "contribuinte");
+            c.add(Restrictions.or(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE), Restrictions.like("contribuinte.nomeCompleto", descricaoPesquisada, MatchMode.ANYWHERE)));
         }
 
         if (tipoContribuicaoSelecionado != null) {
             c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
         }
-
-        c.addOrder(Order.asc("descricao"));
-        return c.list();
     }
 
 }

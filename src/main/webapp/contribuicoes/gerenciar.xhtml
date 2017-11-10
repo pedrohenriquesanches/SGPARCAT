@@ -51,13 +51,13 @@
                             <f:selectItem itemLabel="Outubro" itemValue="10" />
                             <f:selectItem itemLabel="Novembro" itemValue="11" />
                             <f:selectItem itemLabel="Dezembro" itemValue="12" />
-                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes box-selecao-periodo" />
+                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorMesEAno()}" update="tabelaContribuicoes box-selecao-periodo" />
                         </h:selectOneMenu>
                         <p:outputLabel value="Ano:" for="box-selecao-anos" />
                         <h:selectOneMenu id="box-selecao-anos" value="#{gerenciarContribuicaoBean.anoSelecionado}" >
                             <f:selectItem itemLabel="Todos" />
                             <f:selectItems value="#{gerenciarContribuicaoBean.Anos()}" />
-                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes box-selecao-periodo" />
+                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorMesEAno()}" update="tabelaContribuicoes box-selecao-periodo" />
                         </h:selectOneMenu>
                     </div>
 
@@ -68,13 +68,13 @@
                             <f:selectItem itemLabel="Últimos 30 Dias" itemValue="2" />
                             <f:selectItem itemLabel="Últimos 7 Dias" itemValue="3" />
                             <f:selectItem itemLabel="Intervalo Personalizado" itemValue="4" />
-                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes tabelaForm" />
+                            <p:ajax event="change" listener="#{gerenciarContribuicaoBean.filtrarContribuicoesPorPeriodo()}" update="tabelaContribuicoes tabelaForm" />
                         </p:selectOneButton>
                     </div>
                 </f:facet>
 
                 <f:facet name="right">
-                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{gerenciarContribuicaoBean.inputPesquisa}" style="margin-top: 15px" >
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar contribuição ou contribuinte" value="#{gerenciarContribuicaoBean.inputPesquisa}" style="margin-top: 15px; width: 225px;" >
                         <p:ajax event="keyup" listener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" update="tabelaContribuicoes" />
                     </p:inputText>
                     <p:commandButton icon="ui-icon-search" title="Pesquisar" actionListener="#{gerenciarContribuicaoBean.filtrarContribuicoes()}" class="botaopesquisa" update="tabelaContribuicoes"/>
@@ -221,7 +221,7 @@
                             </div>
                             <div>
                                 <p:commandButton value="Salvar" icon="ui-icon-disk" title="Salvar" class="botao-adicionar" style="height: 30px"
-                                                 actionListener="#{registrarContribuicaoBean.salvar()}" action="#{gerenciarContribuicaoBean.listarContribuicoes()}"
+                                                 actionListener="#{registrarContribuicaoBean.salvar()}" action="#{gerenciarContribuicaoBean.filtrarContribuicoes()}"
                                                  update="painel, :tabelaForm:tabelaContribuicoes" />
                             </div>
                         </div>
