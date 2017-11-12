@@ -113,11 +113,8 @@ public class Pessoas implements Serializable {
     public Pessoa retornaPorEmail(String email) {
         Pessoa pessoa = null;
         try {
-            System.out.println("CHEGOU 1");
             pessoa = this.manager.createQuery("from Pessoa where lower(email) =:email", Pessoa.class)
                     .setParameter("email",email.toLowerCase()).getSingleResult();
-            System.out.println("CHEGOU 2");
-            System.out.println("PESSOA "+pessoa);
         } catch (NoResultException e) {
         
         }

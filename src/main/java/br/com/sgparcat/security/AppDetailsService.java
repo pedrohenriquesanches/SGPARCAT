@@ -39,7 +39,7 @@ public class AppDetailsService implements UserDetailsService {
     
     private Collection<? extends GrantedAuthority> getGrupo(Pessoa pessoa){
         List<SimpleGrantedAuthority> grupo = new ArrayList<>();
-        grupo.add(new SimpleGrantedAuthority(pessoa.getFuncao().getTitulo()));
+        grupo.add(new SimpleGrantedAuthority(pessoa.getFuncao().getTitulo().toUpperCase()));
         return grupo;
     }
 

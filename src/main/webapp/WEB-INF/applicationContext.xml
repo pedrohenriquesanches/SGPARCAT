@@ -25,7 +25,7 @@
 	
     <beans:bean id="jsfRedirectStrategy" class="br.com.sgparcat.security.JsfRedirectStrategy"/>
     
-    <http pattern="/javax.faces.resources/**" security="none" />
+    <http pattern="/javax.faces.resource/**" security="none" />
     
     <http pattern="/login.xhtml" security="none" />
     
@@ -35,7 +35,9 @@
         <custom-filter ref="exceptionTranslationFilter" before="FILTER_SECURITY_INTERCEPTOR" />
         <intercept-url pattern="/home.xhtml" access="isAuthenticated()" />
         <intercept-url pattern="/acessoNegado.xhtml" access="isAuthenticated()" />
-        <intercept-url pattern="/financas/**" access="hasAnyRole('Padre')" />
+        <intercept-url pattern="/financas/**" access="hasAnyRole('PADRE','DIÁCONO')" />
+        <intercept-url pattern="/pessoas/**" access="hasAnyRole('PADRE')" />
+        <intercept-url pattern="/contribuicoes/**" access="hasAnyRole('PADRE')" />
         <intercept-url pattern="/**" access="denyAll" />
         <form-login login-page="/login.xhtml" default-target-url="/" always-use-default-target="true"
         authentication-failure-url="/login.xhtml?invalid=true" />
