@@ -33,9 +33,6 @@ public class Lancamento implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idLancamento;
-    
-    @Column(nullable = false)
     private Long numeroLancamento;
     
     @Column(nullable = false)
@@ -47,9 +44,6 @@ public class Lancamento implements Serializable {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valor;
     
-    @Column(name = "valorJuros", precision = 10, scale = 2)
-    private BigDecimal valorJuros;
-    
     @Column
     @Temporal(TemporalType.DATE)
     private Date dataVencimento;
@@ -58,11 +52,12 @@ public class Lancamento implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dataPagamento;
     
-    @Column(name = "emitente")
-    private String emitente;
-    
     @Column(nullable = false)
-    private Character isParcelado;
+    @Temporal(TemporalType.DATE)
+    private Date dataReferente;
+    
+    @Column
+    private String emitente;
     
     @Lob
     @Column
@@ -82,14 +77,6 @@ public class Lancamento implements Serializable {
     @JoinColumn(nullable = true, name = "idPessoaRegistrouLancamento")
     @ManyToOne
     private Pessoa pessoaRegistrouLancamento;
-
-    public Long getIdLancamento() {
-        return idLancamento;
-    }
-
-    public void setIdLancamento(Long idLancamento) {
-        this.idLancamento = idLancamento;
-    }
 
     public Long getNumeroLancamento() {
         return numeroLancamento;
@@ -122,15 +109,7 @@ public class Lancamento implements Serializable {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
-
-    public BigDecimal getValorJuros() {
-        return valorJuros;
-    }
-
-    public void setValorJuros(BigDecimal valorJuros) {
-        this.valorJuros = valorJuros;
-    }
-
+    
     public Date getDataVencimento() {
         return dataVencimento;
     }
@@ -147,20 +126,20 @@ public class Lancamento implements Serializable {
         this.dataPagamento = dataPagamento;
     }
 
+    public Date getDataReferente() {
+        return dataReferente;
+    }
+
+    public void setDataReferente(Date dataReferente) {
+        this.dataReferente = dataReferente;
+    }
+    
     public String getEmitente() {
         return emitente;
     }
 
     public void setEmitente(String emitente) {
         this.emitente = emitente;
-    }
-
-    public Character getIsParcelado() {
-        return isParcelado;
-    }
-
-    public void setIsParcelado(Character isParcelado) {
-        this.isParcelado = isParcelado;
     }
 
     public String getObservacao() {
@@ -206,13 +185,11 @@ public class Lancamento implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 17 * hash + Objects.hashCode(this.idLancamento);
         hash = 17 * hash + Objects.hashCode(this.numeroLancamento);
         hash = 17 * hash + this.isDespesa;
         hash = 17 * hash + Objects.hashCode(this.descricao);
         hash = 17 * hash + Objects.hashCode(this.valor);
         hash = 17 * hash + Objects.hashCode(this.dataVencimento);
-        hash = 17 * hash + this.isParcelado;
         return hash;
     }
 
@@ -231,13 +208,7 @@ public class Lancamento implements Serializable {
         if (!Objects.equals(this.isDespesa, other.isDespesa)) {
             return false;
         }
-        if (!Objects.equals(this.isParcelado, other.isParcelado)) {
-            return false;
-        }
         if (!Objects.equals(this.descricao, other.descricao)) {
-            return false;
-        }
-        if (!Objects.equals(this.idLancamento, other.idLancamento)) {
             return false;
         }
         if (!Objects.equals(this.numeroLancamento, other.numeroLancamento)) {
@@ -254,7 +225,7 @@ public class Lancamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Lancamento{" + "idLancamento=" + idLancamento + ", numeroLancamento=" + numeroLancamento + ", isDespesa=" + isDespesa + ", descricao=" + descricao + ", valor=" + valor + ", isParcelado=" + isParcelado + ", isPago=" + isPago + ", dataRegistro=" + dataRegistro + '}';
+        return "Lancamento{" + "numeroLancamento=" + numeroLancamento + ", isDespesa=" + isDespesa + ", descricao=" + descricao + ", valor=" + valor + ", isPago=" + isPago + ", dataRegistro=" + dataRegistro + '}';
     }
 
 }

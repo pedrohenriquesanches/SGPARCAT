@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
@@ -109,19 +110,32 @@ public class Pessoas implements Serializable {
         return manager.find(Pessoa.class, id);
     }
 
+    public Pessoa retornaPorEmail(String email) {
+        Pessoa pessoa = null;
+        try {
+            System.out.println("CHEGOU 1");
+            pessoa = this.manager.createQuery("from Pessoa where lower(email) =:email", Pessoa.class)
+                    .setParameter("email",email.toLowerCase()).getSingleResult();
+            System.out.println("CHEGOU 2");
+            System.out.println("PESSOA "+pessoa);
+        } catch (NoResultException e) {
+        
+        }
+        return pessoa;
+    }
+
     public List<Pessoa> retornaPessoasQueNãoMembrosDoOrganismo(Organismo organismo, String nomePesquisado) {
 
 //        return manager.createQuery("from Pessoa where idPessoa not in"
 //                + "(select pessoa from Membro where idOrganismo = :idOrganismo)").
 //                setParameter("idOrganismo", ""+organismo.getIdOrganismo()).getResultList();
-
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class)
                 .add(Subqueries.propertyNotIn("idPessoa", DetachedCriteria.forClass(Membro.class)
                         .add(Restrictions.eq("organismo", organismo))
                         .setProjection(Property.forName("pessoa"))
                 ));
-        
+
         if (nomePesquisado != null && !nomePesquisado.equals("")) {
             c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
         }
@@ -136,15 +150,15 @@ public class Pessoas implements Serializable {
         c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
     }
-    
+
     public List<Pessoa> retornaTodasAsPessoas(String nomePesquisado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Pessoa.class);
-        
+
         if (nomePesquisado != null && !nomePesquisado.equals("")) {
             c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
         }
-        
+
         c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
     }

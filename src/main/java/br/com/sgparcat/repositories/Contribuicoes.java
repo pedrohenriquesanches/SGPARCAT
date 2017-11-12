@@ -94,8 +94,6 @@ public class Contribuicoes implements Serializable {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Contribuicao.class);
 
-        Calendar calendar = Calendar.getInstance();
-
         if (mesSelecionado != 0) {
             c.add(Restrictions.sqlRestriction("MONTH(dataReferente) = ? ", mesSelecionado, IntegerType.INSTANCE));
         }

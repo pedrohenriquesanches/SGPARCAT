@@ -86,6 +86,9 @@ public class Pessoa implements Serializable {
 
     @Column
     private String email;
+    
+    @Column
+    private String senha;
 
     @Column(unique = true, nullable = false)
     private String cpf;
@@ -238,6 +241,14 @@ public class Pessoa implements Serializable {
         this.email = email;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
     public String getCpf() {
         return cpf;
     }

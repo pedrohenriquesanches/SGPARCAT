@@ -4,32 +4,41 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-    <f:metadata>
 
-    </f:metadata>
     <ui:define name="titulo">Lançamentos Financeiros</ui:define>
     <ui:define name="corpo">
-        <div class="titulo-opcoes">
-            <div class="titulo-pagina">
-                <h1>Gestão de Finanças</h1>            
+
+        <!-- AjaxStatus configura o componente da classe (loading). Sempre que existir uma requisao ajax a mascara de moeda é configurada novamente -->
+        <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()" />
+
+        <h:form id="tabelaForm">
+
+            <div class="titulo-opcoes">
+                <div class="titulo-pagina">
+                    <h1>Gestão de Finanças</h1>            
+                </div>
+                <div class="opcoes-right">
+                    <p:commandButton value="Registrar Lançamento" onclick="PF('dlg').show();" icon="ui-icon-plus" />
+                </div>
             </div>
-            <div class="opcoes-right">
-                <p:button outcome="/financas/registrar" value="Registrar Lançamento" icon="ui-icon-plus"/>
-            </div>     
-        </div>
-        <h:form>
-            <p:toolbar class="tollbartabela">
+
+            <p:messages for="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+            <p:toolbar id="filtros" class="tollbartabela">
+
                 <f:facet name="left">
                     <div>
                         <p:outputLabel value="Tipo:" for="box-selecao-tipo-lancamento" />
-                        <h:selectOneMenu id="box-selecao-tipo-lancamento" >
-                            <f:selectItem itemLabel="Receitas e Despesas" itemValue="" noSelectionOption="true" />
-                            <f:selectItem itemLabel="Receitas" itemValue="Receitas" />
-                            <f:selectItem itemLabel="Despesas" itemValue="Despesas" />
+                        <h:selectOneMenu id="box-selecao-tipo-lancamento" value="#{gerenciarLancamentoBean.tipoLancamentoSelecionado}" >
+                            <f:selectItem itemLabel="Despesas e Receitas" />
+                            <f:selectItem itemLabel="Despesas" itemValue="S" />
+                            <f:selectItem itemLabel="Receitas" itemValue="N" />
+                            <p:ajax event="change" listener="#{gerenciarLancamentoBean.filtrarLancamentos()}" update="tabelaLancamentos" />
                         </h:selectOneMenu>
+
                         <p:outputLabel value="Mês:" for="box-selecao-meses" />
-                        <h:selectOneMenu id="box-selecao-meses">
-                            <f:selectItem itemLabel="Todos" itemValue="" noSelectionOption="true" />
+                        <h:selectOneMenu id="box-selecao-meses" value="#{gerenciarLancamentoBean.mesSelecionado}" >
+                            <f:selectItem itemLabel="Todos" />
                             <f:selectItem itemLabel="Janeiro" itemValue="1" />
                             <f:selectItem itemLabel="Fevereiro" itemValue="2" />
                             <f:selectItem itemLabel="Março" itemValue="3" />
@@ -41,48 +50,290 @@
                             <f:selectItem itemLabel="Setembro" itemValue="9" />
                             <f:selectItem itemLabel="Outubro" itemValue="10" />
                             <f:selectItem itemLabel="Novembro" itemValue="11" />
-                            <f:selectItem itemLabel="Dezembro" itemValue="12" />                        
+                            <f:selectItem itemLabel="Dezembro" itemValue="12" />
+                            <p:ajax event="change" listener="#{gerenciarLancamentoBean.filtrarLancamentosPorMesEAno()}" update="tabelaLancamentos box-selecao-periodo" />
                         </h:selectOneMenu>
                         <p:outputLabel value="Ano:" for="box-selecao-anos" />
-                        <h:selectOneMenu id="box-selecao-anos" >
-                            <f:selectItem itemLabel="Todos" itemValue="Todos" noSelectionOption="true" />
-                            <f:selectItems value="#{ContribuicaoController.anos}" var="ano" itemValue="#{anos}"/>
+                        <h:selectOneMenu id="box-selecao-anos" value="#{gerenciarLancamentoBean.anoSelecionado}" >
+                            <f:selectItem itemLabel="Todos" />
+                            <f:selectItems value="#{gerenciarLancamentoBean.anos}" />
+                            <p:ajax event="change" listener="#{gerenciarLancamentoBean.filtrarLancamentosPorMesEAno()}" update="tabelaLancamentos box-selecao-periodo" />
                         </h:selectOneMenu>
                     </div>
+
                     <div style="margin-top: 10px">
                         <p:outputLabel value="Período:" />
-                        <p:commandButton type="button" title="Histórico Completo" class="tollbarbotao ativo" />
-                        <p:commandButton type="button" title="Últimos 30 Dias" class="tollbarbotao" />
-                        <p:commandButton type="button" title="Última Semana" class="tollbarbotao" />
-                        <p:commandButton type="button" title="Intervalo Personalizado" class="tollbarbotao" />
+                        <p:selectOneButton id="box-selecao-periodo" value="#{gerenciarLancamentoBean.periodoSelecionado}" >
+                            <f:selectItem itemLabel="Histórico Completo" itemValue="1" />
+                            <f:selectItem itemLabel="Últimos 30 Dias" itemValue="2" />
+                            <f:selectItem itemLabel="Últimos 7 Dias" itemValue="3" />
+                            <f:selectItem itemLabel="Intervalo Personalizado" itemValue="4" />
+                            <p:ajax event="change" listener="#{gerenciarLancamentoBean.filtrarLancamentosPorPeriodo()}" update="tabelaLancamentos tabelaForm" />
+                        </p:selectOneButton>
                     </div>
                 </f:facet>
+
                 <f:facet name="right">
-                    <p:inputText style="margin-top: 15px; margin-right: 15px" placeholder="Pesquisar"/>
+                    <p:inputText id="campoPesquisa" placeholder="Pesquisar" value="#{gerenciarLancamentoBean.inputPesquisa}" style="margin-top: 15px; width: 225px;" >
+                        <p:ajax event="keyup" listener="#{gerenciarLancamentoBean.filtrarLancamentos()}" update="tabelaLancamentos" />
+                    </p:inputText>
+                    <p:commandButton icon="ui-icon-search" title="Pesquisar" actionListener="#{gerenciarLancamentoBean.filtrarLancamentos()}" class="botaopesquisa" update="tabelaLancamentos"/>
                 </f:facet>
+
             </p:toolbar>
-            <p:dataTable class="tabela" id="tabelaLancamentos" var="lancamento" value="#{LancamentoBean.lancamentos}" rowKey="#{lancamento.idLancamento}" style="margin-bottom:0" rows="12" paginator="true" paginatorPosition="bottom">
-                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+            <p:dataTable class="tabela" id="tabelaLancamentos" var="lancamento" value="#{gerenciarLancamentoBean.lancamentos}"
+                         rowKey="#{lancamento.numeroLancamento}" rows="12" paginator="true" paginatorPosition="bottom"
+                         emptyMessage="Nenhum registro encontrado">
+
                 <p:column headerText="Número" style="width: 50px">
-                    <h:outputText value="#{lancamento.idLancamento}" />
+                    <h:outputText value="#{lancamento.numeroLancamento}" />
                 </p:column>
+
                 <p:column headerText="Descrição" style="width: 250px">
                     <h:outputText value="#{lancamento.descricao}" />
                 </p:column>
-                <p:column headerText="Valor" style="width: 150px">
-                    <h:outputText value="#{lancamento.valor}" />
+
+                <p:column headerText="Valor" style="width: 100px">
+                    <h:outputText value="#{gerenciarLancamentoBean.getValorDoLancamento(lancamento)}" />
                 </p:column>
-                <p:column headerText="Data" style="width: 250px">
-                    <h:outputText value="#{lancamento.dataRegistro}" />
-                </p:column>
-                <p:column headerText="Emitente" style="width: 250px">
+
+                <p:column headerText="Emitente" style="width: 200px">
                     <h:outputText value="#{lancamento.emitente}" />
                 </p:column>
-                <p:column style="width:80px;text-align: center">
-                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" />
-                    <p:commandButton  icon="ui-icon-trash" title="Remover" />
+
+                <p:column headerText="Referente à" style="width: 100px">
+                    <h:outputText value="#{lancamento.dataReferente}" >
+                        <f:convertDateTime pattern="MMMM 'de' yyyy"/>
+                    </h:outputText>
                 </p:column>
+
+                <p:column headerText="Status" style="width: 100px">
+                    <h:outputText value="#{gerenciarLancamentoBean.getStatus(lancamento)}" />
+                </p:column>
+
+                <p:column style="width:200px;text-align: center">
+                    <p:commandButton style="margin-right: 5px" icon="#{gerenciarLancamentoBean.getIconeBotao(lancamento)}" value="#{gerenciarLancamentoBean.getTituloBotao(lancamento)}"
+                                     update="tabelaLancamentos" actionListener="#{gerenciarLancamentoBean.marcarComo(lancamento)}" ajax="false">
+                    </p:commandButton>
+                    <p:commandButton style="margin-right: 5px" icon="ui-icon-pencil" title="Editar" onclick="PF('dlg').show();" update="dialogForm:painel">
+                        <f:setPropertyActionListener value="#{lancamento}" target="#{registrarLancamentoBean.lancamento}" />
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-trash" title="Remover" update="tabelaLancamentos" actionListener="#{gerenciarLancamentoBean.excluir(lancamento)}" ajax="false"
+                                     onclick="if (!confirm('Tem certeza? Não será possível desfazer a exclusão!'))
+                                                 return false">
+                    </p:commandButton>
+                </p:column>
+
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column footerText="Total:" colspan="2" class="resultados-rodape" style="text-align:right" />
+                        <p:column footerText="#{gerenciarLancamentoBean.getValorTotal()}" class="resultados-rodape" style="text-align:left" />
+                        <p:column colspan="4" class="resultados-rodape" />
+                    </p:row>
+                </p:columnGroup>
+
             </p:dataTable>
+
+            <p:dialog id="dialog-intervalo-personalizado" header="Filtrar por intervalo personalizado"
+                      widgetVar="dlg-intervalo-personalizado" resizable="false" width="380" height="90" modal="true">
+
+                <p:outputPanel style="margin-top: 15px" id="painel-intervalo-personalizado">
+
+                    <div style="width: 85%; display:inline-table">
+                        <div>
+                            <p:outputLabel value="Do Mês:" for="box-selecao-meses" />
+                            <h:selectOneMenu value="#{gerenciarLancamentoBean.mesInicio}" >
+                                <f:selectItem itemLabel="Selecione" itemValue="0" />
+                                <f:selectItem itemLabel="Janeiro" itemValue="1" />
+                                <f:selectItem itemLabel="Fevereiro" itemValue="2" />
+                                <f:selectItem itemLabel="Março" itemValue="3" />
+                                <f:selectItem itemLabel="Abril" itemValue="4" />
+                                <f:selectItem itemLabel="Maio" itemValue="5" />
+                                <f:selectItem itemLabel="Junho" itemValue="6" />
+                                <f:selectItem itemLabel="Julho" itemValue="7" />
+                                <f:selectItem itemLabel="Agosto" itemValue="8" />
+                                <f:selectItem itemLabel="Setembro" itemValue="9" />
+                                <f:selectItem itemLabel="Outubro" itemValue="10" />
+                                <f:selectItem itemLabel="Novembro" itemValue="11" />
+                                <f:selectItem itemLabel="Dezembro" itemValue="12" />
+                            </h:selectOneMenu>
+                            <p:outputLabel value="Do Ano:" for="box-selecao-anos" />
+                            <h:selectOneMenu value="#{gerenciarLancamentoBean.anoInicio}" >
+                                <f:selectItem itemLabel="Selecione" itemValue="0" />
+                                <f:selectItems value="#{gerenciarLancamentoBean.anos}" />
+                            </h:selectOneMenu>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <p:outputLabel value="Ao Mês:" for="box-selecao-meses" />
+                            <h:selectOneMenu value="#{gerenciarLancamentoBean.mesFim}" >
+                                <f:selectItem itemLabel="Selecione" itemValue="0" />
+                                <f:selectItem itemLabel="Janeiro" itemValue="1" />
+                                <f:selectItem itemLabel="Fevereiro" itemValue="2" />
+                                <f:selectItem itemLabel="Março" itemValue="3" />
+                                <f:selectItem itemLabel="Abril" itemValue="4" />
+                                <f:selectItem itemLabel="Maio" itemValue="5" />
+                                <f:selectItem itemLabel="Junho" itemValue="6" />
+                                <f:selectItem itemLabel="Julho" itemValue="7" />
+                                <f:selectItem itemLabel="Agosto" itemValue="8" />
+                                <f:selectItem itemLabel="Setembro" itemValue="9" />
+                                <f:selectItem itemLabel="Outubro" itemValue="10" />
+                                <f:selectItem itemLabel="Novembro" itemValue="11" />
+                                <f:selectItem itemLabel="Dezembro" itemValue="12" />
+                            </h:selectOneMenu>
+                            <p:outputLabel value="Ao Ano:" for="box-selecao-anos" />
+                            <h:selectOneMenu value="#{gerenciarLancamentoBean.anoFim}" >
+                                <f:selectItem itemLabel="Selecione" itemValue="0" />
+                                <f:selectItems value="#{gerenciarLancamentoBean.anos}" />
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div style="width: 5%; display:inline-table">
+                        <p:commandButton actionListener="#{gerenciarLancamentoBean.filtrarLancamentosPorIntervaloPersonalizado()}"
+                                         icon="ui-icon-search" update="tabelaForm" style="margin-top: 10px"/>
+                    </div>
+
+                </p:outputPanel>
+
+            </p:dialog>
+
         </h:form>
+
+        <h:form id="dialogForm">
+
+            <p:dialog id="dialog" header="#{registrarLancamentoBean.estaEditando() ? 'Editar Lançamento' : 'Registrar Lançamento'}"
+                      widgetVar="dlg" resizable="false" width="840" height="280" modal="true">
+
+                <p:ajax event="close" listener="#{registrarLancamentoBean.limpar}" update="painel"/>
+
+                <p:outputPanel id="painel">
+
+                    <p:messages for="dialogMessages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                    <div class="div-campos-cadastro">
+
+                        <div class="coluna-1-3">
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Número:" for="numero"/>
+                                <p:inputText id="numero" value="#{registrarLancamentoBean.lancamento.numeroLancamento}" disabled="true" />
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Descrição:" for="descricao"/>
+                                <p:inputText id="descricao" required="true" value="#{registrarLancamentoBean.lancamento.descricao}"/>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Valor:" for="valor" />
+                                <p:inputText id="valor" size="10" maxlength="10" styleClass="moeda"
+                                             value="#{registrarLancamentoBean.lancamento.valor}" required="true">
+                                    <f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+                                </p:inputText>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="#{registrarLancamentoBean.lancamento.isDespesa.equals('S') ? 'Recebedor:' : 'Emitente:'}" for="pessoa"/>
+                                <p:inputText id="pessoa" value="#{registrarLancamentoBean.lancamento.emitente}"/>
+                            </div>
+                        </div>
+
+                        <div class="coluna-1-3">
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Tipo:" for="tipo-de-lancamento" />
+                                <p:selectOneButton id="tipo-de-lancamento" required="true" value="#{registrarLancamentoBean.lancamento.isDespesa}" >
+                                    <f:selectItem itemLabel="Receita" itemValue="N" />
+                                    <f:selectItem itemLabel="Despesa" itemValue="S" />
+                                    <p:ajax event="change" update="status-do-lancamento" />
+                                </p:selectOneButton>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Status:" for="status-do-lancamento" />
+                                <p:selectOneButton id="status-do-lancamento" required="true" value="#{registrarLancamentoBean.lancamento.isPago}" >
+                                    <f:selectItem itemLabel="#{registrarLancamentoBean.lancamento.isDespesa.equals('S') ? 'A pagar' : 'A receber'}" itemValue="N" />
+                                    <f:selectItem itemLabel="#{registrarLancamentoBean.lancamento.isDespesa.equals('S') ? 'Pago' : 'Recebido'}" itemValue="S" />
+                                </p:selectOneButton>                            
+                            </div>
+                            <div>
+                                <div class="coluna-1-2">
+                                    <div class="campo-cadastro">
+                                        <p:outputLabel value="Data de pagmen." for="dataPagamento"/>
+                                        <p:calendar id="dataPagamento" locale="pt" pattern="dd/MM/yyyy" mask="true" navigator="true" mindate="1/1/2000"
+                                                    value="#{registrarLancamentoBean.lancamento.dataPagamento}" class="campo-data"/>
+                                    </div>
+                                </div>
+                                <div class="coluna-1-2">
+                                    <div class="campo-cadastro">
+                                        <p:outputLabel value="Vencimento" for="dataVencimento"/>
+                                        <p:calendar id="dataVencimento" locale="pt" pattern="dd/MM/yyyy" mask="true" navigator="true" mindate="1/1/2000"
+                                                    value="#{registrarLancamentoBean.lancamento.dataVencimento}" class="campo-data"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Evento:" for="evento"/>
+                                <p:inputText id="evento" value="#{registrarLancamentoBean.lancamento.evento}"/>
+                            </div>
+                        </div>
+
+                        <div class="coluna-1-3">
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Observações:" for="observacao" />
+                                <p:inputTextarea id="observacao" value="#{registrarLancamentoBean.lancamento.observacao}" rows="5" />
+                            </div>
+                            <div>
+                                <div class="campo-cadastro">
+                                    <p:outputLabel value="Referente a:"/>
+                                </div>
+                                <div class="coluna-1-2">
+                                    <p:outputLabel value="Mês:" for="mes-referente" />
+                                    <h:selectOneMenu id="mes-referente" value="#{gerenciarLancamentoBean.mesReferente}" >
+                                        <f:selectItem itemLabel="Selecione" itemValue="0" />
+                                        <f:selectItem itemLabel="Janeiro" itemValue="1" />
+                                        <f:selectItem itemLabel="Fevereiro" itemValue="2" />
+                                        <f:selectItem itemLabel="Março" itemValue="3" />
+                                        <f:selectItem itemLabel="Abril" itemValue="4" />
+                                        <f:selectItem itemLabel="Maio" itemValue="5" />
+                                        <f:selectItem itemLabel="Junho" itemValue="6" />
+                                        <f:selectItem itemLabel="Julho" itemValue="7" />
+                                        <f:selectItem itemLabel="Agosto" itemValue="8" />
+                                        <f:selectItem itemLabel="Setembro" itemValue="9" />
+                                        <f:selectItem itemLabel="Outubro" itemValue="10" />
+                                        <f:selectItem itemLabel="Novembro" itemValue="11" />
+                                        <f:selectItem itemLabel="Dezembro" itemValue="12" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="coluna-1-2">
+                                    <p:outputLabel value="Ano:" for="ano-referente" />
+                                    <h:selectOneMenu id="ano-referente" value="#{gerenciarLancamentoBean.anoReferente}" >
+                                        <f:selectItem itemLabel="Selecione" itemValue="0" />
+                                        <f:selectItems value="#{gerenciarLancamentoBean.anos}" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="campo-cadastro">
+                                <p:outputLabel value="Registrado em:" for="dataRegistro"/>
+                                <p:calendar id="dataRegistro" locale="pt" pattern="dd/MM/yyyy" mask="true" navigator="true" mindate="1/1/2000"
+                                            value="#{registrarLancamentoBean.lancamento.dataRegistro}" class="campo-data"/>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </p:outputPanel>
+
+            </p:dialog>
+
+        </h:form>
+
+        <!-- Script para máscaras nas moedas, criação de uma forma dinamica -->
+        <script>
+            /* JQuery */
+            function configurarMoeda() {
+                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});
+            }
+            /* executando a funcao, quando ele estiver pronto, execute essa funcao */
+            $(document).ready(function () {
+                configurarMoeda();
+            });
+        </script>
+
     </ui:define>
+
 </ui:composition>

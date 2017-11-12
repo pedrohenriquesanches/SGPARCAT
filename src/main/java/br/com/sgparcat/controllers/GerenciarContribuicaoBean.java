@@ -179,8 +179,12 @@ public class GerenciarContribuicaoBean implements Serializable {
             contribuicoes = repositorioContribuicoes.retornaContribuicoes(inputPesquisa, tipoContribuicaoSelecionado);
         } else {
             if (periodoSelecionado == 4) {
-                RequestContext context = RequestContext.getCurrentInstance();
-                context.execute("PF('dlg-intervalo-personalizado').show()");
+                if (dataInicio == null && dataFim == null) {
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    context.execute("PF('dlg-intervalo-personalizado').show()");
+                }else{
+                    filtrarContribuicoesPorIntervaloPersonalizado();
+                }
             } else {
                 contribuicoes = repositorioContribuicoes.retornaContribuicoesPorPeriodo(periodoSelecionado, inputPesquisa, tipoContribuicaoSelecionado);
             }
