@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Classe responsável por criar produtores de contexto
- * @author fernando ortiz
  * copy by algaworks
  */
 

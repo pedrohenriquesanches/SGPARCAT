@@ -28,49 +28,40 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "evento")
 public class Evento implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEvento;
-    
+
     @Column(nullable = false)
     private String titulo;
-    
+
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataInicio;
-    
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date horarioInicio;
-    
+
     @Column(nullable = true)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataFim;
-    
-    @Column(nullable = true)
-    @Temporal(TemporalType.TIME)
-    private Date horarioFim;
-    
+
     @Column(nullable = false)
     private String localEvento;
-    
+
     @Lob
     @Column(nullable = true)
     private String observacao;
-    
+
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Lancamento> lancamentos;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Participante> participantes;
-
 
     public Integer getIdEvento() {
         return idEvento;
@@ -96,28 +87,12 @@ public class Evento implements Serializable {
         this.dataInicio = dataInicio;
     }
 
-    public Date getHorarioInicio() {
-        return horarioInicio;
-    }
-
-    public void setHorarioInicio(Date horarioInicio) {
-        this.horarioInicio = horarioInicio;
-    }
-
     public Date getDataFim() {
         return dataFim;
     }
 
     public void setDataFim(Date dataFim) {
         this.dataFim = dataFim;
-    }
-
-    public Date getHorarioFim() {
-        return horarioFim;
-    }
-
-    public void setHorarioFim(Date horarioFim) {
-        this.horarioFim = horarioFim;
     }
 
     public String getLocalEvento() {
@@ -166,9 +141,7 @@ public class Evento implements Serializable {
         hash = 89 * hash + Objects.hashCode(this.idEvento);
         hash = 89 * hash + Objects.hashCode(this.titulo);
         hash = 89 * hash + Objects.hashCode(this.dataInicio);
-        hash = 89 * hash + Objects.hashCode(this.horarioInicio);
         hash = 89 * hash + Objects.hashCode(this.dataFim);
-        hash = 89 * hash + Objects.hashCode(this.horarioFim);
         hash = 89 * hash + Objects.hashCode(this.localEvento);
         hash = 89 * hash + Objects.hashCode(this.observacao);
         hash = 89 * hash + Objects.hashCode(this.dataRegistro);
@@ -203,13 +176,7 @@ public class Evento implements Serializable {
         if (!Objects.equals(this.dataInicio, other.dataInicio)) {
             return false;
         }
-        if (!Objects.equals(this.horarioInicio, other.horarioInicio)) {
-            return false;
-        }
         if (!Objects.equals(this.dataFim, other.dataFim)) {
-            return false;
-        }
-        if (!Objects.equals(this.horarioFim, other.horarioFim)) {
             return false;
         }
         if (!Objects.equals(this.dataRegistro, other.dataRegistro)) {
@@ -223,6 +190,7 @@ public class Evento implements Serializable {
 
     @Override
     public String toString() {
-        return "Evento{" + "idEvento=" + idEvento + ", titulo=" + titulo + ", dataInicio=" + dataInicio + ", horarioInicio=" + horarioInicio + ", dataFim=" + dataFim + ", horarioFim=" + horarioFim + ", localEvento=" + localEvento + ", observacao=" + observacao + ", dataRegistro=" + dataRegistro + '}';
+        return "Evento{" + "idEvento=" + idEvento + ", titulo=" + titulo + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", localEvento=" + localEvento + ", dataRegistro=" + dataRegistro + '}';
     }
+
 }

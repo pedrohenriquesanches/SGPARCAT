@@ -47,7 +47,7 @@ public class Lancamentos implements Serializable {
         et.commit();
     }
 
-    public Object retornaPorNumeroLancamento(Long numeroLancamento) {
+    public Lancamento retornaPorNumeroLancamento(Long numeroLancamento) {
         return manager.find(Lancamento.class, numeroLancamento);
     }
 

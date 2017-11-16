@@ -1,4 +1,5 @@
 br/com/sgparcat/util/jsf/FacesProducer.class
+br/com/sgparcat/controllers/AgendaBean.class
 br/com/sgparcat/controllers/GerenciarLancamentoBean.class
 br/com/sgparcat/models/Contribuicao.class
 br/com/sgparcat/services/LancamentoService.class
@@ -23,6 +24,7 @@ br/com/sgparcat/controllers/EventoBean.class
 br/com/sgparcat/repositories/Organismos.class
 br/com/sgparcat/controllers/ParoquianoBean.class
 br/com/sgparcat/security/UsuarioSistema.class
+br/com/sgparcat/repositories/Eventos.class
 br/com/sgparcat/controllers/RegistrarLancamentoBean.class
 br/com/sgparcat/security/JsfAccessDeniedHandler.class
 br/com/sgparcat/repositories/Funcoes.class

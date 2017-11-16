@@ -13,6 +13,7 @@
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/models/Pessoa.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/FuncaoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/services/ContribuicaoService.java
+/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/repositories/Eventos.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/RegistrarLancamentoBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/util/jpa/GeraTabelas.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/security/JsfAccessDeniedHandler.java
@@ -27,6 +28,7 @@
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/converters/ContribuicaoConverter.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/security/JsfLoginUrlAuthenticationEntryPoint.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/converters/PessoaConverter.java
+/home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/AgendaBean.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/converters/OrganismoConverter.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/models/Organismo.java
 /home/pedrohensanches/Documentos/Projetos JAVA/SGPARCAT/src/main/java/br/com/sgparcat/controllers/GerenciarContribuicaoBean.java

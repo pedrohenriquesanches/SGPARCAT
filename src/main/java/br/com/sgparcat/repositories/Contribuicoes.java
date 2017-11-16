@@ -47,7 +47,7 @@ public class Contribuicoes implements Serializable {
         et.commit();
     }
 
-    public Object retornaPorNumeroContribuicao(Long numeroContribuicao) {
+    public Contribuicao retornaPorNumeroContribuicao(Long numeroContribuicao) {
         return manager.find(Contribuicao.class, numeroContribuicao);
     }
 

@@ -60,8 +60,7 @@ public class Organismos implements Serializable{
         return c.list();
     }
 
-    public Object retornaPorId(Integer id) {
-        Object ob = manager.find(Organismo.class, id);
+    public Organismo retornaPorId(Integer id) {
         return manager.find(Organismo.class, id);
     }
     
