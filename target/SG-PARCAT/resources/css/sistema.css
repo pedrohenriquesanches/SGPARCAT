@@ -55,11 +55,10 @@ h1 {
 }
 
 .grid-login {
-    background-color: #f2f2f2;
+    background-color: #ffffff;
+    padding: 20px 15px !important;
     border-radius: 8px;
     border: 1px solid #ccc;
-    margin-top: 8px;
-    padding: 10px
 }
 
 .menu-sistema {     
@@ -251,10 +250,18 @@ select {
     border-radius: 5px ;    
 }
 
-.centralizado{
+.centralizado-horizontalmente{
     left: 50%;
     position: absolute;
     transform: translateX(-50%);
+}
+
+.centralizado{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
 }
 
 .div-campos-cadastro {
@@ -332,6 +339,11 @@ select {
     width: 33%;
 }
 
+.coluna-2-3{
+    display:inline-table;
+    width: 66%;
+}
+
 .coluna-1-2{
     display:inline-table;
     width: 49.5%;
@@ -406,7 +418,7 @@ select {
         margin-right: 0;
     }
 
-    .centralizado{
+    .centralizado-horizontalmente{
         padding: 0 !important;
         left: auto;
         position: initial;
@@ -424,7 +436,7 @@ select {
 
 
 @media (max-width:340px) {
-    .centralizado{
+    .centralizado-horizontalmente{
         left: 50%;
         position: absolute;
         transform: translateX(-50%);

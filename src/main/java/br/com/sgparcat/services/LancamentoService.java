@@ -8,7 +8,7 @@ package br.com.sgparcat.services;
 import br.com.sgparcat.models.Lancamento;
 import br.com.sgparcat.repositories.Lancamentos;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.inject.Inject;
 
 /**
@@ -22,9 +22,14 @@ public class LancamentoService implements Serializable{
     @Inject
     private Lancamentos repositorioLancamentos;
     
-    public Lancamento salvar(Lancamento lancamento){
-        lancamento.setDataRegistro(new Date());
+    public Lancamento salvar(Lancamento lancamento, int mesReferente, int anoReferente) {
+        GregorianCalendar gc = new GregorianCalendar(anoReferente, mesReferente, 1);
+        lancamento.setDataReferente(gc.getTime());
         return repositorioLancamentos.guardar(lancamento);
+    }
+
+    public void salvar(Lancamento lancamento) {
+        repositorioLancamentos.guardar(lancamento);
     }
     
     public void excluir(Lancamento lancamento){

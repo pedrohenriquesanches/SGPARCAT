@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -47,20 +46,18 @@ public class GerenciarLancamentoBean implements Serializable {
 
     private Character tipoLancamentoSelecionado;
 
+    private Character statusSelecionado;
+
     private int mesSelecionado;
 
     private int anoSelecionado;
 
     private int periodoSelecionado;
 
-    private int mesInicio;
+    private Date dataInicio;
 
-    private int anoInicio;
+    private Date dataFim;
 
-    private int mesFim;
-
-    private int anoFim;
-    
     private List<Integer> anos;
 
     @PostConstruct
@@ -102,6 +99,14 @@ public class GerenciarLancamentoBean implements Serializable {
         this.tipoLancamentoSelecionado = tipoLancamentoSelecionado;
     }
 
+    public Character getStatusSelecionado() {
+        return statusSelecionado;
+    }
+
+    public void setStatusSelecionado(Character statusSelecionado) {
+        this.statusSelecionado = statusSelecionado;
+    }
+
     public int getMesSelecionado() {
         return mesSelecionado;
     }
@@ -126,36 +131,20 @@ public class GerenciarLancamentoBean implements Serializable {
         this.periodoSelecionado = periodoSelecionado;
     }
 
-    public int getMesInicio() {
-        return mesInicio;
+    public Date getDataInicio() {
+        return dataInicio;
     }
 
-    public void setMesInicio(int mesInicio) {
-        this.mesInicio = mesInicio;
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
-    public int getAnoInicio() {
-        return anoInicio;
+    public Date getDataFim() {
+        return dataFim;
     }
 
-    public void setAnoInicio(int anoInicio) {
-        this.anoInicio = anoInicio;
-    }
-
-    public int getMesFim() {
-        return mesFim;
-    }
-
-    public void setMesFim(int mesFim) {
-        this.mesFim = mesFim;
-    }
-
-    public int getAnoFim() {
-        return anoFim;
-    }
-
-    public void setAnoFim(int anoFim) {
-        this.anoFim = anoFim;
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
     }
 
     public List<Integer> getAnos() {
@@ -165,7 +154,7 @@ public class GerenciarLancamentoBean implements Serializable {
     public void setAnos(List<Integer> anos) {
         this.anos = anos;
     }
-    
+
     public List<Integer> Anos() {
         List<Integer> years = new ArrayList<>();
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -176,10 +165,10 @@ public class GerenciarLancamentoBean implements Serializable {
     }
 
     public String getValorDoLancamento(Lancamento lancamento) {
-        if (lancamento.getValor().compareTo(BigDecimal.ZERO) == 1 || lancamento.getValor().compareTo(BigDecimal.ZERO) == 0) {
-            return "+ R$ " + lancamento.getValor();
-        } else {
+        if (lancamento.getIsDespesa() == 'S') {
             return "- R$ " + lancamento.getValor();
+        } else {
+            return "+ R$ " + lancamento.getValor();
         }
     }
 
@@ -208,21 +197,56 @@ public class GerenciarLancamentoBean implements Serializable {
     }
 
     public String getTituloBotao(Lancamento lancamento) {
-        if (lancamento.getIsPago() == 'S') {
-            return "Marcar Como Não Pago";
+        if (lancamento.getIsDespesa() == 'S') {
+            if (lancamento.getIsPago() == 'S') {
+                return "Marcar Como Não Pago";
+            } else {
+                return "Marcar Como Pago";
+            }
         } else {
-            return "Marcar Como Pago";
+            if (lancamento.getIsPago() == 'S') {
+                return "Marcar Como Não Recebido";
+            } else {
+                return "Marcar Como Recebido";
+            }
+        }
+    }
+    
+    public String getLabelStatusQuandoStatusNaoDefinido() {
+        if (tipoLancamentoSelecionado == null) {
+            return "Selecione";
+        } else {
+            if (tipoLancamentoSelecionado == 'S') {
+                return "Pago / A pagar";
+            } else {
+                return "Recebido / A receber";
+            }
         }
     }
 
-    public void marcarComo(Lancamento lancamento) {
-        if (lancamento.getIsPago() == 'S') {
-            lancamento.setIsPago('N');
+    public String getLabelStatusQuandoEfetuado() {
+        if (tipoLancamentoSelecionado == null) {
+            return "Pago / Recebido";
         } else {
-            lancamento.setIsPago('N');
+            if (tipoLancamentoSelecionado == 'S') {
+                return "Pago";
+            } else {
+                return "Recebido";
+            }
         }
 
-        //salvar
+    }
+
+    public String getLabelStatusQuandoNaoEfetuado() {
+        if (tipoLancamentoSelecionado == null) {
+            return "A pagar / A receber";
+        } else {
+            if (tipoLancamentoSelecionado == 'S') {
+                return "A pagar";
+            } else {
+                return "A receber";
+            }
+        }
     }
 
     public void listarLancamentos() {
@@ -231,12 +255,21 @@ public class GerenciarLancamentoBean implements Serializable {
     }
 
     public void filtrarLancamentos() {
-
+        if (mesSelecionado == 0 && anoSelecionado == 0 && (periodoSelecionado == 0 || periodoSelecionado == 1)) {
+            lancamentos = repositorioLancamentos.retornaLancamentos(inputPesquisa, tipoLancamentoSelecionado, statusSelecionado);
+            calculaValorTotal();
+        } else {
+            if (periodoSelecionado != 0) {
+                filtrarLancamentosPorPeriodo();
+            } else {
+                filtrarLancamentosPorMesEAno();
+            }
+        }
     }
 
     public void filtrarLancamentosPorMesEAno() {
         periodoSelecionado = 0;
-        lancamentos = repositorioLancamentos.retornaLancamentosPorMesEAno(mesSelecionado, anoSelecionado, inputPesquisa, tipoLancamentoSelecionado);
+        lancamentos = repositorioLancamentos.retornaLancamentosPorMesEAno(mesSelecionado, anoSelecionado, inputPesquisa, tipoLancamentoSelecionado, statusSelecionado);
         calculaValorTotal();
     }
 
@@ -245,13 +278,13 @@ public class GerenciarLancamentoBean implements Serializable {
         anoSelecionado = 0;
 
         if (periodoSelecionado == 1) {
-            lancamentos = repositorioLancamentos.retornaLancamentos(inputPesquisa, tipoLancamentoSelecionado);
+            lancamentos = repositorioLancamentos.retornaLancamentos(inputPesquisa, tipoLancamentoSelecionado, statusSelecionado);
         } else {
             if (periodoSelecionado == 4) {
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('dlg-intervalo-personalizado').show()");
             } else {
-                lancamentos = repositorioLancamentos.retornaLancamentosPorPeriodo(periodoSelecionado, inputPesquisa, tipoLancamentoSelecionado);
+                lancamentos = repositorioLancamentos.retornaLancamentosPorPeriodo(periodoSelecionado, inputPesquisa, tipoLancamentoSelecionado, statusSelecionado);
             }
         }
 
@@ -259,36 +292,19 @@ public class GerenciarLancamentoBean implements Serializable {
     }
 
     public void filtrarLancamentosPorIntervaloPersonalizado() {
-        Date dataInicio = null;
-        Date dataFim = null;
-        GregorianCalendar gc = new GregorianCalendar();
-
-        if (mesInicio != 0 || anoInicio != 0) {
-            if (mesInicio != 0 && anoInicio == 0) gc = new GregorianCalendar(2000, mesInicio, 1);
-            if (mesInicio != 0 && anoInicio != 0) gc = new GregorianCalendar(anoInicio, mesInicio, 1);
-            if (mesInicio == 0 && anoInicio != 0) gc = new GregorianCalendar(anoInicio, 1, 1);
-            dataInicio = gc.getTime();
-        }
-        
-        if (mesFim != 0 || anoFim != 0) {
-            int diaFim;
-            if (mesFim != 0) {
-                diaFim = getQuantidadeDeDias(mesFim);
-                if (anoFim == 0) gc = new GregorianCalendar(2000, mesFim, diaFim);
-                if (anoFim != 0) gc = new GregorianCalendar(anoFim, mesFim, diaFim);
-            }else{
-                if (anoFim != 0) gc = new GregorianCalendar(anoFim, 12, 31);
-            }
-            dataFim = gc.getTime();
-        }
-
-        lancamentos = repositorioLancamentos.retornaLancamentosPorIntervalo(dataInicio, dataFim, inputPesquisa, tipoLancamentoSelecionado);
+        lancamentos = repositorioLancamentos.retornaLancamentosPorIntervalo(dataInicio, dataFim, inputPesquisa, tipoLancamentoSelecionado, statusSelecionado);
     }
 
     private int getQuantidadeDeDias(int mes) {
-        if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) return 31;
-        if (mes == 4 || mes == 6 || mes == 9 || mes == 11) return 30;
-        if (mes == 2) return 28;
+        if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
+            return 31;
+        }
+        if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+            return 30;
+        }
+        if (mes == 2) {
+            return 28;
+        }
         return 30;
     }
 
@@ -309,10 +325,13 @@ public class GerenciarLancamentoBean implements Serializable {
         BigDecimal total = BigDecimal.ZERO;
 
         for (Lancamento lancamento : lancamentos) {
-            if (lancamento.getValor() != null) {
+            if (lancamento.getIsDespesa() == 'S') {
+                total = total.subtract(lancamento.getValor());
+            } else {
                 total = total.add(lancamento.getValor());
             }
         }
+
         setValorTotal(total);
     }
 }

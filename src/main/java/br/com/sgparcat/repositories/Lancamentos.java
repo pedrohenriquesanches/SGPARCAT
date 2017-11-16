@@ -55,17 +55,17 @@ public class Lancamentos implements Serializable {
         return manager.createQuery("from Lancamento order by descricao asc").getResultList();
     }
 
-    public List<Lancamento> retornaLancamentos(String descricaoPesquisada, Character tipoLancamentoSelecionado) {
+    public List<Lancamento> retornaLancamentos(String descricaoPesquisada, Character tipoLancamentoSelecionado, Character statusSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Lancamento.class);
 
-        adicionarRestricoesPorNomeETipo(c, descricaoPesquisada, tipoLancamentoSelecionado);
+        adicionarRestricoesPorNomeTipoEStatus(c, descricaoPesquisada, tipoLancamentoSelecionado, statusSelecionado);
 
         c.addOrder(Order.asc("descricao"));
         return c.list();
     }
 
-    public List<Lancamento> retornaLancamentosPorPeriodo(int periodoSelecionado, String descricaoPesquisada, Character tipoLancamentoSelecionado) {
+    public List<Lancamento> retornaLancamentosPorPeriodo(int periodoSelecionado, String descricaoPesquisada, Character tipoLancamentoSelecionado, Character statusSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Lancamento.class);
 
@@ -73,20 +73,20 @@ public class Lancamentos implements Serializable {
         switch (periodoSelecionado) {
             case 2:
                 calendar.add(Calendar.DAY_OF_YEAR, -30);
-                c.add(Restrictions.ge("dataReferente", calendar.getTime()));
+                c.add(Restrictions.ge("dataRegistro", calendar.getTime()));
                 break;
             case 3:
                 calendar.add(Calendar.DAY_OF_YEAR, -7);
-                c.add(Restrictions.ge("dataReferente", calendar.getTime()));
+                c.add(Restrictions.ge("dataRegistro", calendar.getTime()));
         }
 
-        adicionarRestricoesPorNomeETipo(c, descricaoPesquisada, tipoLancamentoSelecionado);
+        adicionarRestricoesPorNomeTipoEStatus(c, descricaoPesquisada, tipoLancamentoSelecionado, statusSelecionado);
 
         c.addOrder(Order.asc("descricao"));
         return c.list();
     }
 
-    public List<Lancamento> retornaLancamentosPorMesEAno(int mesSelecionado, int anoSelecionado, String descricaoPesquisada, Character tipoLancamentoSelecionado) {
+    public List<Lancamento> retornaLancamentosPorMesEAno(int mesSelecionado, int anoSelecionado, String descricaoPesquisada, Character tipoLancamentoSelecionado, Character statusSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Lancamento.class);
 
@@ -98,38 +98,41 @@ public class Lancamentos implements Serializable {
             c.add(Restrictions.sqlRestriction("YEAR(dataReferente) = ? ", anoSelecionado, IntegerType.INSTANCE));
         }
 
-        adicionarRestricoesPorNomeETipo(c, descricaoPesquisada, tipoLancamentoSelecionado);
+        adicionarRestricoesPorNomeTipoEStatus(c, descricaoPesquisada, tipoLancamentoSelecionado, statusSelecionado);
 
         c.addOrder(Order.asc("descricao"));
         return c.list();
     }
 
-    public List<Lancamento> retornaLancamentosPorIntervalo(Date dataInicio, Date dataFim, String descricaoPesquisada, Character tipoLancamentoSelecionado) {
+    public List<Lancamento> retornaLancamentosPorIntervalo(Date dataInicio, Date dataFim, String descricaoPesquisada, Character tipoLancamentoSelecionado, Character statusSelecionado) {
         Session session = manager.unwrap(Session.class);
         Criteria c = session.createCriteria(Lancamento.class);
 
         if (dataInicio != null) {
-            c.add(Restrictions.ge("dataReferente", dataInicio));
+            c.add(Restrictions.ge("dataRegistro", dataInicio));
         }
 
         if (dataFim != null) {
-            c.add(Restrictions.le("dataReferente", dataFim));
+            c.add(Restrictions.le("dataRegistro", dataFim));
         }
 
-        adicionarRestricoesPorNomeETipo(c, descricaoPesquisada, tipoLancamentoSelecionado);
+        adicionarRestricoesPorNomeTipoEStatus(c, descricaoPesquisada, tipoLancamentoSelecionado, statusSelecionado);
 
         c.addOrder(Order.asc("descricao"));
         return c.list();
     }
 
-    private void adicionarRestricoesPorNomeETipo(Criteria c, String descricaoPesquisada, Character tipoLancamentoSelecionado) {
-
+    private void adicionarRestricoesPorNomeTipoEStatus(Criteria c, String descricaoPesquisada, Character tipoLancamentoSelecionado, Character statusSelecionado) {
         if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
             c.add(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE));
         }
 
         if (tipoLancamentoSelecionado != null) {
             c.add(Restrictions.eq("isDespesa", tipoLancamentoSelecionado));
+        }
+
+        if (statusSelecionado != null) {
+            c.add(Restrictions.eq("isPago", statusSelecionado));
         }
     }
 
