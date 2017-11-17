@@ -25,10 +25,9 @@
 
             <p:messages id="messages" for="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-            <h:panelGrid style="margin-top: 15px; width: 100%" >
+            <h:panelGrid style="margin-top: 20px; width: 100%" >
 
-                <p:schedule id="schedule" value="#{agendaBean.listagem}" widgetVar="calendario"
-                            locale="pt" >
+                <p:schedule id="schedule" value="#{agendaBean.listagem}" class="calendario" locale="pt" >
 
                     <!--                    <p:ajax event="dateSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
                                         <p:ajax event="eventSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />

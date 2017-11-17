@@ -38,6 +38,7 @@
         <intercept-url pattern="/financas/**" access="hasAnyRole('PADRE','DIÁCONO','MINISTRO(A)')" />
         <intercept-url pattern="/contribuicoes/**" access="hasAnyRole('PADRE','DIÁCONO','MINISTRO(A)')" />
         <intercept-url pattern="/calendario/**" access="hasAnyRole('PADRE','DIÁCONO','MINISTRO(A)')" />
+        <intercept-url pattern="/organismos/**" access="hasAnyRole('PADRE','DIÁCONO','MINISTRO(A)')" />
         <intercept-url pattern="/pessoas/**" access="hasAnyRole('PADRE')" />
         <intercept-url pattern="/**" access="denyAll" />
         <form-login login-page="/login.xhtml" default-target-url="/" always-use-default-target="true"

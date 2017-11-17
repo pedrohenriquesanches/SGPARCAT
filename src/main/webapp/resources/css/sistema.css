@@ -19,6 +19,28 @@ header {
     color: #fff;
 }
 
+.calendario button > span {
+    background-image: url("/sgparcat/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-excite-bike") !important;
+}
+
+.calendario .ui-widget-header {
+    height: 25px;
+    color: #033;
+    background: #efe4e4;
+}
+
+.calendario .fc-today {
+    background-color: #efe4e4 !important;
+}
+
+.calendario .fc-day-header {
+    vertical-align: middle !important;
+}
+
+.calendario .fc-day {
+    background: #FAFAFA;
+}
+
 .ajax-status {
     position: fixed;
     top: 85px;
@@ -135,7 +157,7 @@ select {
 
 .titulo-opcoes{
     margin-top: 20px;
-    display: flow-root;
+    display: list-item;
 }
 
 .titulo-pagina h1 {
