@@ -19,7 +19,6 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -31,38 +30,18 @@ public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idEvento;
-
-    @Column(nullable = false)
+    private Integer idEvento;    
     private String titulo;
-
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInicio;
-
-    @Column(nullable = true)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataFim;
-
-    @Column(nullable = false)
+    private Date dataInicio;    
+    private Date dataFim;    
     private String localEvento;
-
-    @Lob
-    @Column(nullable = true)
     private String observacao;
-
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Lancamento> lancamentos;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Participante> participantes;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getIdEvento() {
         return idEvento;
     }
@@ -71,6 +50,7 @@ public class Evento implements Serializable {
         this.idEvento = idEvento;
     }
 
+    @Column(nullable = false)
     public String getTitulo() {
         return titulo;
     }
@@ -78,7 +58,9 @@ public class Evento implements Serializable {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
+    
+    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getDataInicio() {
         return dataInicio;
     }
@@ -86,7 +68,9 @@ public class Evento implements Serializable {
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
-
+    
+    @Column(nullable = true)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getDataFim() {
         return dataFim;
     }
@@ -95,6 +79,7 @@ public class Evento implements Serializable {
         this.dataFim = dataFim;
     }
 
+    @Column(nullable = false)
     public String getLocalEvento() {
         return localEvento;
     }
@@ -103,6 +88,8 @@ public class Evento implements Serializable {
         this.localEvento = localEvento;
     }
 
+    @Lob
+    @Column(nullable = true)
     public String getObservacao() {
         return observacao;
     }
@@ -111,14 +98,17 @@ public class Evento implements Serializable {
         this.observacao = observacao;
     }
 
+    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getDataRegistro() {
         return dataRegistro;
     }
-
+    
     public void setDataRegistro(Date dataRegistro) {
         this.dataRegistro = dataRegistro;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     public List<Lancamento> getLancamentos() {
         return lancamentos;
     }
@@ -127,6 +117,7 @@ public class Evento implements Serializable {
         this.lancamentos = lancamentos;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     public List<Participante> getParticipantes() {
         return participantes;
     }

@@ -8,8 +8,9 @@ package br.com.sgparcat.controllers;
 import br.com.sgparcat.models.Evento;
 import br.com.sgparcat.repositories.Eventos;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,41 +31,53 @@ public class AgendaBean implements Serializable {
     @Inject
     private Eventos repositorioEventos;
 
-    private ScheduleModel scheduleModelEventos;
+    private ScheduleModel listagem;
 
-    private List<Evento> eventos;
-
-    @PostConstruct
-    public void AgendaBean() {
-        listarEventos();
-        carregarScheduleModelEventos();
+    private List<Evento> agendasPesquisados;
+    
+    @Inject
+    private Evento evento;
+  
+    public AgendaBean() {
+        agendasPesquisados = new ArrayList<>();
+        evento = new Evento();
+        listagem = new DefaultScheduleModel();
     }
 
-    public ScheduleModel getScheduleModelEventos() {
-        return scheduleModelEventos;
+    public ScheduleModel getListagem() {
+        return listagem;
     }
 
-    public void setScheduleModelEventos(ScheduleModel scheduleModelEventos) {
-        this.scheduleModelEventos = scheduleModelEventos;
+    public void setListagem(ScheduleModel listagem) {
+        this.listagem = listagem;
     }
 
-    public List<Evento> getEventos() {
-        return eventos;
+    public List<Evento> getAgendasPesquisados() {
+        return agendasPesquisados;
     }
 
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
+    public void setAgendasPesquisados(List<Evento> agendasPesquisados) {
+        this.agendasPesquisados = agendasPesquisados;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
     
-    public void listarEventos() {
-        eventos = repositorioEventos.retornaTodosEventos();
-    }
-
-    private void carregarScheduleModelEventos() {
-        scheduleModelEventos = new DefaultScheduleModel();
-        for (Evento evento : eventos) {
-            scheduleModelEventos.addEvent(new DefaultScheduleEvent(evento.getTitulo(), evento.getDataInicio(), evento.getDataFim()));
-        }
-    }
+//    public void buscar() {
+//        agendasPesquisados = repositorioEventos.retornaTodosEventos();
+//        eventos();
+//    }
+//
+//    private void eventos() {
+//        listagem = new DefaultScheduleModel();
+//        for (Evento tmp : agendasPesquisados) {
+//            listagem.addEvent(new DefaultScheduleEvent(tmp.getTitulo(), tmp.getDataInicio(), tmp.getDataFim()));
+//        }
+//    }
 
 }

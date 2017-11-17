@@ -10,7 +10,7 @@
 
         <div class="titulo-opcoes">
             <div class="titulo-pagina">
-                <h1>Gestão de Finanças</h1>            
+                <h1>Gestão do Calendário</h1>            
             </div>
             <div class="opcoes-right">
                 <p:commandButton value="Criar evento" onclick="PF('dialogo-evento').show();" icon="ui-icon-plus" />
@@ -21,14 +21,15 @@
 
             <p:messages id="messages" for="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-            <h:panelGrid columnClasses="value">
+            <h:panelGrid width="100%">
 
-                <p:schedule id="calendario" value="#{agendaBean.scheduleModelEventos}" widgetVar="calendario" timeZone="America/Sao_Paulo">
+                <p:schedule id="schedule" value="#{agendaBean.listagem}" widgetVar="calendario"
+                            locale="pt" timeZone="GMT-2">
 
-                    <p:ajax event="dateSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
-                    <p:ajax event="eventSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
-                    <p:ajax event="eventMove" update=":tabelaForm:messages" />
-                    <p:ajax event="eventResize" update=":tabelaForm:messages" />
+                    <!--                    <p:ajax event="dateSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
+                                        <p:ajax event="eventSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
+                                        <p:ajax event="eventMove" update=":tabelaForm:messages" />
+                                        <p:ajax event="eventResize" update=":tabelaForm:messages" />-->
 
                 </p:schedule>
 
