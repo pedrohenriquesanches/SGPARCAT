@@ -9,11 +9,11 @@ import br.com.sgparcat.models.Evento;
 import br.com.sgparcat.repositories.Eventos;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.CloseEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
@@ -68,16 +68,20 @@ public class AgendaBean implements Serializable {
         this.evento = evento;
     }
     
-//    public void buscar() {
-//        agendasPesquisados = repositorioEventos.retornaTodosEventos();
-//        eventos();
-//    }
-//
-//    private void eventos() {
-//        listagem = new DefaultScheduleModel();
-//        for (Evento tmp : agendasPesquisados) {
-//            listagem.addEvent(new DefaultScheduleEvent(tmp.getTitulo(), tmp.getDataInicio(), tmp.getDataFim()));
-//        }
-//    }
+    public void buscar() {
+        agendasPesquisados = repositorioEventos.retornaTodosEventos();
+        eventos();
+    }
+
+    private void eventos() {
+        listagem = new DefaultScheduleModel();
+        for (Evento tmp : agendasPesquisados) {
+            listagem.addEvent(new DefaultScheduleEvent(tmp.getTitulo(), tmp.getDataInicio(), tmp.getDataFim()));
+        }
+    }
+    
+    public void limpar(CloseEvent event) {
+        evento = new Evento();
+    } 
 
 }

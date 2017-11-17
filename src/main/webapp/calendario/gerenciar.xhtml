@@ -8,12 +8,16 @@
     <ui:define name="titulo">Calendário Paroquial</ui:define>
     <ui:define name="corpo">
 
+        <f:metadata>
+            <f:event listener="#{agendaBean.buscar()}" type="preRenderView"/>
+        </f:metadata>
+
         <div class="titulo-opcoes">
             <div class="titulo-pagina">
                 <h1>Gestão do Calendário</h1>            
             </div>
             <div class="opcoes-right">
-                <p:commandButton value="Criar evento" onclick="PF('dialogo-evento').show();" icon="ui-icon-plus" />
+                <p:commandButton value="Criar evento" onclick="PF('dialogo').show();" icon="ui-icon-plus" />
             </div>
         </div>
 
@@ -21,10 +25,10 @@
 
             <p:messages id="messages" for="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-            <h:panelGrid width="100%">
+            <h:panelGrid style="margin-top: 15px; width: 100%" >
 
                 <p:schedule id="schedule" value="#{agendaBean.listagem}" widgetVar="calendario"
-                            locale="pt" timeZone="GMT-2">
+                            locale="pt" >
 
                     <!--                    <p:ajax event="dateSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
                                         <p:ajax event="eventSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
@@ -36,26 +40,32 @@
             </h:panelGrid>
 
         </h:form>
-
+        
         <h:form id="dialogForm">
-            <p:dialog widgetVar="dialogo-evento" header="Event Details" showEffect="clip" hideEffect="clip">
+            
+            <p:dialog widgetVar="dialogo" header="Agendamento" visible="false"
+                      resizable="false" draggable="false" modal="true">
+
+                <p:ajax event="close" listener="#{registrarContribuicaoBean.limpar}" update="painel-evento"/>
+
                 <h:panelGrid id="painel-evento" columns="2">
                     <p:outputLabel for="title" value="Titles:" />
-                    <p:inputText id="title" value="0" required="true" />
+                    <p:inputText id="title" required="true" />
 
                     <p:outputLabel for="from" value="From:" />
-                    <p:calendar id="from" value="1" timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar id="from" pattern="dd/MM/yyyy HH:mm" mask="true" navigator="true" locale="pt" />
 
                     <p:outputLabel for="to" value="To:" />
-                    <p:calendar id="to" value="2" timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar id="to" pattern="dd/MM/yyyy HH:mm" mask="true" navigator="true" locale="pt" />
 
                     <p:outputLabel for="allDay" value="All Day:" />
-                    <h:selectBooleanCheckbox id="allDay" value="3" />
+                    <h:selectBooleanCheckbox id="allDay" />
 
-                    <p:commandButton type="reset" value="Reset" />
-                    <p:commandButton value="Salvar" oncomplete="PF('calendario').update();PF('painel-evento').hide();" />
+                    <p:commandButton value="Salvar" update="painel-evento, :tabelaForm:schedule" />
                 </h:panelGrid>
+
             </p:dialog>
+
         </h:form>
 
     </ui:define>
