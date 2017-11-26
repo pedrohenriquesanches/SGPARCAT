@@ -29,7 +29,7 @@ public class Participante implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idParticipante;
     
-    @JoinColumn(nullable = false, name = "idFuncao")
+    @JoinColumn(name = "idFuncao")
     @ManyToOne
     private Funcao funcao;
     
@@ -44,9 +44,7 @@ public class Participante implements Serializable {
     public Participante() {
     }
 
-    public Participante(Long idParticipante, Funcao funcao, Evento evento, Pessoa pessoa) {
-        this.idParticipante = idParticipante;
-        this.funcao = funcao;
+    public Participante(Evento evento, Pessoa pessoa) {
         this.evento = evento;
         this.pessoa = pessoa;
     }

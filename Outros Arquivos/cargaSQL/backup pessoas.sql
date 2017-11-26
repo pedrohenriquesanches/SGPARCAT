@@ -12,6 +12,17 @@ INSERT INTO `SGPARCAT`.`pessoa`
 `email`,
 `senha`)
 VALUES
-(1,"094.455.194-11","1996-05-06","C","S","N","Pedro","M","PAROQUIANO",6,"pedrohenrique_pi@hotmail.com","35401346pedro"),
-(2,"970.898.879-80","1993-03-05","S","N","N","Felipe","M","PAROQUIANO",6,"felipe@hotmail.com","felipe");
-
+(101,"094.345.194-02","1996-05-06","C","S","N","Pedro","M","PAROQUIANO",7,"pedrohenrique_pi@hotmail.com","35401346pedro"),
+(102,"094.345.194-17","1996-05-06","C","S","S","Luiza","F","PAROQUIANO",10,"luiza@hotmail.com","35401346pedro"),
+(103,"094.345.194-12","1996-05-06","C","S","S","Marcio Ferreira","M","CLERIGO",4,"marcio@hotmail.com","35401346pedro"),
+(104,"094.345.194-22","1996-05-06","C","S","S","Marcos Sanches","M","PAROQUIANO",5,"marcelo@hotmail.com","35401346pedro"),
+(105,"012.345.194-14","1996-05-06","C","S","N","Maria de Lourder","F","PAROQUIANO",5,"maria@hotmail.com","35401346pedro"),
+(106,"094.224.194-61","1996-05-06","C","N","N","Fabio de Melo","M","PAROQUIANO",7,"fabio@hotmail.com","35401346pedro"),
+(107,"092.345.194-23","1996-05-06","C","S","N","Edilson Figueira","M","PAROQUIANO",8,"edilson@hotmail.com","35401346pedro"),
+(108,"096.315.194-08","1996-05-06","C","S","N","Alfredo Shorthisk","M","PAROQUIANO",9,"alfredo@hotmail.com","35401346pedro"),
+(109,"049.345.194-02","1996-05-06","C","S","N","Eneas Henrique","M","CLERIGO",1,"eneas@hotmail.com","35401346pedro"),
+(110,"654.321.194-15","1996-05-06","C","S","S","Oswaldo","M","PAROQUIANO",5,"oswaldo@hotmail.com","35401346pedro"),
+(111,"002.345.194-12","1996-05-06","C","S","N","Silvia Carvalho","F","PAROQUIANO",6,"silvia@hotmail.com","35401346pedro"),
+(112,"094.345.112-10","1996-05-06","C","N","N","Mauro Querioz","M","PAROQUIANO",7,"mauro@hotmail.com","35401346pedro"),
+(113,"094.123.194-08","1996-05-06","C","S","N","Maria Dejanira Sanches","F","PAROQUIANO",8,"mariadeja@hotmail.com","35401346pedro"),
+(114,"096.898.229-80","1993-03-05","S","N","N","Fabricia","F","CLERIGO",2,"fabricia@hotmail.com","felipe");

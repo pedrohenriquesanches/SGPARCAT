@@ -1,10 +1,25 @@
-
 <ui:composition template="/templates/pagina.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                >
-    <ui:define name="titulo">Pagina inicial</ui:define>
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="titulo">Início</ui:define>
+
+    <ui:define name="corpo">
+
+        <f:metadata>
+        </f:metadata>
+
+        <h:form id="frm">
+            
+            <h:panelGrid columns="2" style="width:100%">
+                <p:chart type="line" model="#{homeBean.graficoLancamentosFinanceiros}" id="grafico-contribucoes-meses" style="width:45%" />
+            </h:panelGrid>
+            
+        </h:form>
+
+    </ui:define>
+
 </ui:composition>

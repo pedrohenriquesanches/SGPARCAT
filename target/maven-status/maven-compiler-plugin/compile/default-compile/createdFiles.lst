@@ -1,6 +1,7 @@
 br/com/sgparcat/util/jsf/FacesProducer.class
 br/com/sgparcat/controllers/AgendaBean.class
 br/com/sgparcat/controllers/GerenciarLancamentoBean.class
+br/com/sgparcat/repositories/Participantes.class
 br/com/sgparcat/models/Contribuicao.class
 br/com/sgparcat/services/LancamentoService.class
 br/com/sgparcat/models/Participante.class
@@ -9,14 +10,17 @@ br/com/sgparcat/repositories/Pessoas.class
 br/com/sgparcat/models/Evento.class
 br/com/sgparcat/services/MembroService.class
 br/com/sgparcat/security/Seguranca.class
+br/com/sgparcat/controllers/HomeBean.class
 br/com/sgparcat/security/UsuarioLogado.class
 br/com/sgparcat/controllers/OrganismoBean.class
 br/com/sgparcat/util/jpa/GeraTabelas.class
 br/com/sgparcat/util/jpa/EntityManagerProducer.class
+br/com/sgparcat/services/ParticipanteService.class
 br/com/sgparcat/models/Pessoa$TipoPessoa.class
 br/com/sgparcat/controllers/GerenciarContribuicaoBean.class
 br/com/sgparcat/models/Contribuicao$TipoContribuicao.class
 br/com/sgparcat/controllers/RegistrarContribuicaoBean.class
+br/com/sgparcat/converters/EventoConverter.class
 br/com/sgparcat/services/OrganismoService.class
 br/com/sgparcat/converters/PessoaConverter.class
 br/com/sgparcat/models/Membro.class
@@ -28,6 +32,7 @@ br/com/sgparcat/repositories/Eventos.class
 br/com/sgparcat/controllers/RegistrarLancamentoBean.class
 br/com/sgparcat/security/JsfAccessDeniedHandler.class
 br/com/sgparcat/repositories/Funcoes.class
+br/com/sgparcat/controllers/ParticipantesBean.class
 br/com/sgparcat/controllers/PessoaBean.class
 br/com/sgparcat/controllers/ParticipanteBean.class
 br/com/sgparcat/util/jsf/FacesUtil.class
@@ -44,6 +49,7 @@ br/com/sgparcat/controllers/ClerigoBean.class
 br/com/sgparcat/security/AppDetailsService.class
 br/com/sgparcat/cdi/CDIServiceLocator.class
 br/com/sgparcat/models/Organismo.class
+br/com/sgparcat/services/EventoService.class
 br/com/sgparcat/security/JsfRedirectStrategy.class
 br/com/sgparcat/models/Pessoa.class
 br/com/sgparcat/repositories/Membros.class

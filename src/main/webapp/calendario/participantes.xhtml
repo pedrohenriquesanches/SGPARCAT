@@ -1,0 +1,174 @@
+<ui:composition template="/templates/pagina.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="titulo">Editar Evento e Participantes</ui:define>
+
+    <ui:define name="corpo">
+
+        <f:metadata>
+            <f:viewParam name="evento" value="#{participantesBean.evento}"/>
+            <f:viewAction phase="UPDATE_MODEL_VALUES" action="#{participantesBean.filtrarPessoasQueNaoParticipamDesseEvento()}"/>
+        </f:metadata>
+
+        <h:form>
+
+            <div class="titulo-opcoes">
+                <div class="titulo-pagina">
+                    <h1>Editar Evento e Participantes</h1>
+                </div>
+                <div class="opcoes-right">
+                    <p:commandButton style="margin-right: 5px" value="Salvar" title="Salvar" icon="ui-icon-disk"
+                                     actionListener="#{participantesBean.salvar()}" update="@form"/>
+                    <p:button value="Cancelar" icon="ui-icon-cancel" outcome="/calendario/gerenciar"
+                              onclick="if (!confirm('Tem certeza? Você será redirecionado para a tela de gestão do calendário paroquial.'))
+                                          return false">
+                    </p:button>
+                </div>
+            </div>
+
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+            <div class="div-campos-cadastro" style="width: 100%">
+                <p:panel id="dados-evento" class="painel-cadastros">
+
+                    <div class="campo-cadastro coluna-1-10">
+                        <p:outputLabel value="ID:" for="id-evento"/>
+                        <p:inputText id="id-evento" value="#{participantesBean.evento.idEvento}" disabled="true"/>
+                    </div>
+                    <div class="campo-cadastro coluna-2-10">
+                        <p:outputLabel value="Título:" for="titulo"/>
+                        <p:inputText id="titulo" required="true" value="#{participantesBean.evento.titulo}" />
+                    </div>
+                    <div class="campo-cadastro coluna-1-10">
+                        <p:outputLabel value="Início:" for="data-inicio" />
+                        <p:calendar id="data-inicio" value="#{participantesBean.evento.dataInicio}"
+                                    pattern="dd/MM/yyyy HH:mm" mask="true" navigator="true" locale="pt" />
+                    </div>
+                    <div class="campo-cadastro coluna-1-10">
+                        <p:outputLabel value="Fim:" for="data-fim" />
+                        <p:calendar id="data-fim" value="#{participantesBean.evento.dataFim}"
+                                    pattern="dd/MM/yyyy HH:mm" mask="true" navigator="true" locale="pt" />
+                    </div>
+                    <div class="campo-cadastro coluna-1-10">
+                        <p:outputLabel value="Local:" for="local"/>
+                        <p:inputText id="local" required="true" value="#{participantesBean.evento.localEvento}"/>
+                    </div>
+                    <div class="campo-cadastro coluna-3-10" style="float: right;margin-top: 5px">
+                        <p:inputTextarea id="observacao" placeholder="Observações" value="#{participantesBean.evento.observacao}" rows="3" style="width: 96%" />
+                    </div>
+                </p:panel>
+            </div>
+
+        </h:form>
+
+        <h:form id="formTabelas">
+
+            <div style="width: 100%; ">
+
+                <div class="coluna-1-2" style="float: left">
+
+                    <p:toolbar class="tollbartabela" style="padding: 0">
+
+                        <f:facet name="left">
+                            <h3 class="title-facet">Pessoas</h3>
+                        </f:facet>
+
+                        <f:facet name="right">
+                            <p:inputText id="campoPesquisaPessoa" placeholder="Pesquisar" value="#{participantesBean.inputPesquisaPessoa}" >
+                                <p:ajax event="keyup" listener="#{participantesBean.filtrarPessoasQueNaoParticipamDesseEvento()}" update="tabelaPessoas" />
+                            </p:inputText>
+                            <p:commandButton actionListener="#{participantesBean.filtrarPessoasQueNaoParticipamDesseEvento()}" update="tabelaPessoas" process="@this"
+                                             icon="ui-icon-search" title="Pesquisar" class="botaopesquisa"/>
+                        </f:facet>
+
+                    </p:toolbar>
+
+                    <p:dataTable class="tabela" id="tabelaPessoas" var="pessoa" value="#{participantesBean.pessoas}" rowKey="#{pessoa.idPessoa}"
+                                 rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum registro encontrado">
+
+                        <p:column headerText="ID" style="width: 50px">
+                            <h:outputText value="#{pessoa.idPessoa}" />
+                        </p:column>
+
+                        <p:column headerText="Nome" >
+                            <h:outputText value="#{pessoa.nomeCompleto}" />
+                        </p:column>
+
+                        <p:column headerText="Principal Função na Paróquia" >
+                            <h:outputText value="#{pessoa.funcao.titulo}" />
+                        </p:column>
+
+                        <p:column style="width: 32px">
+                            <p:commandButton icon="ui-icon-circle-plus" title="Adicionar como participante" actionListener="#{participantesBean.adicionarParticipante(pessoa)}"
+                                             update="tabelaPessoas, formTabelas:tabelaParticipantes" process="@this" class="botao-adicionar"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </div>
+
+                <div class="coluna-1-2" style="float: right">
+
+                    <p:toolbar class="tollbartabela" style="padding: 0">
+
+                        <f:facet name="left">
+                            <h3 class="title-facet">Participantes</h3>
+                        </f:facet>
+
+                        <f:facet name="right">
+                            <p:inputText id="campoPesquisaParticipante" placeholder="Pesquisar" value="#{participantesBean.inputPesquisaParticipante}" >
+                                <p:ajax event="keyup" listener="#{participantesBean.filtrarParticipantes()}" update="tabelaParticipantes" />
+                            </p:inputText>
+                            <p:commandButton actionListener="#{participantesBean.filtrarParticipantes()}" update="tabelaParticipantes" process="@this"
+                                             icon="ui-icon-search" title="Pesquisar" class="botaopesquisa" />
+                        </f:facet>
+
+                    </p:toolbar>
+
+                    <p:dataTable class="tabela" id="tabelaParticipantes" var="participante" value="#{participantesBean.evento.participantes}" rowKey="#{participante.idParticipante}"
+                                 rows="12" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum participante adicionado"
+                                 editable="true" editMode="cell">
+
+                        <p:column headerText="ID" style="width: 50px" >
+                            <h:outputText value="#{participante.pessoa.idPessoa}" />
+                        </p:column>
+
+                        <p:column headerText="Nome" >
+                            <h:outputText value="#{participante.pessoa.nomeCompleto}" />
+                        </p:column>
+
+                        <p:column headerText="Função Nesse Evento" >
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{participante.funcao.titulo}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu id="box-selecao-funcoes" value="#{participante.funcao}" style="width:80%">
+                                        <f:selectItem  itemLabel="Selecione"/>
+                                        <f:selectItems value="#{funcaoBean.filtrarFuncoesQueNaoSaoApenasParaClerigos(null)}" var="funcao" itemLabel="#{funcao.titulo}" itemValue="#{funcao}" />
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width: 32px">
+                            <p:commandButton icon="ui-icon-circle-minus" title="Remover participante" actionListener="#{participantesBean.removerParticipante(participante)}"
+                                             update="formTabelas:tabelaPessoas, tabelaParticipantes" process="@this" class="botao-remover" ajax="false"
+                                             onclick="if (!confirm('Tem certeza? Não será possível desfazer a exclusão!'))
+                                                         return false">
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </div>
+
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

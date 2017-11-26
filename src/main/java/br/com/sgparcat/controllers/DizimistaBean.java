@@ -11,6 +11,9 @@ import br.com.sgparcat.repositories.Pessoas;
 import br.com.sgparcat.services.PessoaService;
 import br.com.sgparcat.util.jsf.FacesUtil;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -87,7 +90,17 @@ public class DizimistaBean implements Serializable {
                 return "Inativo";
             }
         }else{
-            return "-";
+            return "";
+        }
+    }
+    
+    public String getUltimaContribuicao(Pessoa dizimista) {
+        if (dizimista.getContribuicoesQueRealizou().isEmpty()) {
+            return "";
+        }else{
+            Date data = dizimista.getContribuicoesQueRealizou().get(0).getDataReferente();
+            return new SimpleDateFormat("dd/MM/yyyy").format(data);
+            //return data.get(Calendar.DAY_OF_MONTH) + "/" + data.get(Calendar.MONTH) + "/" + data.get(Calendar.YEAR);
         }
     }
 

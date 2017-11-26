@@ -65,7 +65,7 @@
                 </p:column>
                 
                 <p:column headerText="Última Contribuição" style="width: 150px">
-                    <h:outputText value="#{dizimista.contribuicoesQueRealizou.get(0).dataReferente}" >
+                    <h:outputText value="#{dizimistaBean.getUltimaContribuicao(dizimista)}" >
                         <f:convertDateTime pattern="MMMM 'de' yyyy"/>
                     </h:outputText>
                 </p:column>

@@ -11,18 +11,22 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.ScheduleEvent;
 
 /**
  *
  * @author pedrohensanches
  */
-public class Eventos implements Serializable{
+public class Eventos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Inject
     private EntityManager manager;
-    
+
     public Evento guardar(Evento evento) {
         EntityTransaction et = manager.getTransaction();
         et.begin();
@@ -38,13 +42,22 @@ public class Eventos implements Serializable{
         manager.remove(evento);
         et.commit();
     }
-    
+
     public List<Evento> retornaTodosEventos() {
         return manager.createQuery("from Evento order by titulo asc").getResultList();
     }
-    
+
     public Evento retornaPorId(Integer id) {
         return manager.find(Evento.class, id);
     }
-    
+
+    public Evento retornaPorNomeEData(ScheduleEvent scheduleEvent) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Evento.class);
+        c.add(Restrictions.eq("titulo", scheduleEvent.getTitle()));
+        c.add(Restrictions.eq("dataInicio", scheduleEvent.getStartDate()));
+        c.add(Restrictions.eq("dataFim", scheduleEvent.getEndDate()));        
+        return (Evento) c.uniqueResult();
+    }
+
 }

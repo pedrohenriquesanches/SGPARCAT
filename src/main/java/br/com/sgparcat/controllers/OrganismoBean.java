@@ -171,7 +171,7 @@ public class OrganismoBean implements Serializable {
         if (organismo.getMembros() == null || organismo.getMembros().isEmpty()) {
             pessoas = repositorioPessoas.retornaTodasAsPessoas();
         } else {
-            pessoas = repositorioPessoas.retornaPessoasQueNãoMembrosDoOrganismo(organismo, inputPesquisaPessoa);
+            pessoas = repositorioPessoas.retornaPessoasQueNaoSaoMembrosDoOrganismo(organismo, inputPesquisaPessoa);
         }
     }
     

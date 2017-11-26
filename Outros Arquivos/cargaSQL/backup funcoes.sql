@@ -12,5 +12,3 @@ VALUES (1,"S","Diácono"),
 (8,"N","Tesoureiro(a)"),
 (9,"N","Secretário(a)"),
 (10,"N","Catequista");
-
-

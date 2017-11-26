@@ -24,9 +24,12 @@ header {
 }
 
 .calendario .ui-widget-header {
-    height: 25px;
     color: #033;
     background: #efe4e4;
+}
+
+.calendario .fc-today {
+    border-color: #aaa !important;
 }
 
 .calendario .fc-today {
@@ -342,23 +345,40 @@ select {
 
 .coluna-1-10{
     display:inline-table;
-    width: 10%;
+    width: 9.5%;
+    margin-right: 10px;
+}
+
+.coluna-2-10{
+    display:inline-table;
+    width: 19.5%;
+    margin-right: 10px;
+}
+
+.coluna-3-10{
+    display:inline-table;
+    width: 29.5%;
     margin-right: 10px;
 }
 
 .coluna-1-5{
     display:inline-table;
-    width: 20%;
+    width: 19.5%;
 }
 
 .coluna-2-5{
     display:inline-table;
-    width: 40%;
+    width: 39.5%;
+}
+
+.coluna-3-5{
+    display:inline-table;
+    width: 59.5%;
 }
 
 .coluna-1-3{
     display:inline-table;
-    width: 33%;
+    width: 32.5%;
 }
 
 .coluna-2-3{
@@ -368,7 +388,7 @@ select {
 
 .coluna-1-2{
     display:inline-table;
-    width: 49.5%;
+    width: 49%;
 }
 
 .ui-autocomplete-input.ui-autocomplete-dd-input {
@@ -435,7 +455,7 @@ select {
 }
 
 @media (max-width:768px) {
-    .coluna-1-2, .coluna-1-3, .coluna-1-5, .coluna-1-10, .coluna-2-5{
+    .coluna-1-2, .coluna-1-3, .coluna-1-5, .coluna-1-10, .coluna-2-10, .coluna-3-10, .coluna-2-5, .coluna-3-5{
         width: 100% !important;
         margin-right: 0;
     }

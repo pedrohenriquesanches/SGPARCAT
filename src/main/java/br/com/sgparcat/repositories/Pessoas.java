@@ -5,9 +5,11 @@
  */
 package br.com.sgparcat.repositories;
 
+import br.com.sgparcat.models.Evento;
 import br.com.sgparcat.models.Funcao;
 import br.com.sgparcat.models.Membro;
 import br.com.sgparcat.models.Organismo;
+import br.com.sgparcat.models.Participante;
 import br.com.sgparcat.models.Pessoa;
 import java.io.Serializable;
 import java.util.List;
@@ -121,7 +123,7 @@ public class Pessoas implements Serializable {
         return pessoa;
     }
 
-    public List<Pessoa> retornaPessoasQueNãoMembrosDoOrganismo(Organismo organismo, String nomePesquisado) {
+    public List<Pessoa> retornaPessoasQueNaoSaoMembrosDoOrganismo(Organismo organismo, String nomePesquisado) {
 
 //        return manager.createQuery("from Pessoa where idPessoa not in"
 //                + "(select pessoa from Membro where idOrganismo = :idOrganismo)").
@@ -140,6 +142,28 @@ public class Pessoas implements Serializable {
         c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
     }
+    
+
+    public List<Pessoa> retornaPessoasQueNaoSaoParticipantes(Evento evento, String nomePesquisado) {
+
+//        return manager.createQuery("from Pessoa where idPessoa not in"
+//                + "(select pessoa from Membro where idOrganismo = :idOrganismo)").
+//                setParameter("idOrganismo", ""+organismo.getIdOrganismo()).getResultList();
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Pessoa.class)
+                .add(Subqueries.propertyNotIn("idPessoa", DetachedCriteria.forClass(Participante.class)
+                        .add(Restrictions.eq("evento", evento))
+                        .setProjection(Property.forName("pessoa"))
+                ));
+
+        if (nomePesquisado != null && !nomePesquisado.equals("")) {
+            c.add(Restrictions.like("nomeCompleto", nomePesquisado, MatchMode.ANYWHERE));
+        }
+
+        c.addOrder(Order.asc("nomeCompleto"));
+        return c.list();
+    }
+        
 
     public List<Pessoa> retornaTodasAsPessoas() {
         Session session = manager.unwrap(Session.class);

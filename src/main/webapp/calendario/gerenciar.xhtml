@@ -8,60 +8,95 @@
     <ui:define name="titulo">Calendário Paroquial</ui:define>
     <ui:define name="corpo">
 
-        <f:metadata>
-            <f:event listener="#{agendaBean.buscar()}" type="preRenderView"/>
-        </f:metadata>
-
         <div class="titulo-opcoes">
             <div class="titulo-pagina">
-                <h1>Gestão do Calendário</h1>            
+                <h1>Gestão do Calendário Paroquial</h1>            
             </div>
             <div class="opcoes-right">
                 <p:commandButton value="Criar evento" onclick="PF('dialogo').show();" icon="ui-icon-plus" />
             </div>
         </div>
 
+        <p:messages id="messages" for="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
         <h:form id="tabelaForm">
 
-            <p:messages id="messages" for="messages" showDetail="false" autoUpdate="true" closable="true"/>
+            <h:panelGrid id="painel-calendario" style="margin-top: 20px; width: 100%" >
 
-            <h:panelGrid style="margin-top: 20px; width: 100%" >
+                <p:schedule id="schedule" value="#{agendaBean.eventos}" class="calendario"
+                            displayEventEnd="true" draggable="false" aspectRatio="2"
+                            timeFormat="HH:mm" locale="pt" timeZone="GMT-2">
 
-                <p:schedule id="schedule" value="#{agendaBean.listagem}" class="calendario" locale="pt" >
-
-                    <!--                    <p:ajax event="dateSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
-                                        <p:ajax event="eventSelect" update="dialogForm:painel-evento" oncomplete="PF('dialogo-evento').show();" />
-                                        <p:ajax event="eventMove" update=":tabelaForm:messages" />
-                                        <p:ajax event="eventResize" update=":tabelaForm:messages" />-->
+                    <p:ajax event="dateSelect" listener="#{agendaBean.onDateSelect}" 
+                            update="dialogForm:painel-evento" oncomplete="PF('dialogo').show();" />
+                    <p:ajax event="eventSelect" listener="#{agendaBean.onEventSelect}"
+                            update="dialogForm:painel-evento" oncomplete="PF('dialogo').show();" />
 
                 </p:schedule>
 
             </h:panelGrid>
 
         </h:form>
-        
+
         <h:form id="dialogForm">
-            
-            <p:dialog widgetVar="dialogo" header="Agendamento" visible="false"
+
+            <p:dialog widgetVar="dialogo" header="Evento" visible="false" width="500" height="300"
                       resizable="false" draggable="false" modal="true">
 
-                <p:ajax event="close" listener="#{registrarContribuicaoBean.limpar}" update="painel-evento"/>
+                <p:ajax event="close" listener="#{agendaBean.limpar}" update="painel-evento"/>
 
-                <h:panelGrid id="painel-evento" columns="2">
-                    <p:outputLabel for="title" value="Titles:" />
-                    <p:inputText id="title" required="true" />
+                <p:outputPanel id="painel-evento" class="painel-cadastros">
 
-                    <p:outputLabel for="from" value="From:" />
-                    <p:calendar id="from" pattern="dd/MM/yyyy HH:mm" mask="true" navigator="true" locale="pt" />
+                    <p:messages for="dialogMessages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                    <p:outputLabel for="to" value="To:" />
-                    <p:calendar id="to" pattern="dd/MM/yyyy HH:mm" mask="true" navigator="true" locale="pt" />
+                    <div class="div-campos-cadastro" style="width: 100%">                        
 
-                    <p:outputLabel for="allDay" value="All Day:" />
-                    <h:selectBooleanCheckbox id="allDay" />
+                        <div class="coluna-1-3 campo-cadastro">
+                            <p:outputLabel value="ID:" for="id-evento"/>
+                            <p:inputText id="id-evento" value="#{agendaBean.evento.idEvento}" disabled="true"/>
+                        </div>
+                        <div class="coluna-2-3 campo-cadastro">
+                            <p:outputLabel value="Título:" for="titulo"/>
+                            <p:inputText id="titulo" required="true" value="#{agendaBean.evento.titulo}" style="width: 95%"/>
+                        </div>
+                        <div class="coluna-1-3 campo-cadastro">
+                            <p:outputLabel value="Início:" for="data-inicio" />
+                            <p:calendar id="data-inicio" value="#{agendaBean.evento.dataInicio}"
+                                        pattern="dd/MM/yyyy HH:mm" mask="true" navigator="true" locale="pt" />
+                        </div>
+                        <div class="coluna-1-3 campo-cadastro">
+                            <p:outputLabel value="Fim:" for="data-fim" />
+                            <p:calendar id="data-fim" value="#{agendaBean.evento.dataFim}"
+                                        pattern="dd/MM/yyyy HH:mm" mask="true" navigator="true" locale="pt" />
+                        </div>
+                        <div class="coluna-1-3 campo-cadastro">
+                            <p:outputLabel value="Local:" for="local"/>
+                            <p:inputText id="local" required="true" value="#{agendaBean.evento.localEvento}"/>
+                        </div>
 
-                    <p:commandButton value="Salvar" update="painel-evento, :tabelaForm:schedule" />
-                </h:panelGrid>
+                        <div class="campo-cadastro">
+                            <p:outputLabel value="Observações:" for="observacao" />
+                            <p:inputTextarea id="observacao" value="#{agendaBean.evento.observacao}" rows="3" style="width: 96%" />
+                        </div>
+
+                        <div style="margin-top: 15px">
+                            <p:commandButton value="Salvar" update="painel-evento, :tabelaForm:painel-calendario"
+                                             actionListener="#{agendaBean.salvar()}"
+                                             class="botao-adicionar" style="margin-right: 10px"/>
+                            <p:commandButton value="#{agendaBean.textoBotaoParticipantes()}" class="botao-adicionar"
+                                             update="painel-evento" action="#{agendaBean.gerenciarParticipantes()}"
+                                             disabled="#{agendaBean.disponibilidadeBotaoParticipantes()}" 
+                                             style="margin-right: 10px" />
+                            <p:commandButton value="Remover Evento" update="dialogForm, :tabelaForm:painel-calendario"                                             
+                                             actionListener="#{agendaBean.remover()}" class="botao-remover"
+                                             rendered="#{agendaBean.evento.getIdEvento() != null}" 
+                                             onclick="if (!confirm('Tem certeza? Não será possível desfazer a exclusão!'))
+                                                         return false"/>
+                        </div>
+
+                    </div>
+
+                </p:outputPanel>
 
             </p:dialog>
 
