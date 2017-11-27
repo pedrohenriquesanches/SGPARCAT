@@ -5,14 +5,22 @@
  */
 package br.com.sgparcat.controllers;
 
+import br.com.sgparcat.repositories.Lancamentos;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -24,11 +32,16 @@ public class HomeBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat ("MMM yyyy", new Locale ("pt", "BR"));
+
     private LineChartModel graficoLancamentosFinanceiros;
+
+    @Inject
+    private Lancamentos repositorioLancamentos;
 
     @PostConstruct
     public void HomeBean() {
-        criarModelos();
+        criarGraficoDeLancamentos();
     }
 
     public LineChartModel getGraficoLancamentosFinanceiros() {
@@ -39,41 +52,38 @@ public class HomeBean implements Serializable {
         this.graficoLancamentosFinanceiros = graficoLancamentosFinanceiros;
     }
 
-    private void criarModelos() {
-        graficoLancamentosFinanceiros = initLinearModel();
-        graficoLancamentosFinanceiros.setTitle("Line Chart");
+    private void criarGraficoDeLancamentos() {
+        graficoLancamentosFinanceiros = adicionarSeriesDeReceitas();
+        graficoLancamentosFinanceiros.setTitle("LANÇAMENTOS FINANCEIROS");
         graficoLancamentosFinanceiros.setAnimate(true);
-        graficoLancamentosFinanceiros.setLegendPosition("se");
-        Axis yAxis = graficoLancamentosFinanceiros.getAxis(AxisType.Y);
-        yAxis.setMin(0);
-        yAxis.setMax(10);
+        graficoLancamentosFinanceiros.setLegendPosition("ne");
+        graficoLancamentosFinanceiros.setShowPointLabels(true);
+        graficoLancamentosFinanceiros.getAxes().put(AxisType.X, new CategoryAxis());
+        graficoLancamentosFinanceiros.getAxis(AxisType.Y).setLabel("R$");
     }
-    
-    private LineChartModel initLinearModel() {
+
+    private LineChartModel adicionarSeriesDeReceitas() {
         LineChartModel model = new LineChartModel();
- 
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Series 1");
- 
-        series1.set(1, 2);
-        series1.set(2, 1);
-        series1.set(3, 3);
-        series1.set(4, 6);
-        series1.set(5, 8);
- 
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
- 
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(5, 9);
- 
-        model.addSeries(series1);
-        model.addSeries(series2);
-         
+        ChartSeries seriesReceitas = new ChartSeries();
+        seriesReceitas.setLabel("Receitas");
+        
+        Map<Date, BigDecimal> receitas = repositorioLancamentos.retornaValorTotalDeReceitasPorData(365);
+        int i = 1;
+        for (Date data : receitas.keySet()) {
+            seriesReceitas.set(DATE_FORMAT.format(data), receitas.get(data));
+            i++;
+        }
+
+        model.addSeries(seriesReceitas);
         return model;
     }
-    
+
+    private void adicionarSeriesDeDespesas() {
+
+    }
+
 }
+
+//
+//            System.out.println("data " + data);
+//            System.out.println("valor " + receitas.get(data) + "\n");

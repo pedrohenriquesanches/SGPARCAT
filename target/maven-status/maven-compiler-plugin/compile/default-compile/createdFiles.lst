@@ -48,6 +48,7 @@ br/com/sgparcat/converters/ContribuicaoConverter.class
 br/com/sgparcat/controllers/ClerigoBean.class
 br/com/sgparcat/security/AppDetailsService.class
 br/com/sgparcat/cdi/CDIServiceLocator.class
+br/com/sgparcat/repositories/DataValor.class
 br/com/sgparcat/models/Organismo.class
 br/com/sgparcat/services/EventoService.class
 br/com/sgparcat/security/JsfRedirectStrategy.class

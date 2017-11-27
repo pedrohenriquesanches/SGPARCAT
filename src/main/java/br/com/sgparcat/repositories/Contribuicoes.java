@@ -137,5 +137,4 @@ public class Contribuicoes implements Serializable {
             c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
         }
     }
-
 }

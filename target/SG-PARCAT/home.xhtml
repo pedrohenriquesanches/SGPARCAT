@@ -9,13 +9,10 @@
 
     <ui:define name="corpo">
 
-        <f:metadata>
-        </f:metadata>
-
         <h:form id="frm">
             
             <h:panelGrid columns="2" style="width:100%">
-                <p:chart type="line" model="#{homeBean.graficoLancamentosFinanceiros}" id="grafico-contribucoes-meses" style="width:45%" />
+                <p:chart type="line" model="#{homeBean.graficoLancamentosFinanceiros}" id="grafico-lancamentos" style="width:45%"/>
             </h:panelGrid>
             
         </h:form>
