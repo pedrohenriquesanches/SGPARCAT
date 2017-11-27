@@ -111,7 +111,7 @@
 
                 <p:column headerText="Referente à" style="width: 100px">
                     <h:outputText value="#{lancamento.dataReferente}" >
-                        <f:convertDateTime pattern="MMMM 'de' yyyy"/>
+                        <f:convertDateTime pattern="MMMM 'de' yyyy" locale="pt" timeZone="America/Sao_Paulo"/>
                     </h:outputText>
                 </p:column>
 

@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -143,8 +144,8 @@ public class Lancamentos implements Serializable {
             c.add(Restrictions.eq("isPago", statusSelecionado));
         }
     }
-    
-    public Map<Date, BigDecimal> retornaValorTotalDeReceitasPorData(Integer numeroDeDias) {
+
+    public Map<Date, BigDecimal> retornaValorTotalDeLancamentosPorMes(Integer numeroDeDias, Character isDespesa) {
 
         Session session = manager.unwrap(Session.class);
         numeroDeDias -= 1;
@@ -153,7 +154,7 @@ public class Lancamentos implements Serializable {
         dataInicial = DateUtils.truncate(dataInicial, Calendar.DAY_OF_MONTH);
         dataInicial.add(Calendar.DAY_OF_MONTH, numeroDeDias * -1);
 
-        Map<Date, BigDecimal> resultado = new HashMap<>();
+        Map<Date, BigDecimal> resultado = new TreeMap<>();
 
         Criteria criteria = session.createCriteria(Lancamento.class);
 
@@ -164,16 +165,15 @@ public class Lancamentos implements Serializable {
                 .add(Projections.sum("valor").as("valor")))
                 .add(Restrictions.ge("dataReferente", dataInicial.getTime()));
 
-        criteria.add(Restrictions.eq("isDespesa", 'N'));
+        criteria.add(Restrictions.eq("isDespesa", isDespesa));
 
         List<DataValor> valoresPorData = criteria.setResultTransformer(Transformers.aliasToBean(DataValor.class)).list();
 
         for (DataValor dataValor : valoresPorData) {
             resultado.put(dataValor.getData(), dataValor.getValor());
         }
-
+        
         return resultado;
     }
-
 
 }

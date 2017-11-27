@@ -10,11 +10,19 @@
     <ui:define name="corpo">
 
         <h:form id="frm">
-            
-            <h:panelGrid columns="2" style="width:100%">
-                <p:chart type="line" model="#{homeBean.graficoLancamentosFinanceiros}" id="grafico-lancamentos" style="width:45%"/>
-            </h:panelGrid>
-            
+
+            <div class="centralizado-horizontalmente" style="width:90%">
+                <div style="margin-top: 50px; margin-bottom: 30px">
+                    <h1 style="width: 100%; text-align: center">Olá, Pedro Henrique Sanches!</h1>
+                </div>
+                <div class="coluna-1-2" style="margin-top: 20px; margin-right: 20px">
+                    <p:chart type="line" model="#{homeBean.graficoLancamentosFinanceiros}" id="grafico-lancamentos" responsive="true"/>
+                </div>
+                <div class="coluna-1-2" style="margin-top: 20px">
+                    <p:chart type="line" model="#{homeBean.graficoContribuicoes}" id="grafico-contribuicoes" responsive="true"/>
+                </div>
+            </div>
+
         </h:form>
 
     </ui:define>

@@ -5,6 +5,7 @@
  */
 package br.com.sgparcat.controllers;
 
+import br.com.sgparcat.repositories.Contribuicoes;
 import br.com.sgparcat.repositories.Lancamentos;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,8 +20,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
-import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -35,13 +36,19 @@ public class HomeBean implements Serializable {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat ("MMM yyyy", new Locale ("pt", "BR"));
 
     private LineChartModel graficoLancamentosFinanceiros;
+    
+    private LineChartModel graficoContribuicoes;
 
     @Inject
     private Lancamentos repositorioLancamentos;
+    
+    @Inject
+    private Contribuicoes repositorioContribuicoes;
 
     @PostConstruct
     public void HomeBean() {
         criarGraficoDeLancamentos();
+        criarGraficoDeContribuicoes();
     }
 
     public LineChartModel getGraficoLancamentosFinanceiros() {
@@ -51,39 +58,82 @@ public class HomeBean implements Serializable {
     public void setGraficoLancamentosFinanceiros(LineChartModel graficoLancamentosFinanceiros) {
         this.graficoLancamentosFinanceiros = graficoLancamentosFinanceiros;
     }
+    
+    public LineChartModel getGraficoContribuicoes() {
+        return graficoContribuicoes;
+    }
+
+    public void setGraficoContribuicoes(LineChartModel graficoContribuicoes) {
+        this.graficoContribuicoes = graficoContribuicoes;
+    }
 
     private void criarGraficoDeLancamentos() {
-        graficoLancamentosFinanceiros = adicionarSeriesDeReceitas();
+        graficoLancamentosFinanceiros = new LineChartModel();
         graficoLancamentosFinanceiros.setTitle("LANÇAMENTOS FINANCEIROS");
         graficoLancamentosFinanceiros.setAnimate(true);
-        graficoLancamentosFinanceiros.setLegendPosition("ne");
+        graficoLancamentosFinanceiros.setLegendPosition("se");
         graficoLancamentosFinanceiros.setShowPointLabels(true);
         graficoLancamentosFinanceiros.getAxes().put(AxisType.X, new CategoryAxis());
         graficoLancamentosFinanceiros.getAxis(AxisType.Y).setLabel("R$");
+        graficoLancamentosFinanceiros.getAxis(AxisType.Y).setMin(0);
+        graficoLancamentosFinanceiros.setSeriesColors("FF0000,32CD32");
+        adicionarSeriesDeDespesas();
+        adicionarSeriesDeReceitas();
     }
 
-    private LineChartModel adicionarSeriesDeReceitas() {
-        LineChartModel model = new LineChartModel();
-        ChartSeries seriesReceitas = new ChartSeries();
+    private void adicionarSeriesDeReceitas() {
+        LineChartSeries seriesReceitas = new LineChartSeries();
         seriesReceitas.setLabel("Receitas");
         
-        Map<Date, BigDecimal> receitas = repositorioLancamentos.retornaValorTotalDeReceitasPorData(365);
+        Map<Date, BigDecimal> receitas = repositorioLancamentos.retornaValorTotalDeLancamentosPorMes(365,'N');
         int i = 1;
         for (Date data : receitas.keySet()) {
             seriesReceitas.set(DATE_FORMAT.format(data), receitas.get(data));
             i++;
         }
 
-        model.addSeries(seriesReceitas);
-        return model;
+        graficoLancamentosFinanceiros.addSeries(seriesReceitas);
     }
 
     private void adicionarSeriesDeDespesas() {
+        LineChartSeries seriesReceitas = new LineChartSeries();
+        seriesReceitas.setLabel("Despesas");
+        
+        Map<Date, BigDecimal> receitas = repositorioLancamentos.retornaValorTotalDeLancamentosPorMes(365,'S');
+        int i = 1;
+        for (Date data : receitas.keySet()) {
+            seriesReceitas.set(DATE_FORMAT.format(data), receitas.get(data));
+            i++;
+        }
 
+        graficoLancamentosFinanceiros.addSeries(seriesReceitas);
+    }
+    
+    private void criarGraficoDeContribuicoes() {
+        graficoContribuicoes = new LineChartModel();
+        graficoContribuicoes.setTitle("DÍZIMOS");
+        graficoContribuicoes.setAnimate(true);
+        graficoContribuicoes.setLegendPosition("se");
+        graficoContribuicoes.setShowPointLabels(true);
+        graficoContribuicoes.getAxes().put(AxisType.X, new CategoryAxis());
+        graficoContribuicoes.getAxis(AxisType.Y).setLabel("R$");
+        graficoContribuicoes.getAxis(AxisType.Y).setMin(0);
+        graficoContribuicoes.setSeriesColors("0a82eb");
+        adicionarSeriesDeContribuicoes();
+    }
+    
+    private void adicionarSeriesDeContribuicoes() {
+        LineChartSeries seriesContribuicoes = new LineChartSeries();
+        seriesContribuicoes.setLabel("Contribuições");
+        
+        Map<Date, BigDecimal> receitas = repositorioContribuicoes.retornaValorTotalDeDizimoPorMes(365);
+        int i = 1;
+        for (Date data : receitas.keySet()) {
+            seriesContribuicoes.set(DATE_FORMAT.format(data), receitas.get(data));
+            i++;
+        }
+
+        graficoContribuicoes.addSeries(seriesContribuicoes);
     }
 
 }
-
-//
-//            System.out.println("data " + data);
-//            System.out.println("valor " + receitas.get(data) + "\n");

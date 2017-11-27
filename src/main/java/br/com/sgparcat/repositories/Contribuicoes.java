@@ -6,19 +6,28 @@
 package br.com.sgparcat.repositories;
 
 import br.com.sgparcat.models.Contribuicao;
+import br.com.sgparcat.models.Lancamento;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.hibernate.type.IntegerType;
+import org.hibernate.type.StandardBasicTypes;
+import org.hibernate.type.Type;
 
 /**
  *
@@ -127,7 +136,6 @@ public class Contribuicoes implements Serializable {
     }
 
     private void adicionarRestricoesPorNomeETipo(Criteria c, String descricaoPesquisada, Contribuicao.TipoContribuicao tipoContribuicaoSelecionado) {
-
         if (descricaoPesquisada != null && !descricaoPesquisada.equals("")) {
             c.createAlias("pessoaContribuinte", "contribuinte");
             c.add(Restrictions.or(Restrictions.like("descricao", descricaoPesquisada, MatchMode.ANYWHERE), Restrictions.like("contribuinte.nomeCompleto", descricaoPesquisada, MatchMode.ANYWHERE)));
@@ -136,5 +144,35 @@ public class Contribuicoes implements Serializable {
         if (tipoContribuicaoSelecionado != null) {
             c.add(Restrictions.eq("tipoContribuicao", tipoContribuicaoSelecionado));
         }
+    }
+    
+    public Map<Date, BigDecimal> retornaValorTotalDeDizimoPorMes(Integer numeroDeDias) {
+        Session session = manager.unwrap(Session.class);
+        numeroDeDias -= 1;
+
+        Calendar dataInicial = Calendar.getInstance();
+        dataInicial = DateUtils.truncate(dataInicial, Calendar.DAY_OF_MONTH);
+        dataInicial.add(Calendar.DAY_OF_MONTH, numeroDeDias * -1);
+
+        Map<Date, BigDecimal> resultado = new TreeMap<>();
+
+        Criteria criteria = session.createCriteria(Contribuicao.class);
+
+        criteria.setProjection(Projections.projectionList()
+                .add(Projections.sqlGroupProjection("date(dataReferente) as data",
+                        "date(dataReferente)", new String[]{"data"},
+                        new Type[]{StandardBasicTypes.DATE}))
+                .add(Projections.sum("valor").as("valor")))
+                .add(Restrictions.ge("dataReferente", dataInicial.getTime()));
+
+        criteria.add(Restrictions.eq("tipoContribuicao", Contribuicao.TipoContribuicao.DIZIMO));
+
+        List<DataValor> valoresPorData = criteria.setResultTransformer(Transformers.aliasToBean(DataValor.class)).list();
+
+        for (DataValor dataValor : valoresPorData) {
+            resultado.put(dataValor.getData(), dataValor.getValor());
+        }
+
+        return resultado;
     }
 }
