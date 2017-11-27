@@ -36,6 +36,8 @@ public class Pessoas implements Serializable {
 
     @Inject
     private EntityManager manager;
+    
+    private Funcoes repositorioFuncoes;
 
     public void guardar(Pessoa pessoa) {
         EntityTransaction et = manager.getTransaction();
@@ -182,6 +184,28 @@ public class Pessoas implements Serializable {
 
         c.addOrder(Order.asc("nomeCompleto"));
         return c.list();
+    }
+
+    public Pessoa retornaCoordenadoresDoOrganismo(Organismo organismo) {
+        return (Pessoa) manager.createQuery("from Pessoa where idPessoa in"
+                + "(select Pessoa from Membro where idOrganismo = :idOrganismo and idFuncao = 7)").
+                setParameter("idOrganismo", "" + organismo.getIdOrganismo()).getSingleResult();
+//
+//        select nomeCompleto from pessoa where idPessoa in (select idPessoa from membro  where idOrganismo = 4 and idFuncao = 7);
+        
+//        repositorioFuncoes = new Funcoes();
+//        Session session = manager.unwrap(Session.class);
+//        Criteria c = session.createCriteria(Pessoa.class)
+//                .add(Subqueries.propertyIn("idPessoa", DetachedCriteria.forClass(Membro.class)
+//                        .add(Restrictions.eq("organismo", organismo))
+//                        .setProjection(Property.forName("pessoa"))
+//                        .add(Restrictions.like("funcao", repositorioFuncoes.retornaPorId(7)))
+//                ));
+//        
+//         
+//
+//        c.addOrder(Order.asc("nomeCompleto"));
+//        return c.list();
     }
 
 }

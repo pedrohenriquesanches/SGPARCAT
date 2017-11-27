@@ -13,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.ScheduleEvent;
 
@@ -58,6 +60,18 @@ public class Eventos implements Serializable {
         c.add(Restrictions.eq("dataInicio", scheduleEvent.getStartDate()));
         c.add(Restrictions.eq("dataFim", scheduleEvent.getEndDate()));        
         return (Evento) c.uniqueResult();
+    }
+    
+    public List<Evento> retornaTodosOsEventos(String nomePesquisado) {
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Evento.class);
+
+        if (nomePesquisado != null && !nomePesquisado.equals("")) {
+            c.add(Restrictions.like("titulo", nomePesquisado, MatchMode.ANYWHERE));
+        }
+
+        c.addOrder(Order.asc("titulo"));
+        return c.list();
     }
 
 }

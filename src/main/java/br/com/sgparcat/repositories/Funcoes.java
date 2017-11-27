@@ -61,4 +61,10 @@ public class Funcoes implements Serializable{
         return manager.find(Funcao.class, id);
     }
     
+    public Funcao retornaObjetoFuncaoCoordenador(){
+        Session session = manager.unwrap(Session.class);
+        Criteria c = session.createCriteria(Funcao.class);
+        c.add(Restrictions.like("titulo", "Coordenador(a)", MatchMode.EXACT));
+        return (Funcao) c.uniqueResult();
+    }
 }

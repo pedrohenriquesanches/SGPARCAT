@@ -5,6 +5,7 @@
  */
 package br.com.sgparcat.security;
 
+import br.com.sgparcat.models.Pessoa;
 import javax.enterprise.inject.Produces;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -46,6 +47,15 @@ public class Seguranca {
         }
         
         return usuario;
+    }
+    
+    public String redirecionarParaPaginaDeCadastro(){
+        Pessoa usuario = getUsuarioLogado().getPessoa();
+        if(usuario.getTipoPessoa() == Pessoa.TipoPessoa.CLERIGO){
+            return "/pessoas/cadastrar-clerigo?clerigo="+usuario.getIdPessoa();
+        }else{
+            return "/pessoas/cadastrar?paroquiano="+usuario.getIdPessoa();
+        }
     }
     
 }

@@ -236,7 +236,10 @@
                             </div>
                             <div class="campo-cadastro" style="margin-top: 0px">
                                 <p:outputLabel value="Evento:" for="evento"/>
-                                <p:inputText id="evento" value="#{registrarLancamentoBean.lancamento.evento}"/>
+                                <p:autoComplete id="evento" size="26" emptyMessage="Nenhuma pessoa encontrada com este nome" scrollHeight="180"
+                                                value="#{registrarLancamentoBean.lancamento.evento}" completeMethod="#{agendaBean.pesquisarEvento}" forceSelection="true"
+                                                var="evento" itemLabel="#{evento != null ? evento.titulo : null}" itemValue="#{evento}" >
+                                </p:autoComplete>
                             </div>
                         </div>
 

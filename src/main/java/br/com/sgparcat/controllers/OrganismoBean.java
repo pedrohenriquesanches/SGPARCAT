@@ -46,7 +46,7 @@ public class OrganismoBean implements Serializable {
 
     @Inject
     Funcoes repositorioFuncoes;
-    
+
     @Inject
     Membros repositorioMembros;
 
@@ -132,27 +132,27 @@ public class OrganismoBean implements Serializable {
 
     public String salvarPreCadastro() {
         organismo = organismoService.salvar(organismo);
-        FacesUtil.addInfoMessage("dialogMessages","O organismo " + organismo.getNome() + " foi criado com sucesso");
+        FacesUtil.addInfoMessage("dialogMessages", "O organismo " + organismo.getNome() + " foi criado com sucesso");
         //Thread.sleep(2000);
         return "/organismos/membros?organismo=" + organismo.getIdOrganismo() + "&faces-redirect=true";
     }
 
     public void salvar() {
         Boolean estaEditando = organismo.getIdOrganismo() != null;
-        
+
         organismo = organismoService.salvar(organismo);
-        
+
         if (estaEditando) {
-            FacesUtil.addInfoMessage(null,"Edição concluída com sucesso");
+            FacesUtil.addInfoMessage(null, "Edição concluída com sucesso");
         } else {
-            FacesUtil.addInfoMessage(null,"O organismo " + organismo.getNome() + " foi adicionado com sucesso!");
+            FacesUtil.addInfoMessage(null, "O organismo " + organismo.getNome() + " foi adicionado com sucesso!");
         }
     }
 
     public void excluir(Organismo organismo) {
         organismoService.excluir(organismo);
         organismos.remove(organismo);
-        FacesUtil.addInfoMessage("messages","O organismo " + organismo.getNome() + " foi excluido com sucesso!");
+        FacesUtil.addInfoMessage("messages", "O organismo " + organismo.getNome() + " foi excluido com sucesso!");
         limpar();
     }
 
@@ -174,14 +174,14 @@ public class OrganismoBean implements Serializable {
             pessoas = repositorioPessoas.retornaPessoasQueNaoSaoMembrosDoOrganismo(organismo, inputPesquisaPessoa);
         }
     }
-    
-    public void filtrarMembros(){
+
+    public void filtrarMembros() {
         organismo.setMembros(repositorioMembros.pesquisarMembro(organismo, inputPesquisaMembro));
     }
 
     public void adicionarMembro(Pessoa pessoa) {
         if (organismo.getIdOrganismo() == null) {
-            FacesUtil.addWarMessage(null,"Primeiro crie e salve o organismo para poder adicionar membros");
+            FacesUtil.addWarMessage(null, "Primeiro crie e salve o organismo para poder adicionar membros");
         } else {
             Membro membro = new Membro(organismo, pessoa);
             membroService.salvar(membro);
@@ -196,6 +196,28 @@ public class OrganismoBean implements Serializable {
         if (membro.getIdMembro() != null) {
             membroService.excluir(membro);
         }
+    }
+
+    public String getCoordenador(Organismo organismo) {
+        for (Membro membro : organismo.getMembros()) {
+            if (membro.getFuncao() != null) {
+                if (membro.getFuncao().getTitulo().equals("Coordenador(a)")) {
+                    return membro.getPessoa().getNomeCompleto();
+                }
+            }
+        }
+        return "";
+    }
+    
+    public String getTesoureiro(Organismo organismo) {
+        for (Membro membro : organismo.getMembros()) {
+            if (membro.getFuncao() != null) {
+                if (membro.getFuncao().getTitulo().equals("Tesoureiro(a)")) {
+                    return membro.getPessoa().getNomeCompleto();
+                }
+            }
+        }
+        return "";
     }
 
 }

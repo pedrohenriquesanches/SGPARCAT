@@ -34,7 +34,7 @@
     <http auto-config="false" use-expressions="true">
         <custom-filter ref="exceptionTranslationFilter" before="FILTER_SECURITY_INTERCEPTOR" />
         <intercept-url pattern="/home.xhtml" access="isAuthenticated()" />
-        <intercept-url pattern="/acessoNegado.xhtml" access="isAuthenticated()" />
+        <intercept-url pattern="/acesso-negado.xhtml" access="isAuthenticated()" />
         <intercept-url pattern="/calendario/**" access="hasAnyRole('PADRE','DIÁCONO','MINISTRO(A)','TESOUREIRO(A)')" />
         <intercept-url pattern="/contribuicoes/**" access="hasAnyRole('PADRE','DIÁCONO','MINISTRO(A)','TESOUREIRO(A)')" />
         <intercept-url pattern="/financas/**" access="hasAnyRole('PADRE','DIÁCONO','MINISTRO(A)','TESOUREIRO(A)')" />

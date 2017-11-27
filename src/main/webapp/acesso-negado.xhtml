@@ -1,0 +1,20 @@
+<ui:composition template="/templates/pagina.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                >
+
+    <ui:define name="titulo">Acesso negado</ui:define>
+    <ui:define name="corpo">
+        <div class="centralizado acesso-negado-box">
+            <h1 style="margin-top: 10px ; text-align: center">OPSSS!</h1>
+            <h2 style="text-align: center">ACESSO NEGADO</h2>
+            <h:graphicImage library="imagens" name="acesso-negado.png" style="height:120px" />
+            <h3 style="text-align: center">A página não pode ser exibida.</h3>
+            <p:button outcome="/home" value="Voltar para o início" icon="ui-icon-arrowreturnthick-1-w "/>
+        </div>
+    </ui:define>
+
+</ui:composition>

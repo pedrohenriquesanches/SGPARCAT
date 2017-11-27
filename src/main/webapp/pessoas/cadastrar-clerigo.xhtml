@@ -103,19 +103,20 @@
                             <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
                         </p:inputText>
                     </div>
-                    <h:panelGrid columns="2" cellpadding="5">
+<!--                    <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Ceder acesso ao sistema para essa pessoa: " />
                         <p:selectBooleanCheckbox/>
-                    </h:panelGrid>
+                    </h:panelGrid>-->
                     <div class="campo-cadastro ">                 
                         <h:outputLabel for="senha1" value="Senha:" />
-                        <p:password id="senha1" match="senha2" label="Senha" feedback="true" inline="true"
-                                    promptLabel="Digite a senha" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" disabled="true"/>
+                        <p:password id="senha1" label="Senha" feedback="true" inline="true"
+                                    value="#{clerigoBean.clerigo.senha}"
+                                    promptLabel="Digite a senha" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" disabled="false"/>
                     </div>
-                    <div class="campo-cadastro ">
+<!--                    <div class="campo-cadastro ">
                         <h:outputLabel for="senha2" value="Confirme a Senha:" />
-                        <p:password id="senha2" label="Confirme a Senha" disabled="true"/>
-                    </div>
+                        <p:password id="senha2" label="Confirme a Senha" disabled="false"/>
+                    </div>-->
                 </p:panel>
             </div>
             

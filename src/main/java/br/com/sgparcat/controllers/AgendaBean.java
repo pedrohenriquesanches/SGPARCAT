@@ -11,6 +11,7 @@ import br.com.sgparcat.services.EventoService;
 import br.com.sgparcat.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -121,6 +122,10 @@ public class AgendaBean implements Serializable {
         FacesUtil.addInfoMessage("dialogMessages","O evento foi adicionado com sucesso!");
         //Thread.sleep(2000);
         return "/calendario/participantes?evento=" + evento.getIdEvento() + "&faces-redirect=true";
+    }
+    
+    public List<Evento> pesquisarEvento(String input){
+        return repositorioEventos.retornaTodosOsEventos(input);
     }
 
 }

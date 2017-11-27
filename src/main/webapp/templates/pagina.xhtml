@@ -53,23 +53,16 @@ and open the template in the editor.
                             <p:menuitem value="Ver Todos os Clérigos Paroquiais" outcome="/pessoas/gerenciar-clerigos"/>
                         </p:submenu>
 
-                        <p:submenu label="Organismos" style="margin-right: 3px">
-                            <p:menuitem value="Adicionar Organismo" outcome="/organismos/gerenciar"/>
-                            <p:menuitem value="Ver Todos os Organismos" outcome="/organismos/gerenciar"/>
-                        </p:submenu>
-
+                        <p:menuitem value="Organismos" outcome="/organismos/gerenciar" style="margin-right: 3px"/>
+                        
+                        <p:menuitem value="Financeiro" outcome="/financas/gerenciar" style="margin-right: 3px"/>
+                        
                         <p:submenu label="Contribuições" style="margin-right: 3px" >
-                            <p:menuitem value="Adicionar Contribuição" outcome="/contribuicoes/gerenciar"/>
-                            <p:menuitem value="Ver Todas as Contribuições" outcome="/contribuicoes/gerenciar"/>
+                            <p:menuitem value="Gerenciar Contribuições" outcome="/contribuicoes/gerenciar"/>
                             <p:separator style="border-top-color: rgb(210, 173, 173);border-top-style: solid;border-top-width: 1px;"/>
                             <p:menuitem value="Adicionar Dizimista" outcome="/pessoas/cadastrar"/>
                             <p:menuitem value="Ver Todos os Dizimistas" outcome="/pessoas/gerenciar-dizimistas"/>
-                        </p:submenu>
-
-                        <p:submenu label="Financeiro" style="margin-right: 3px">
-                            <p:menuitem value="Registrar Lançamento" outcome="/financas/gerenciar"/>
-                            <p:menuitem value="Ver Todos os Lançamentos" outcome="/financas/gerenciar"/>
-                        </p:submenu>
+                        </p:submenu>                     
 
                         <p:menuitem value="Calendário Paroquial" outcome="/calendario/gerenciar"/>                        
                     </p:menubar>
@@ -77,12 +70,12 @@ and open the template in the editor.
             </div>
 
             <div style="margin-right: 5px; float:right; display: -webkit-box">
-                <h:link outcome="/home" >
+                <h:link outcome="#{seguranca.redirecionarParaPaginaDeCadastro()}" >
                     <h:graphicImage library="imagens" name="usericon.png" style="height:35px" />
                 </h:link>
                 <p:menubar id="bt-painel-usuario" styleClass="menu-sistema">
                     <p:submenu label="" style="margin-right: 3px" >
-                        <p:menuitem value="Meu Perfil" outcome="/home"/>
+                        <p:menuitem value="Meus Dados" outcome="#{seguranca.redirecionarParaPaginaDeCadastro()}"/>
                         <p:menuitem value="Sair" url="/j_spring_security_logout"/>
                     </p:submenu>
                 </p:menubar>

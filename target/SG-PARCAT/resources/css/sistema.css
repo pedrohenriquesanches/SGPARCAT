@@ -173,6 +173,16 @@ select {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25) !important;
 }
 
+.acesso-negado-box{
+    width: 320px;
+    height: 290px;
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #bababa;
+    border-radius: 10px;
+}
+
 .tollbartabela {
     margin-top: 15px;
     padding: 0.6em !important;
