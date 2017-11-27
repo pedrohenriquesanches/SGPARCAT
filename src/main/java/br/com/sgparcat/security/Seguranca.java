@@ -30,8 +30,7 @@ public class Seguranca {
         
         if(usuarioSistema != null){
             nome = usuarioSistema.getPessoa().getNomeCompleto();
-        }
-        
+        }        
         return nome;
     }
     

@@ -88,12 +88,19 @@ public class RegistrarLancamentoBean implements Serializable {
     }
 
     private void preecherDadosPadroes() {
+        Calendar cal = Calendar.getInstance();
         lancamento.setIsDespesa('N');
         lancamento.setIsPago('N');
         Date hoje = new Date();
-        Calendar cal = Calendar.getInstance();
         cal.setTime(hoje);
         lancamento.setDataRegistro(hoje);
+        setMesReferente(cal.get(Calendar.MONTH));
+        setAnoReferente(cal.get(Calendar.YEAR));
+    }
+
+    public void atualizarDataReferente(Lancamento lancamento) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(lancamento.getDataReferente());
         setMesReferente(cal.get(Calendar.MONTH));
         setAnoReferente(cal.get(Calendar.YEAR));
     }
